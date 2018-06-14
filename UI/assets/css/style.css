@@ -1,0 +1,132 @@
+/* 
+ ************************************
+ IMPORT USER DEFINED FONTS
+ ************************************
+*/
+
+/* BRYANT BOLD */
+
+@font-face {
+  font-family: BryantBoldAlt;
+  src: url("../fonts/BryantBoldAlt.ttf");
+}
+
+/* BRYANT LIGHT */
+
+@font-face {
+  font-family: BryantLight;
+  src: url("../fonts/BryantLight.ttf");
+}
+
+/* BRYANT LIGHT ALT */
+
+@font-face {
+  font-family: BryantLightAlt;
+  src: url("../fonts/BryantLightAlt.ttf");
+}
+
+/* BRYANT MEDIUM  */
+
+@font-face {
+  font-family: BryantMedium;
+  src: url("../fonts/BryantMedium.ttf");
+}
+
+/* BRYANT MEDIUM ALT */
+
+@font-face {
+  font-family: BryantMediumAlt;
+  src: url("../fonts/BryantMediumAlt.ttf");
+}
+
+/* BRYANT REGULAR */
+
+@font-face {
+  font-family: BryantRegular;
+  src: url("../fonts/BryantRegular.ttf");
+}
+
+/* BRYANT REGULAR ALT */
+
+@font-face {
+  font-family: BryantRegularAlt;
+  src: url("../fonts/BryantRegularAlt.ttf");
+}
+
+/* 
+ ---------------------------------------------------
+ */
+
+* {
+  box-sizing: border-box;
+  margin: 0 auto;
+  font-family: BryantBoldAlt;
+  outline: none;
+}
+
+body {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+
+.navbar {
+  border-radius: 0;
+  background: transparent;
+  border-bottom: 0;
+  margin-bottom: 0;
+  display: flex;
+}
+
+.navbar-header,
+.navbar .navbar__nav>li {
+  font-family: BryantBoldAlt;
+  padding: 3.5rem 2rem;
+}
+
+/* .navbar-header, */
+
+.navbar__nav {
+  display: flex;
+  list-style: none;
+}
+
+nav .navbar__nav>li>a {
+  padding: 0;
+  font-size: 1.5rem;
+  color: #F2F2F2;
+  font-family: BryantMedium;
+}
+
+.navbar__header {
+  height: 9rem;
+  display: flex;
+  align-items: center;
+}
+
+.navbar__header>a.navbar__brand {
+  font-size: 2.5rem;
+  color: #F2F2F2;
+}
+
+/*  */
+
+/* 
+.navbar .navbar__nav>li:last-child {
+  padding-top: 2.5rem;
+} */
+
+.header {
+  /* padding: 6rem; */
+  background-image: url('../img/Group\ 5.png'), linear-gradient(to left, #551F84 0%, rgba(53, 125, 197, 0.91) 99%, #357DC5 100%);
+  background-position: right 0 top 0;
+  background-repeat: no-repeat;
+  height: auto;
+}
