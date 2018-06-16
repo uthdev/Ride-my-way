@@ -19,7 +19,7 @@
         <nav class="navbar  container-fluid" role="navigation">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar__header dashboard__navbar__header">
-            <span class="js__navbar__toggler" style="font-size:30px;cursor:pointer">&#9776; </span>
+            <span class="js__navbar__toggler DashboardColor--primary" style="font-size:30px;cursor:pointer">&#9776; </span>
             <a href="/" class="navbar__brand">
               <div class="dashboard--logo--wrapper bg--color--primary">
                 <img src="assets/img/Group 2.1.png" alt="Ride my way logo">
@@ -50,19 +50,19 @@
           <div class="container-fluid">
             <ul class="nav navbar__right navbar__nav">
               <li>
-                <a href="#" class="active">
+                <a href="summary.html" class="active">
                   Summary
                   <hr class="active--indicator">
                 </a>
               </li>
               <li>
-                <a href="#" class="notification">
+                <a href="rideoffers.html" class="notification">
                   Ride Offers
                   <hr class="active--indicator">
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="riderequest.html">
                   Ride Requests
                   <hr class="active--indicator">
                 </a>
@@ -89,7 +89,7 @@
       </div>
       <div class="dashboard__content">
 
-        <div class="metric">
+        <div class="metric light--shadow">
           <div class="divider--half">
             <div class="row">
               <div class="divider--three">
@@ -100,14 +100,16 @@
               <div class="divider--three vertical--center">
                 <div class="card__user__widget">
                   <h3 class="DashboardColor--text--grey">Hi Joeeasy!</h3>
-                  <button class="DashboardBtn btn--round DashboardColor--bg--primary">view ride offers</button>
+                  <form action="rideoffers.html">
+                    <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary">view ride offers</button>
+                  </form>
                 </div>
               </div>
               <div class="divider--three vertical--center">
                 <div class="CreateRide">
                   <a href="#">
                     <i class="fab fa-slideshare fa-3x DashboardColor--text--primary"></i>
-                    <h4 class="DashboardColor--text--grey">Offer A Ride</h4>
+                    <h4 class="DashboardColor--text--grey margin-left--10">Offer A Ride</h4>
                   </a>
                 </div>
               </div>
@@ -115,31 +117,175 @@
           </div>
           <div class="divider--half">
             <div class="row">
-              <div class="divider--three vertical--center">
+              <!-- <div class="divider--three vertical--center">
                 <div class="CreateRide">
                   <a href="#">
                     <i class="fa-3x DashboardColor--text--primary">27</i>
                     <h4 class="DashboardColor--text--grey">Rides received</h4>
                   </a>
                 </div>
-              </div>
-              <!-- <div class="divider--three vertical--center">
+              </div> -->
+              <div class="divider--three vertical--center">
                 <div class="CreateRide">
                   <a href="#">
                     <i class="fa-3x DashboardColor--text--primary">17</i>
                     <h4 class="DashboardColor--text--grey">Rides offered</h4>
                   </a>
                 </div>
-              </div> -->
-              <div class="divider--three vertical--center">hello</div>
+              </div>
+              <div class="divider--three vertical--center">
+                <div class="CreateRide">
+                  <a href="#">
+                    <i class="fas fa-history fa-3x DashboardColor--text--primary"></i>
+                    <h4 class="DashboardColor--text--grey margin-left--10">Ride History</h4>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
+        <div class="RideInfo">
+          <div class="RideOffers light--shadow">
+            <div class="RideOffers__title text--center">
+              <h3 class="DashboardColor--text--grey">Ride Offers</h3>
+            </div>
+            <div class="RideOffers__content">
+              <div class="RideOffers__item">
+                <div class="rider__img">
+                  <img src="assets/img/ME.jpeg" alt="Rider's image">
+                </div>
+                <div class="riders__content">
+                  <div class="riders__subheader">
+                    <h5>
+                      <a href="ridedetails.html"> Heading Towards Mile 2</a>
+                    </h5>
+                    <h6>
+                      <strong>
+                        <em>Destination: </em>
+                      </strong>
+                      <span class="DashboardColor--text--grey">Mile 2</span>
+                    </h6>
+
+                  </div>
+                </div>
+              </div>
+              <div class="RideOffers__item">
+                <div class="rider__img">
+                  <img src="assets/img/ME.jpeg" alt="Rider's image">
+                </div>
+                <div class="riders__content">
+                  <div class="riders__subheader">
+                    <h5>
+                      <a href="ridedetails.html"> Heading Towards Mile 2</a>
+                    </h5>
+                    <h6>
+                      <strong>
+                        <em>Destination: </em>
+                      </strong>
+                      <span class="DashboardColor--text--grey">Mile 2</span>
+                    </h6>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="RideOffer__footer text--center">
+              <a href="rideoffers.html">View All Rides
+              </a>
+            </div>
+          </div>
+          <div class="RideHistory light--shadow">
+            <div class="RideHistory__title text--center">
+              <h3 class="DashboardColor--text--grey">Ride History</h3>
+            </div>
+            <!-- riders history -->
+            <div class="RideHistory__content">
+              <div class="row ">
+                <div class="Ride__date">
+                  <!-- <h5>Nov</h5> -->
+                  <h6 class="DashboardColor--text--grey">Nov</h6>
+                  <p class="DashboardColor--text--grey">17</p>
+                </div>
+                <div class="Rider__name">
+                  <h6>
+                    <a href="#">joeeasy</a>
+                  </h6>
+                  <p class="DashboardColor--text--grey">
+                    <em>
+                      <strong>Offered:</strong>
+                    </em> heading towards mile yaba </p>
+                </div>
+                <div class="ride__destination">
+                  <h6 class="DashboardColor--text--grey">
+                    <em>From: </em>Ikeja
+                    <br>
+                    <em>To: </em>Yaba
+                  </h6>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="Ride__date">
+                  <!-- <h5>Nov</h5> -->
+                  <h6 class="DashboardColor--text--grey">Nov</h6>
+                  <p class="DashboardColor--text--grey">17</p>
+                </div>
+                <div class="Rider__name">
+                  <h6>
+                    <a href="#">joeeasy</a>
+                  </h6>
+                  <p class="DashboardColor--text--grey">
+                    <em>
+                      <strong>Offered:</strong>
+                    </em> heading towards mile yaba </p>
+                </div>
+                <div class="ride__destination">
+                  <h6 class="DashboardColor--text--grey">
+                    <em>From: </em>Ikeja
+                    <br>
+                    <em>To: </em>Yaba
+                  </h6>
+                </div>
+              </div>
+              <div class="row ">
+                <div class="Ride__date">
+                  <!-- <h5>Nov</h5> -->
+                  <h6 class="DashboardColor--text--grey">Nov</h6>
+                  <p class="DashboardColor--text--grey">17</p>
+                </div>
+                <div class="Rider__name">
+                  <h6>
+                    <a href="#">joeeasy</a>
+                  </h6>
+                  <p class="DashboardColor--text--grey">
+                    <em>
+                      <strong>Offered:</strong>
+                    </em> heading towards mile yaba </p>
+                </div>
+                <div class="ride__destination">
+                  <h6 class="DashboardColor--text--grey">
+                    <em>From: </em>Ikeja
+                    <br>
+                    <em>To: </em>Yaba
+                  </h6>
+                </div>
+              </div>
+            </div>
+            <div class="RideHistory__footer text--center">
+              <a href="createoffer.html">View All
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <script src="assets/js/main.js"></script>
+  <script>
+    window.onload = () => {
+      app.loadSideBar();
+    }
+  </script>
 </body>
 
 </html>
