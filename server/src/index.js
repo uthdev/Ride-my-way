@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import rideRoute from './routes/index';
 
 const app = express();
 
@@ -12,5 +13,7 @@ app.use(bodyParser.json());
 // support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api/v1/rides', rideRoute);
+
 // Subscribe server to a particular port
-app.listen(Port, (req, res) => console.log(`Server Started At ${Port}`));
+app.listen(Port, () => console.log(`Server Started At ${Port}`));

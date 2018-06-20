@@ -17,4 +17,9 @@ rideRoute.route('/')
   .get(RideController.allRideOffer);
 
 
+rideRoute.route('/:id')
+
+  /* Get ride details of a single ride offer */
+  .get(RideController.getRideOffer);
+
 export default rideRoute;
