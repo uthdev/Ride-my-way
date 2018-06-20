@@ -37,6 +37,33 @@ class RideController {
       message: 'Could not find ride or the ride is invalid',
     });
   }
+
+  static createRideOffer(req, res) {
+    const rideOffer = req.body;
+
+    // validations
+    const name = rideOffer.name.trim() !== '';
+    const location = rideOffer.location.trim() !== '';
+    const destination = rideOffer.destination.trim() !== '';
+    const departureTime = rideOffer.departureTime.trim() !== '';
+    const price = typeof (rideOffer.price) === 'number' && rideOffer.price > 0;
+
+    // check is rid
+    if (name && location && destination && departureTime && price) {
+      rideOffersDb.push({
+        id: rideOffersDb.length + 1,
+        ...rideOffer,
+      });
+      res.status(201).json({
+        message: 'New ride offer has been created',
+        rideOffersDb,
+      });
+    } else {
+      res.status(400).json({
+        error: 'Please enter the missing fields',
+      });
+    }
+  }
 }
 
 
