@@ -20,10 +20,17 @@ class RideController {
    *
    * @returns {Object} information about a ride
    */
+
   static getRideOffer(req, res) {
     const { id } = req.params;
-    const parsedId = parseInt(id, 10);
+
+    const parsedId = (!(/^\d+$/.test(id))) ? NaN : parseInt(id, 10);
     let rideDetails = '';
+
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(parsedId))) {
+      return res.status(400).json({ message: 'Ride id is invalid' });
+    }
 
     // if id is a number
     if (typeof (parsedId) === 'number') {
@@ -33,12 +40,22 @@ class RideController {
         }
         return null;
       });
-      return res.status(200).json(rideDetails);
+      if (rideDetails) return res.status(200).json(rideDetails);
+      return res.status(404).json({
+        message: 'The ride offer you requested does not exist',
+      });
     }
+
+    // no matching id
     return res.status(404).json({
-      message: 'Could not find ride or the ride is invalid',
+      message: 'Id not found',
     });
   }
+
+  /**
+   *
+   * @returns {Object} An update array of ride offers
+   */
 
   static createRideOffer(req, res) {
     const rideOffer = req.body;
@@ -111,15 +128,17 @@ class RideController {
         }
 
         rideRequest.noOfSeatsLeft = (rideRequest.noOfSeats) - (rideRequest.passengersId.length);
-      } else {
-        res.status(201).json({
-          message: 'Your cannot join this ride the passengers are already complete',
+        return res.status(200).json({
+          message: 'Ride request sent',
+          rideRequest,
         });
       }
-      return res.status(200).json(rideRequest);
+      res.status(201).json({
+        message: 'Your cannot join this ride the passengers are already complete',
+      });
     }
     return res.status(400).json({
-      message: 'Invalid request',
+      error: 'Invalid request token',
     });
   }
 }
