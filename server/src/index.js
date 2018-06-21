@@ -17,3 +17,6 @@ app.use('/api/v1/rides', rideRoute);
 
 // Subscribe server to a particular port
 app.listen(Port, () => console.log(`Server Started At ${Port}`));
+
+// export app
+export default app;
