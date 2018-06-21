@@ -136,10 +136,12 @@ class RideController {
       res.status(201).json({
         message: 'Your cannot join this ride the passengers are already complete',
       });
+    } else {
+      return res.status(400).json({
+        error: 'Invalid request token',
+      });
     }
-    return res.status(400).json({
-      error: 'Invalid request token',
-    });
+    return null;
   }
 }
 
