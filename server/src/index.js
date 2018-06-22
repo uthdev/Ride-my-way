@@ -5,7 +5,7 @@ import rideRoute from './routes/index';
 const app = express();
 
 // set port for server to listen on
-const Port = 5000 || process.env.Port;
+const Port = process.env.Port || 5000;
 
 // support parsing of application/json type post data
 app.use(bodyParser.json());
