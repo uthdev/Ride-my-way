@@ -8,10 +8,14 @@
   "license": "MIT",
   "scripts": {
     "build": "./node_modules/.bin/babel ./server/src --out-dir ./server/build",
-    "start": "node ./server/build/index.js",
+    "start": "cross-env NODE_ENV=production node ./server/build/index.js",
     "dev": "nodemon --exec babel-node ./server/src/index.js",
-    "test": "nyc mocha --require babel-register  ./server/src/test/**/**.spec.js  --exit",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "cross-env NODE_ENV=test nyc mocha --require babel-register --timeout 6000 ./server/src/test/**/**.spec.js  --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-babel"
   },
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -25,7 +29,9 @@
     "babel-plugin-istanbul": "^4.1.6",
     "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
+    "codecov": "^3.0.2",
     "coveralls": "^3.0.1",
+    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0",
