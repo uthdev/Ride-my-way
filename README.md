@@ -105,7 +105,6 @@ npm test
 </tr>
 </tbody></table>
 
-
 ## License
 
 This projects is the MIT LICENSE
@@ -113,9 +112,6 @@ This projects is the MIT LICENSE
 ## Authur
 
 [Jehonadab Okpukoro](http://github.com/joeeasy)
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Acknowledgments
 
@@ -128,5 +124,5 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 ### Live demo
 
 You can test
-- [Endpoint ](https://ridemw.herokuapp.com/)
 
+- [Endpoint ](https://ridemw.herokuapp.com/)
