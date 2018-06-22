@@ -118,7 +118,7 @@ This projects is the MIT LICENSE
 - [Andela](http://andela.com)
 - [Brad Traversy Media](http://youtube.com?s=brad)
 - [Google Search](https://google.com)
-- [Stackover Flow](stackoverflow.com)
+- [StackoverFlow](stackoverflow.com)
 - Hat tip to everybody who supported
 
 ### Live demo
