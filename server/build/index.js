@@ -21,7 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express2.default)();
 
 // set port for server to listen on
-var Port = 5000;
+var Port = process.env.PORT || 5000;
 
 // support parsing of application/json type post data
 app.use(_bodyParser2.default.json());
