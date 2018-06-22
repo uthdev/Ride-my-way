@@ -16,10 +16,10 @@ Build status of continous integration i.e travis, coveralls and codeclimate
 [![Maintainability](https://api.codeclimate.com/v1/badges/d86c8aa23c4dfe18ba06/maintainability)](https://codeclimate.com/github/joeeasy/Ride-my-way/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d86c8aa23c4dfe18ba06/test_coverage)](https://codeclimate.com/github/joeeasy/Ride-my-way/test_coverage)
 
-## Style guide
+### Style guide
 
-[Airbnb ](http://link)(Javascript style guide)
-[BEM ](http://link)(CSS style guide)
+[Airbnb ](https://github.com/airbnb/javascript)(Javascript style guide)
+[BEM ](https://github.com/airbnb/css)(CSS style guide)
 
 ### Screenshots(UI template)
 
@@ -29,10 +29,10 @@ Preview UI template here[ UI Template](https://joeeasy.github.io/Ride-my-way/UI/
 
 ### Tech Stack
 
-- [Nodejs](http://nodejs.org)
-- [Expressjs](http://expressjs.com)
-- [Mocha](http://mocha.com)
-- [Chai](http://chai.com)
+- [Nodejs](https://nodejs.org/en/)
+- [Expressjs](https://expressjs.com/)
+- [Mocha](https://mochajs.org/)
+- [Chai](http://www.chaijs.com/)
 
 ### Features
 
@@ -88,41 +88,41 @@ npm test
 </thead>
 <tbody>
 <tr>
-<td>GET /rides</td>
+<td>GET api/v1/rides</td>
 <td>Fetch all ride request for an authenticated user</td>
 </tr>
 <tr>
-<td>GET /users/:requestId</td>
+<td>GET api/v1/users/:requestId</td>
 <td>Fetch the details of a specific ride</td>
 </tr>
 <tr>
-<td>POST /users/rides</td>
+<td>POST api//users/rides</td>
 <td>Creates a new ride offer</td>
 </tr>
 <tr>
-<td>POST /users/:rideId/requests</td>
+<td>POST api/v1/users/:rideId/requests</td>
 <td>Sends a request to join a new ride</td>
 </tr>
 </tbody></table>
 
 ## License
 
-This projects is the MIT LICENSE
+This projects is under the MIT LICENSE
 
-## Authur
+## Author
 
 [Jehonadab Okpukoro](http://github.com/joeeasy)
 
 ## Acknowledgments
 
 - [Andela](http://andela.com)
-- [Brad Traversy Media](http://youtube.com?s=brad)
+- [Brad Traversy Media](https://www.youtube.com/channel/UC29ju8bIPH5as8OGnQzwJyA)
 - [Google Search](https://google.com)
-- [StackoverFlow](stackoverflow.com)
+- [Stackoverflow](stackoverflow.com)
 - Hat tip to everybody who supported
 
 ### Live demo
 
-You can test
+You can test the api endpoints
 
-- [Endpoint ](https://ridemw.herokuapp.com/)
+- [Here ](https://ridemw.herokuapp.com/)
