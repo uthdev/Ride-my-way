@@ -143,6 +143,31 @@ class RideController {
     }
     return null;
   }
+
+  static updateRideOffer(req, res) {
+    const { id } = req.params;
+    const parsedId = parseInt(id, 10);
+    let rideDetails = {};
+
+
+    // Find the ride by id
+    rideDetails = rideOffersDb.filter(ride => ride.id === parsedId);
+    if (rideDetails !== {}) {
+      rideDetails = {
+        id: rideDetails.id,
+        ...req.body,
+      };
+
+      res.status(200).json({
+        message: 'Ride has been updated',
+        rideOffersDb,
+      });
+    } else {
+      res.status(404).json({
+        message: 'Ride offer not found',
+      });
+    }
+  }
 }
 
 export default RideController;
