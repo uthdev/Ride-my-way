@@ -30,4 +30,9 @@ rideRoute.route('/:id/requests')
   /* Send request to join ride */
   .post(RideController.joinRide);
 
+rideRoute.route('/:id/update')
+
+/* Update ride offer */
+  .put(RideController.updateRideOffer);
+
 export default rideRoute;
