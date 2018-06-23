@@ -32,14 +32,10 @@ class RideController {
       return helpers.error(res, 400, 'Ride id is invalid');
     }
 
-    // if id is a number
-    if (typeof (parsedId) === 'number') {
-      rideDetails = helpers.find(rideOffersDb, parsedId);
-      // if ride is found rerurn ride
-      if (rideDetails) return helpers.success(res, 200, 'Found a ride', rideDetails);
-      return helpers.error(res, 404, 'The ride offer you requested does not exist');
-    }
-    return null;
+    rideDetails = helpers.find(rideOffersDb, parsedId);
+    // if ride is found rerurn ride
+    if (rideDetails) return helpers.success(res, 200, 'Found a ride', rideDetails);
+    return helpers.error(res, 404, 'The ride offer you requested does not exist');
   }
 
   /**
