@@ -31,3 +31,8 @@ helpers.find = (rideOfferArr, id) => rideOfferArr.find(ride => (id === ride.id))
 helpers.findRequest = (requestArr, id) => requestArr.find(request => (id === request.rideId));
 export default helpers;
 
+helpers.isRequestValid = (requestOption) => {
+  const userId = requestOption.id;
+  const seats = requestOption.seats >= 1;
+  return userId && seats;
+}; // validate request details

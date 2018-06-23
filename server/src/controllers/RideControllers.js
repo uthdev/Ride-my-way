@@ -13,9 +13,7 @@ class RideController {
    * @returns {Object} Array ride offers
    */
   static allRideOffer(req, res) {
-    return (rideOffersDb.length > 0) ?
-      helpers.success(res, 200, 'All ride Offers', rideOffersDb) :
-      helpers.error(res, 404, 'No Ride Offers Found');
+    return (rideOffersDb.length > 0) && helpers.success(res, 200, 'All ride Offers', rideOffersDb);
   }
 
   /**
@@ -38,7 +36,7 @@ class RideController {
     if (typeof (parsedId) === 'number') {
       rideDetails = helpers.find(rideOffersDb, parsedId);
       // if ride is found rerurn ride
-      if (rideDetails) helpers.success(res, 200, 'Found a ride', rideDetails);
+      if (rideDetails) return helpers.success(res, 200, 'Found a ride', rideDetails);
       return helpers.error(res, 404, 'The ride offer you requested does not exist');
     }
     return null;
@@ -68,15 +66,16 @@ class RideController {
    *@returns {Object} status of a ride request
    */
   static joinRide(req, res) {
+    // Ride id
     const { id } = req.params;
-    const parsedId = parseInt(id, 10);
+    const parsedId = helpers.parsedId(id);
+    // reques body
     const requestOption = req.body;
+    // ride request to be sent to ride owner
     let rideRequest = {};
     let index = 0;
 
-    // validate request details
-    const userId = requestOption.id;
-    const seats = requestOption.seats >= 1;
+    /* Validate request details */
     const userSeat = requestOption.seats;
 
     // used variables
@@ -85,7 +84,7 @@ class RideController {
 
 
     // Check if there is space for additional ride offers
-    if (userId && seats) {
+    if (helpers.isRequestValid(requestOption)) {
       rideRequest = helpers.findRequest(rideRequestDb, parsedId);
       // re-assign use variables
       noOfSeats = rideRequest.noOfSeats + 1;
@@ -96,7 +95,7 @@ class RideController {
        && (noOfSeats > (passengerArr + userSeat))) {
         // Add passenger multiple passengers for one user
         while (userSeat > index) {
-          rideRequest.passengersId.push(userId);
+          rideRequest.passengersId.push(requestOption.id);
           index += 1;
         }
 

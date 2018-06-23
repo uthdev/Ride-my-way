@@ -25,7 +25,7 @@ describe('Test For Ride Routes', () => {
     it('should return a ride offers', (done) => {
       chai.request(app)
         .get('/api/v1/rides/1')
-        .end((message, res) => {
+        .end((error, res) => {
           expect(res).to.have.status(200);
           expect(parseInt(res.body.data.id, 10)).to.equal(1);
           expect(res.body.data.id).to.be.a('number');
