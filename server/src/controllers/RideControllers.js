@@ -1,9 +1,9 @@
 import rideOffersDb from '../dummydata/rideoffers';
 import rideRequestDb from '../dummydata/riderequest';
-
+import helpers from '../helpers/helpers';
 
 /**
- * This is a representation of the recipes data
+ * Processes all ride data
  * @class RideController
  */
 
@@ -13,7 +13,9 @@ class RideController {
    * @returns {Object} Array ride offers
    */
   static allRideOffer(req, res) {
-    return (rideOffersDb.length > 0) ? res.status(200).json(rideOffersDb) : res.status(404).json({ message: 'No Ride Offer' });
+    return (rideOffersDb.length > 0) ?
+      helpers.success(res, 200, 'All ride Offers', rideOffersDb) :
+      helpers.error(res, 404, 'No Ride Offers Found');
   }
 
   /**
@@ -24,32 +26,22 @@ class RideController {
   static getRideOffer(req, res) {
     const { id } = req.params;
 
-    const parsedId = (!(/^\d+$/.test(id))) ? NaN : parseInt(id, 10);
+    const parsedId = helpers.parsedId(id);
     let rideDetails = '';
 
     /* Check if id is  a Not a number */
     if (!(Number.isInteger(parsedId))) {
-      return res.status(400).json({ message: 'Ride id is invalid' });
+      return helpers.error(res, 400, 'Ride id is invalid');
     }
 
     // if id is a number
     if (typeof (parsedId) === 'number') {
-      rideOffersDb.find((ride) => {
-        if (parsedId === ride.id) {
-          rideDetails = ride;
-        }
-        return null;
-      });
-      if (rideDetails) return res.status(200).json(rideDetails);
-      return res.status(404).json({
-        message: 'The ride offer you requested does not exist',
-      });
+      rideDetails = helpers.find(rideOffersDb, parsedId);
+      // if ride is found rerurn ride
+      if (rideDetails) helpers.success(res, 200, 'Found a ride', rideDetails);
+      return helpers.error(res, 404, 'The ride offer you requested does not exist');
     }
-
-    // no matching id
-    return res.status(404).json({
-      message: 'Id not found',
-    });
+    return null;
   }
 
   /**
@@ -60,28 +52,15 @@ class RideController {
   static createRideOffer(req, res) {
     const rideOffer = req.body;
 
-    // validations
-    const name = rideOffer.name.trim() !== '';
-    const location = rideOffer.location.trim() !== '';
-    const destination = rideOffer.destination.trim() !== '';
-    const departureTime = rideOffer.departureTime.trim() !== '';
-    const price = typeof (rideOffer.price) === 'number' && rideOffer.price > 0;
-
-    // check is rid
-    if (name && location && destination && departureTime && price) {
+    // check is ride is valid
+    if (helpers.isValid(rideOffer)) {
       rideOffersDb.push({
         id: rideOffersDb.length + 1,
         ...rideOffer,
       });
-      res.status(201).json({
-        message: 'New ride offer has been created',
-        rideOffersDb,
-      });
-    } else {
-      res.status(400).json({
-        error: 'Please enter the missing fields',
-      });
+      return helpers.success(res, 201, 'New ride offer has been created', rideOffersDb);
     }
+    return helpers.error(res, 400, 'Please enter the missing fields');
   }
 
   /**
@@ -107,13 +86,7 @@ class RideController {
 
     // Check if there is space for additional ride offers
     if (userId && seats) {
-      rideRequestDb.find((request) => {
-        // Filter out request and reassign it to riderequest
-        if (request.rideId === parsedId) {
-          rideRequest = request;
-        }
-        return null;
-      });
+      rideRequest = helpers.findRequest(rideRequestDb, parsedId);
       // re-assign use variables
       noOfSeats = rideRequest.noOfSeats + 1;
       passengerArr = rideRequest.passengersId.length;
@@ -128,45 +101,11 @@ class RideController {
         }
 
         rideRequest.noOfSeatsLeft = (rideRequest.noOfSeats) - (rideRequest.passengersId.length);
-        return res.status(200).json({
-          message: 'Ride request sent',
-          rideRequest,
-        });
+        return helpers.success(res, 200, 'Ride request sent', rideRequest);
       }
-      res.status(201).json({
-        message: 'Your cannot join this ride the passengers are already complete',
-      });
-    } else {
-      return res.status(400).json({
-        error: 'Invalid request token',
-      });
+      return helpers.error(res, 201, 'Your cannot join this ride the passengers are already complete');
     }
-    return null;
-  }
-
-  static updateRideOffer(req, res) {
-    const { id } = req.params;
-    const parsedId = parseInt(id, 10);
-    let rideDetails = {};
-
-
-    // Find the ride by id
-    rideDetails = rideOffersDb.filter(ride => ride.id === parsedId);
-    if (rideDetails !== {}) {
-      rideDetails = {
-        id: rideDetails.id,
-        ...req.body,
-      };
-
-      res.status(200).json({
-        message: 'Ride has been updated',
-        rideOffersDb,
-      });
-    } else {
-      res.status(404).json({
-        message: 'Ride offer not found',
-      });
-    }
+    return helpers.error(res, 400, 'Invalid request token');
   }
 }
 
