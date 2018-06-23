@@ -11,10 +11,10 @@ describe('Test For Ride Routes', () => {
     it('should return all ride offers', (done) => {
       chai.request(app)
         .get('/api/v1/rides')
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(200);
-          assert.isArray(res.body, 'is an array of rides');
-          expect(res.body.length).to.equals(5);
+          assert.isObject(res.body, 'is an object with an array of rides');
+          expect(res.body.data.length).to.equals(5);
           done();
         });
     });
@@ -25,10 +25,10 @@ describe('Test For Ride Routes', () => {
     it('should return a ride offers', (done) => {
       chai.request(app)
         .get('/api/v1/rides/1')
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(200);
-          expect(parseInt(res.body.id, 10)).to.equal(1);
-          expect(res.body.id).to.be.a('number');
+          expect(parseInt(res.body.data.id, 10)).to.equal(1);
+          expect(res.body.data.id).to.be.a('number');
           assert.isObject(res.body, 'is an object containing the ride details');
           done();
         });
@@ -40,7 +40,7 @@ describe('Test For Ride Routes', () => {
     it('should a not found message', (done) => {
       chai.request(app)
         .get('/api/v1/rides/1333')
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(404);
           expect(res.body.message).to.equal('The ride offer you requested does not exist');
           done();
@@ -53,7 +53,7 @@ describe('Test For Ride Routes', () => {
     it('should not return a ride offers', (done) => {
       chai.request(app)
         .get('/api/v1/rides/abcd')
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal('Ride id is invalid');
           done();
@@ -66,7 +66,7 @@ describe('Test For Ride Routes', () => {
     it('should not parseInt if Id has alphabet', (done) => {
       chai.request(app)
         .get('/api/v1/rides/123abcd')
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal('Ride id is invalid');
           done();
@@ -89,7 +89,7 @@ describe('Test For Ride Routes', () => {
       chai.request(app)
         .post('/api/v1/rides/')
         .send(data)
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(201);
           expect(res.body.message).to.equal('New ride offer has been created');
           done();
@@ -112,9 +112,9 @@ describe('Test For Ride Routes', () => {
       chai.request(app)
         .post('/api/v1/rides/')
         .send(data)
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(400);
-          expect(res.body.error).to.equal('Please enter the missing fields');
+          expect(res.body.message).to.equal('Please enter the missing fields');
           done();
         });
     });
@@ -130,7 +130,7 @@ describe('Test For Ride Routes', () => {
       chai.request(app)
         .post('/api/v1/rides/2/requests')
         .send(data)
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(200);
           expect(res.body.message).to.equal('Ride request sent');
           done();
@@ -148,9 +148,9 @@ describe('Test For Ride Routes', () => {
       chai.request(app)
         .post('/api/v1/rides/2/requests')
         .send(data)
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(400);
-          expect(res.body.error).to.equal('Invalid request token');
+          expect(res.body.message).to.equal('Invalid request token');
           done();
         });
     });
@@ -166,7 +166,7 @@ describe('Test For Ride Routes', () => {
       chai.request(app)
         .post('/api/v1/rides/2/requests')
         .send(data)
-        .end((error, res) => {
+        .end((message, res) => {
           expect(res).to.have.status(201);
           expect(res.body.message).to.equal('Your cannot join this ride the passengers are already complete');
           done();
