@@ -1,8 +1,6 @@
 language: node_js
 node_js:
   - "9.11.2"
-install:
-  - npm install -g codecov
 env:
   global:
     - CC_TEST_REPORTER_ID=2c21212bd01b49eb1c8bc2929951404e53824061cdaca893373da23563baadaf\
@@ -14,7 +12,6 @@ before_script:
 
 script:
   - npm test
-  - codecov
 
 after_script:
   - npm run coverage
