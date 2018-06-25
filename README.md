@@ -15,7 +15,7 @@ Build status of continous integration i.e travis, coveralls and codeclimate
 [![Coverage Status](https://coveralls.io/repos/github/joeeasy/Ride-my-way/badge.svg?branch=develop&service=github)](https://coveralls.io/github/joeeasy/Ride-my-way?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d86c8aa23c4dfe18ba06/maintainability)](https://codeclimate.com/github/joeeasy/Ride-my-way/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d86c8aa23c4dfe18ba06/test_coverage)](https://codeclimate.com/github/joeeasy/Ride-my-way/test_coverage)
-
+[![codecov](https://codecov.io/gh/joeeasy/Ride-my-way/branch/develop/graph/badge.svg)](https://codecov.io/gh/joeeasy/Ride-my-way)
 ### Style guide
 
 [Airbnb ](https://github.com/airbnb/javascript)(Javascript style guide)
