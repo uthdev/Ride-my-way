@@ -22,6 +22,16 @@
   .user--pic {
     height: 80px;
   }
+  .SignIn__form>form,
+  .CreateAccount__form>form {
+    width: 60%;
+  }
+  .SearchRide__content>form {
+    width: 80%;
+  }
+  .SearchResult__content>.RideDetails {
+    padding: 20px;
+  }
 }
 
 @media(max-width: 768px) {
@@ -83,6 +93,13 @@
   .testimony__title,
   .partners__title {
     font-size: 3.5rem;
+  }
+  .SignIn__form>form,
+  .CreateAccount__form>form {
+    width: 100%;
+  }
+  .FindRide {
+    width: 100%;
   }
 }
 
@@ -150,7 +167,7 @@
     width: 250px;
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 100;
     top: 0;
     left: 0;
     background-color: #573a87;
@@ -192,11 +209,13 @@
   .CreateAccount__form {
     padding: 0;
   }
-  .CreateAccount__form>form .input--group>input {
+  .SignIn__form>form .input--group>input.form--control,
+  .CreateAccount__form>form .input--group>input.form--control {
     border-right: none;
   }
   .metric {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
     height: auto;
     padding: 20px;
   }
@@ -210,5 +229,50 @@
   }
   .RideDetails {
     width: 100%;
+  }
+  .CreateAccountFooter {
+    position: unset;
+    left: unset;
+    bottom: unset;
+    width: 100%;
+    overflow: hidden;
+  }
+  .CreateAccount__form,
+  .SignIn__form {
+    padding: 0 10px;
+  }
+  .SearchRide {
+    height: auto;
+  }
+  .SearchRide__content>form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .SearchRide__content>form>.form--group {
+    width: 100%;
+  }
+  .SearchRide__content>form>.form--group>button {
+    width: 100%;
+  }
+  .SearchResult__content,
+  .RideRequest {
+    flex-direction: column;
+  }
+  .SearchResult__content>.RideDetails,
+  .RideRequest>.RideDetails {
+    width: 100%;
+  }
+  .divider--three {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+  .divider--three:first-child,
+  .divider--three:nth-child(2) {
+    width: 100%;
+  }
+  .vertical--center {
+    display: block;
+    align-items: unset;
   }
 }

@@ -7,8 +7,9 @@
 /* BRYANT BOLD */
 
 @font-face {
-  font-family: BryantBoldAlt;
-  src: url("../fonts/BryantBoldAlt.ttf");
+  font-family: 'Lato', sans-serif;
+  ;
+  src: url("../fonts/'Lato', sans-serif;.ttf");
 }
 
 /* BRYANT LIGHT */
@@ -60,7 +61,7 @@
 * {
   box-sizing: border-box;
   margin: 0 auto;
-  font-family: BryantBoldAlt;
+  font-family: 'Lato', sans-serif;
   outline: none;
 }
 
@@ -83,9 +84,9 @@ a:active {
 
 .btn {
   padding: 10px 16px !important;
-  -webkit-box-shadow: 0px 2px 35px 8px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0px 2px 35px 8px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 2px 35px 8px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 1px 15px 1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 1px 15px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 15px 1px rgba(0, 0, 0, 0.25);
   border: none;
 }
 
@@ -117,7 +118,7 @@ a:active {
 /* fonts */
 
 .font--normal {
-  font-family: BryantBoldAlt;
+  font-family: 'Lato', sans-serif;
 }
 
 .font--medium {
@@ -201,10 +202,21 @@ a:active {
   margin-top: 10px;
 }
 
+.margin--bottom--10 {
+  margin-bottom: 10px;
+}
+
+.margin--bottom--20 {
+  margin-bottom: 20px;
+}
+
 .p--0 {
   padding: 0;
 }
 
+.padding--left--5 {
+  padding-left: 5px;
+}
 /* scrollbar  */
 
 *::-webkit-scrollbar {
@@ -244,7 +256,7 @@ a:active {
 
 .navbar-header,
 .navbar .navbar__nav>li {
-  font-family: BryantBoldAlt;
+  font-family: 'Lato', sans-serif;
   padding: 35px 20px;
 }
 
@@ -308,7 +320,7 @@ nav .navbar__nav>li>a {
 }
 
 .header__title {
-  font-family: BryantBoldAlt;
+  font-family: 'Lato', sans-serif;
   font-size: 60px;
   line-height: 62px;
 }
@@ -330,21 +342,24 @@ nav .navbar__nav>li>a {
 
 .how__title,
 .CreateAccount__title {
-  font-family: BryantBoldAlt;
+  font-family: 'Lato', sans-serif;
   font-style: regular;
   font-size: 32px;
   line-height: 38px;
 }
 
 .how-it-works,
-.CreateAccount {
+.CreateAccount,
+.SignIn {
   padding: 100px 0;
-  background-color: rgba(235, 216, 235, 0.3);
+  background-color: #fff;
 }
 
 .how__headline,
-.CreateAccount__headline {
-  font-family: BryantBoldAlt;
+.CreateAccount__headline,
+.SignIn__headline {
+  font-family: 'Lato', sans-serif;
+  ;
   font-size: 18px;
   line-height: 25px;
   color: #9b9b9b;
@@ -406,7 +421,7 @@ nav .navbar__nav>li>a {
 
 .card__content {
   padding: 19px;
-  /* background-color: #ffffff; */
+  background-color: #f5f7fa73;
 }
 
 .card--content__title {
@@ -457,7 +472,8 @@ nav .navbar__nav>li>a {
 }
 
 .benefits__title {
-  font-family: BryantBoldAlt;
+  font-family: 'Lato', sans-serif;
+  ;
   font-style: regular;
   font-size: 32px;
   line-height: 38px;
@@ -470,7 +486,8 @@ nav .navbar__nav>li>a {
 }
 
 .caption__title {
-  font-family: BryantBoldAlt;
+  font-family: 'Lato', sans-serif;
+  ;
   font-size: 20px;
   line-height: 23px;
   margin: 24px 0 16px 0;
@@ -491,7 +508,8 @@ nav .navbar__nav>li>a {
 }
 
 .contact__form,
-.CreateAccount__form {
+.CreateAccount__form,
+.SignIn__form {
   padding: 0 188px;
 }
 
@@ -511,8 +529,19 @@ nav .navbar__nav>li>a {
   padding: 16px 0 50px 0;
 }
 
-.contact__form>form,
+.SignIn__form>form,
 .CreateAccount__form>form {
+  width: 40%;
+}
+
+.SignIn__form>form>.input--group,
+.CreateAccount__form>form>.input--group {
+  margin-bottom: 10px;
+  background-color: #f5f7fa;
+  /* width: 40%; */
+}
+
+.contact__form>form {
   width: 70%;
 }
 
@@ -621,7 +650,7 @@ footer h5 {
 .logo--wrapper {
   height: 100px;
   width: 100px;
-  background-color: #394493;
+  background-color: #7148a4;
   display: flex;
   border: none;
   align-items: center;
@@ -643,8 +672,14 @@ form .input--group>input:nth-child(even) {
   display: flex;
 }
 
-.CreateAccountFooter {
+.CreateAccountFooter,
+.SignInFooter {
   padding: 25.5px 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .dashboard--bg--grey {
@@ -787,7 +822,7 @@ form .input--group>input:nth-child(even) {
 }
 
 .dashboard__content {
-  padding: 30px 0;
+  padding: 30px 0 120px 0;
 }
 
 .card__user {
@@ -825,7 +860,8 @@ form .input--group>input:nth-child(even) {
   color: #575962;
 }
 
-.RideInfo {
+.RideInfo,
+.SearchResult__content {
   display: flex;
 }
 
@@ -869,7 +905,15 @@ form .input--group>input:nth-child(even) {
 .RideOffers__item:last-child {
   border-bottom: none;
 }
-
+.rider__img {
+  width: 10%;
+}
+.riders__content {
+  width: 40%;
+}
+.RideOffers__item form {
+  width: 30%;
+}
 .rider__img img {
   height: 40px;
   border-radius: 50%;
@@ -910,6 +954,7 @@ form .input--group>input:nth-child(even) {
 
 .RideForm {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .js__navbar__toggler.DashboardColor--primary {
@@ -923,15 +968,76 @@ span.js__navbar__toggler {
   cursor: pointer
 }
 
-.input--group.dashboard--input:first-child {
-  margin-bottom: 10px;
-}
 
 .input--group.dashboard--input {
   border-radius: 10px;
   background-color: #f7f6f9;
+  margin-bottom: 10px;
 }
+
+.input--group.dashboard--input:last-child {
+  margin-bottom: 0;
+}
+
 
 .input--group.dashboard--input input {
   padding-left: 20px;
+}
+
+.FindRide {
+  width: 70%;
+}
+
+.SearchRide {
+  padding: 20px;
+  height: 120px;
+  align-items: center;
+  align-content: center;
+  background-color: #fff;
+  margin-bottom: 30px;
+}
+
+.SearchRide__content>form {
+  display: flex;
+  width: 60%;
+}
+
+.SearchRide__content>form>.form--group>.form--control {
+  background: #f7f6f9;
+  border-radius: 50px;
+  border: none;
+}
+
+
+button.searchbtn {
+  height: 44px;
+}
+
+.SearchResult__content>.RideDetails,
+.RideRequest > .RideDetails {
+  width: 30%;
+}
+ .RideRequest {
+   display: flex;
+   flex-wrap: wrap;
+ }
+
+.slide {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-name: slideRight;
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%,0,0);
+    transform: translate3d(-100%,0,0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
 }

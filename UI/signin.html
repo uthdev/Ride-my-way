@@ -12,17 +12,52 @@
 
 <body>
   <div class="wrapper">
-    <section class="CreateAccount padding--bottom--210">
-      <div class="CreateAccount__title">
+    <header class="header__main">
+      <div class="header__nav">
+        <nav class="navbar " role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar__header">
+            <span class="js__navbar__toggler" style="font-size:30px;cursor:pointer">&#9776; </span>
+            <a href="index.html" class="navbar__brand">
+              <img src="assets/img/logo.png" alt="Ride my way logo" srcset="">
+            </a>
+          </div>
+
+          <!-- Collect the nav links for toggling -->
+          <div class="collapse navbar__collapse">
+            <a href="javascript:void(0)" class="closebtn js__navbar__toggler">&times;</a>
+            <ul class="nav navbar__right navbar__nav">
+              <li>
+                <a href="index.html#howitworks">How it works</a>
+              </li>
+              <li>
+                <a href="index.html#benefits">Benefits</a>
+              </li>
+              <li>
+                <a href="about.html">About</a>
+              </li>
+              <li>
+                <a href="signin.html">Login</a>
+              </li>
+              <li>
+                <a class="btn btn--secondary btn--round" href="createaccount.html">Sign Up</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <section class="SignIn padding--bottom--210">
+      <div class="SignIn__title">
         <div class="logo--wrapper">
           <img src="assets/img/Group 2.1.png" alt="Ride my way logo">
         </div>
         <h4 class="text--center margin--top--10 text--primary">Sign In to Ride</h4>
       </div>
-      <div class="CreateAccount__headline">Safe, reliable rides in minutes
+      <div class="SignIn__headline">Safe, reliable rides in minutes
       </div>
-      <div class="CreateAccount__content">
-        <div class="CreateAccount__form">
+      <div class="SignIn__content">
+        <div class="SignIn__form">
           <form action="summary.html" role="form">
             <!-- group inputs -->
             <!-- capture email and phone number -->
@@ -47,7 +82,7 @@
 
       </div>
     </section>
-    <section class="contact CreateAccountFooter gradient">
+    <section class="contact SignInFooter gradient">
       <footer>
         <h5 class="text--center text--color--white">&copy; Andela bootcamp project</h5>
 

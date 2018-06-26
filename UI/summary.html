@@ -20,7 +20,7 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar__header dashboard__navbar__header">
             <span class="js__navbar__toggler DashboardColor--primary" style="font-size:30px;cursor:pointer">&#9776; </span>
-            <a href="/" class="navbar__brand">
+            <a href="index.html" class="navbar__brand">
               <div class="dashboard--logo--wrapper bg--color--primary">
                 <img src="assets/img/Group 2.1.png" alt="Ride my way logo">
               </div>
@@ -56,7 +56,7 @@
                 </a>
               </li>
               <li>
-                <a href="rideoffers.html" class="notification">
+                <a href="findride.html" class="notification">
                   Ride Offers
                   <hr class="active--indicator">
                 </a>
@@ -90,65 +90,59 @@
       <div class="dashboard__content">
 
         <div class="metric light--shadow">
-          <div class="divider--half">
-            <div class="row">
-              <div class="divider--three">
-                <div class="card__user">
-                  <img src="assets/img/ME.jpeg" class="card__user__pics" alt="User character">
-                </div>
-              </div>
-              <div class="divider--three vertical--center">
-                <div class="card__user__widget">
-                  <h3 class="DashboardColor--text--grey">Hi Joeeasy!</h3>
-                  <form action="rideoffers.html">
-                    <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary">view ride offers</button>
-                  </form>
-                </div>
-              </div>
-              <div class="divider--three vertical--center">
-                <div class="CreateRide">
-                  <a href="rideoffers.html">
-                    <i class="fab fa-slideshare fa-3x DashboardColor--text--primary"></i>
-                    <h4 class="DashboardColor--text--grey margin-left--10">Offer A Ride</h4>
-                  </a>
-                </div>
-              </div>
+          <div class="divider--three">
+            <div class="card__user">
+              <img src="assets/img/ME.jpeg" class="card__user__pics" alt="User character">
             </div>
           </div>
-          <div class="divider--half">
-            <div class="row">
-              <div class="divider--three vertical--center">
-                <div class="CreateRide">
-                  <a href="#">
-                    <i class="fa-3x DashboardColor--text--primary">27</i>
-                    <h4 class="DashboardColor--text--grey">Rides received</h4>
-                  </a>
-                </div>
-              </div>
-              <div class="divider--three vertical--center">
-                <div class="CreateRide">
-                  <a href="#">
-                    <i class="fa-3x DashboardColor--text--primary">17</i>
-                    <h4 class="DashboardColor--text--grey">Rides offered</h4>
-                  </a>
-                </div>
-              </div>
-              <div class="divider--three vertical--center">
-                <div class="CreateRide">
-                  <a href="riderhistory.html">
-                    <i class="fas fa-history fa-3x DashboardColor--text--primary"></i>
-                    <h4 class="DashboardColor--text--grey margin-left--10">Ride History</h4>
-                  </a>
-                </div>
-              </div>
+          <div class="divider--three vertical--center">
+            <div class="card__user__widget">
+              <h3 class="DashboardColor--text--grey">Hi Joeeasy!</h3>
+              <form action="findride.html">
+                <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary">Discover ride offers</button>
+              </form>
             </div>
           </div>
+          <div class="divider--three vertical--center">
+            <div class="CreateRide">
+              <a href="createoffer.html">
+                <i class="fab fa-slideshare fa-3x DashboardColor--text--primary"></i>
+                <h4 class="DashboardColor--text--grey margin-left--10">Offer A Ride</h4>
+              </a>
+            </div>
+          </div>
+
+          <div class="divider--three vertical--center">
+            <div class="CreateRide">
+              <a href="#">
+                <i class="fa-3x DashboardColor--text--primary">27</i>
+                <h4 class="DashboardColor--text--grey">Rides received</h4>
+              </a>
+            </div>
+          </div>
+          <div class="divider--three vertical--center">
+            <div class="CreateRide">
+              <a href="#">
+                <i class="fa-3x DashboardColor--text--primary">17</i>
+                <h4 class="DashboardColor--text--grey">Rides offered</h4>
+              </a>
+            </div>
+          </div>
+          <div class="divider--three vertical--center">
+            <div class="CreateRide">
+              <a href="riderhistory.html">
+                <i class="fas fa-history fa-3x DashboardColor--text--primary"></i>
+                <h4 class="DashboardColor--text--grey margin-left--10">Ride History</h4>
+              </a>
+            </div>
+          </div>
+
         </div>
 
         <div class="RideInfo">
           <div class="RideOffers light--shadow">
             <div class="RideOffers__title text--center">
-              <h3 class="DashboardColor--text--grey">Ride Offers</h3>
+              <h3 class="DashboardColor--text--grey">Ride Requests</h3>
             </div>
             <div class="RideOffers__content">
               <div class="RideOffers__item">
@@ -158,17 +152,31 @@
                 <div class="riders__content">
                   <div class="riders__subheader">
                     <h5>
-                      <a href="ridedetails.html"> Heading Towards Mile 2</a>
+                      <a href="ridedetails.html"> Joeeasy wants to join you</a>
                     </h5>
+                    <h6>
+                      <strong>
+                        <em>Location: </em>
+                      </strong>
+                      <span class="DashboardColor--text--grey">Ikeja</span>
+                    </h6>
                     <h6>
                       <strong>
                         <em>Destination: </em>
                       </strong>
-                      <span class="DashboardColor--text--grey">Mile 2</span>
+                      <span class="DashboardColor--text--grey">Yaba</span>
                     </h6>
 
                   </div>
                 </div>
+                <form action="summary.html" class="RideForm">
+                  <div>
+                    <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Accept</button>
+                  </div>
+                  <div>
+                    <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Decline</button>
+                  </div>
+                </form>
               </div>
               <div class="RideOffers__item">
                 <div class="rider__img">
@@ -177,21 +185,35 @@
                 <div class="riders__content">
                   <div class="riders__subheader">
                     <h5>
-                      <a href="ridedetails.html"> Heading Towards Mile 2</a>
+                      <a href="ridedetails.html"> Joeeasy wants to join you</a>
                     </h5>
+                    <h6>
+                      <strong>
+                        <em>Location: </em>
+                      </strong>
+                      <span class="DashboardColor--text--grey">Yaba</span>
+                    </h6>
                     <h6>
                       <strong>
                         <em>Destination: </em>
                       </strong>
-                      <span class="DashboardColor--text--grey">Mile 2</span>
+                      <span class="DashboardColor--text--grey">Ikeja</span>
                     </h6>
 
                   </div>
                 </div>
+                <form action="summary.html" class="RideForm">
+                  <div>
+                    <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Accept</button>
+                  </div>
+                  <div>
+                    <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Decline</button>
+                  </div>
+                </form>
               </div>
             </div>
             <div class="RideOffer__footer text--center">
-              <a href="rideoffers.html">View All Rides
+              <a href="riderequest.html">View All Ride request
               </a>
             </div>
           </div>
@@ -209,7 +231,7 @@
                 </div>
                 <div class="Rider__name">
                   <h6>
-                    <a href="#">joeeasy</a>
+                    <a href="#">Joeeasy</a>
                   </h6>
                   <p class="DashboardColor--text--grey">
                     <em>
