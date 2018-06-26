@@ -1,11 +1,9 @@
 
-const helpers = {};
-
 /* Check the id of every request to see whether it can be converted to number */
-helpers.parsedId = id => ((!(/^\d+$/.test(id))) ? NaN : parseInt(id, 10));
+export const parsedInt = id => ((!(/^\d+$/.test(id))) ? NaN : parseInt(id, 10));
 
 /* Validate fields for create new ride offers */
-helpers.isValid = (rideOffer) => {
+export const isValid = (rideOffer) => {
   // validations
   const name = rideOffer.name.trim() !== '';
   const location = rideOffer.location.trim() !== '';
@@ -17,22 +15,26 @@ helpers.isValid = (rideOffer) => {
 };
 
 /* returns the response of a request */
-helpers.error = (res, statusCode, message) => res.status(statusCode).json({ message });
+export const error = (res, statusCode, message) => res.status(statusCode).json({ message });
 
 /* When a request was successful */
-helpers.success = (res, statusCode, message, data) =>
+export const success = (res, statusCode, message, data) =>
   res.status(statusCode)
     .json({ message, data });
 
 /* Find ride offer */
-helpers.find = (rideOfferArr, id) => rideOfferArr.find(ride => (id === ride.id));
+export const find = (rideOfferArr, id) => rideOfferArr.find(ride => (id === ride.id));
 
 /* Find request */
-helpers.findRequest = (requestArr, id) => requestArr.find(request => (id === request.rideId));
-export default helpers;
+export const findRequest = (requestArr, id) => requestArr.find(request => (id === request.rideId));
 
-helpers.isRequestValid = (requestOption) => {
+/* validate request */
+export const isRequestValid = (requestOption) => {
   const userId = requestOption.id;
   const seats = requestOption.seats >= 1;
   return userId && seats;
 }; // validate request details
+
+/* Check to see if passsenger sit are already filled up */
+export const isSeatValid = (noOfSeats, passengerArr, userSeat) => (noOfSeats > passengerArr)
+  && (noOfSeats > (passengerArr + userSeat));
