@@ -202,10 +202,21 @@ a:active {
   margin-top: 10px;
 }
 
+.margin--bottom--10 {
+  margin-bottom: 10px;
+}
+
+.margin--bottom--20 {
+  margin-bottom: 20px;
+}
+
 .p--0 {
   padding: 0;
 }
 
+.padding--left--5 {
+  padding-left: 5px;
+}
 /* scrollbar  */
 
 *::-webkit-scrollbar {
@@ -811,7 +822,7 @@ form .input--group>input:nth-child(even) {
 }
 
 .dashboard__content {
-  padding: 30px 0;
+  padding: 30px 0 120px 0;
 }
 
 .card__user {
@@ -849,7 +860,8 @@ form .input--group>input:nth-child(even) {
   color: #575962;
 }
 
-.RideInfo {
+.RideInfo,
+.SearchResult__content {
   display: flex;
 }
 
@@ -958,4 +970,57 @@ span.js__navbar__toggler {
 
 .input--group.dashboard--input input {
   padding-left: 20px;
+}
+
+.FindRide {
+  width: 70%;
+}
+
+.SearchRide {
+  padding: 20px;
+  height: 120px;
+  align-items: center;
+  align-content: center;
+  background-color: #fff;
+  margin-bottom: 30px;
+}
+
+.SearchRide__content>form {
+  display: flex;
+  width: 60%;
+}
+
+.SearchRide__content>form>.form--group>.form--control {
+  background: #f7f6f9;
+  border-radius: 50px;
+  border: none;
+}
+
+
+button.searchbtn {
+  height: 44px;
+}
+
+.SearchResult__content>.RideDetails {
+  width: 30%;
+}
+
+.slide {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-name: slideRight;
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(-100%,0,0);
+    transform: translate3d(-100%,0,0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
 }

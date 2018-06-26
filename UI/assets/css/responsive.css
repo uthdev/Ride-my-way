@@ -26,6 +26,12 @@
   .CreateAccount__form>form {
     width: 60%;
   }
+  .SearchRide__content>form {
+    width: 80%;
+  }
+  .SearchResult__content>.RideDetails {
+    padding: 20px;
+  }
 }
 
 @media(max-width: 768px) {
@@ -90,6 +96,22 @@
   }
   .SignIn__form>form,
   .CreateAccount__form>form {
+    width: 100%;
+  }
+  .FindRide {
+    width: 100%;
+  }
+  .SearchRide {
+    height: auto;
+  }
+  .SearchRide__content>form {
+    display: flex;
+    flex-direction: column;
+  }
+  .SearchResult__content {
+    flex-direction: column;
+  }
+  .SearchResult__content>.RideDetails {
     width: 100%;
   }
 }
