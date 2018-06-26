@@ -22,6 +22,10 @@
   .user--pic {
     height: 80px;
   }
+  .SignIn__form>form,
+  .CreateAccount__form>form {
+    width: 60%;
+  }
 }
 
 @media(max-width: 768px) {
@@ -83,6 +87,10 @@
   .testimony__title,
   .partners__title {
     font-size: 3.5rem;
+  }
+  .SignIn__form>form,
+  .CreateAccount__form>form {
+    width: 100%;
   }
 }
 
@@ -192,7 +200,8 @@
   .CreateAccount__form {
     padding: 0;
   }
-  .CreateAccount__form>form .input--group>input {
+  .SignIn__form>form .input--group>input.form--control,
+  .CreateAccount__form>form .input--group>input.form--control {
     border-right: none;
   }
   .metric {
@@ -210,5 +219,16 @@
   }
   .RideDetails {
     width: 100%;
+  }
+  .CreateAccountFooter {
+    position: unset;
+    left: unset;
+    bottom: unset;
+    width: 100%;
+    overflow: hidden;
+  }
+  .CreateAccount__form,
+  .SignIn__form {
+    padding: 0 10px;
   }
 }
