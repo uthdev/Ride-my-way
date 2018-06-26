@@ -101,19 +101,6 @@
   .FindRide {
     width: 100%;
   }
-  .SearchRide {
-    height: auto;
-  }
-  .SearchRide__content>form {
-    display: flex;
-    flex-direction: column;
-  }
-  .SearchResult__content {
-    flex-direction: column;
-  }
-  .SearchResult__content>.RideDetails {
-    width: 100%;
-  }
 }
 
 @media(max-width: 425px) {
@@ -227,7 +214,8 @@
     border-right: none;
   }
   .metric {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
     height: auto;
     padding: 20px;
   }
@@ -252,5 +240,39 @@
   .CreateAccount__form,
   .SignIn__form {
     padding: 0 10px;
+  }
+  .SearchRide {
+    height: auto;
+  }
+  .SearchRide__content>form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .SearchRide__content>form>.form--group {
+    width: 100%;
+  }
+  .SearchRide__content>form>.form--group>button {
+    width: 100%;
+  }
+  .SearchResult__content,
+  .RideRequest {
+    flex-direction: column;
+  }
+  .SearchResult__content>.RideDetails,
+  .RideRequest>.RideDetails {
+    width: 100%;
+  }
+  .divider--three {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+  .divider--three:first-child,
+  .divider--three:nth-child(2) {
+    width: 100%;
+  }
+  .vertical--center {
+    display: block;
+    align-items: unset;
   }
 }
