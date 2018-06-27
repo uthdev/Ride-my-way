@@ -190,6 +190,10 @@ a:active {
   text-align: right;
 }
 
+.margin--0 {
+  margin: 0;
+}
+
 .margin--10 {
   margin: 10px 0;
 }
@@ -214,9 +218,19 @@ a:active {
   padding: 0;
 }
 
+.padding--40 {
+  padding: 0 40px;
+}
+
 .padding--left--5 {
   padding-left: 5px;
 }
+
+.padding--left--right--30 {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
 /* scrollbar  */
 
 *::-webkit-scrollbar {
@@ -563,6 +577,13 @@ nav .navbar__nav>li>a {
   border-right: 1px solid;
 }
 
+select.form--control {
+  padding: 13px 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 .text__area {
   margin: 16px 0 24px 0;
 }
@@ -905,15 +926,19 @@ form .input--group>input:nth-child(even) {
 .RideOffers__item:last-child {
   border-bottom: none;
 }
+
 .rider__img {
   width: 10%;
 }
+
 .riders__content {
   width: 40%;
 }
+
 .RideOffers__item form {
   width: 30%;
 }
+
 .rider__img img {
   height: 40px;
   border-radius: 50%;
@@ -936,7 +961,7 @@ form .input--group>input:nth-child(even) {
 }
 
 .RideDetails {
-  width: 512px;
+  width: 50%;
   padding: 40px;
   margin-top: 30px;
   background-color: #ffffff;
@@ -968,7 +993,6 @@ span.js__navbar__toggler {
   cursor: pointer
 }
 
-
 .input--group.dashboard--input {
   border-radius: 10px;
   background-color: #f7f6f9;
@@ -978,7 +1002,6 @@ span.js__navbar__toggler {
 .input--group.dashboard--input:last-child {
   margin-bottom: 0;
 }
-
 
 .input--group.dashboard--input input {
   padding-left: 20px;
@@ -1008,19 +1031,19 @@ span.js__navbar__toggler {
   border: none;
 }
 
-
 button.searchbtn {
   height: 44px;
 }
 
 .SearchResult__content>.RideDetails,
-.RideRequest > .RideDetails {
+.RideRequest>.RideDetails {
   width: 30%;
 }
- .RideRequest {
-   display: flex;
-   flex-wrap: wrap;
- }
+
+.RideRequest {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .slide {
   animation-duration: 1s;
@@ -1032,12 +1055,16 @@ button.searchbtn {
 @keyframes slideRight {
   0% {
     opacity: 0;
-    -webkit-transform: translate3d(-100%,0,0);
-    transform: translate3d(-100%,0,0);
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
     opacity: 1;
     -webkit-transform: none;
     transform: none;
   }
+}
+
+.direction {
+  display: flex;
 }
