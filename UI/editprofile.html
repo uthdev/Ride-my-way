@@ -19,7 +19,7 @@
         <nav class="navbar  container-fluid" role="navigation">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar__header dashboard__navbar__header">
-            <span class="js__navbar__toggler DashboardColor--primary" style="font-size:30px;cursor:pointer">&#9776; </span>
+            <span class="js__navbar__toggler DashboardColor--primary">&#9776; </span>
             <a href="index.html" class="navbar__brand">
               <div class="dashboard--logo--wrapper bg--color--primary">
                 <img src="assets/img/Group 2.1.png" alt="Ride my way logo">
@@ -67,19 +67,19 @@
           <div class="container-fluid">
             <ul class="nav navbar__right navbar__nav">
               <li>
-                <a href="summary.html" class="">
+                <a href="#">
                   Summary
                   <hr class="active--indicator">
                 </a>
               </li>
               <li>
-                <a href="rideoffers.html" class="notification">
+                <a href="#" class="notification active">
                   Ride Offers
                   <hr class="active--indicator">
                 </a>
               </li>
               <li>
-                <a href="riderequest.html">
+                <a href="#">
                   Ride Requests
                   <hr class="active--indicator">
                 </a>
@@ -100,85 +100,52 @@
           </li>
           <li>-</li>
           <li>
-            <a href="#">Ride History</a>
+            <a href="#">Ride Info</a>
           </li>
         </ul>
       </div>
       <div class="dashboard__content">
-        <div class="RideHistory light--shadow">
-          <div class="RideHistory__title text--center">
-            <h3 class="DashboardColor--text--grey">Ride History</h3>
-          </div>
-          <!-- riders history -->
-          <div class="RideHistory__content">
-            <div class="row ">
-              <div class="Ride__date">
-                <!-- <h5>Nov</h5> -->
-                <h6 class="DashboardColor--text--grey">Nov</h6>
-                <p class="DashboardColor--text--grey">17</p>
-              </div>
-              <div class="Rider__name">
-                <h6>
-                  <a href="#">joeeasy</a>
-                </h6>
-                <p class="DashboardColor--text--grey">
-                  <em>
-                    <strong>Offered:</strong>
-                  </em> heading towards mile yaba </p>
-              </div>
-              <div class="ride__destination">
-                <h6 class="DashboardColor--text--grey">
-                  <em>From: </em>Ikeja
-                  <br>
-                  <em>To: </em>Yaba
-                </h6>
+        <div class="RideDetails light--shadow">
+          <div class="RideDetail__header">
+            <div class="RideInfo__header">
+              <div class="RideInfo__header__img text--center">
+                <h1 class="DashboardColor--text--grey">Update Profile</h1>
               </div>
             </div>
-            <div class="row ">
-              <div class="Ride__date">
-                <!-- <h5>Nov</h5> -->
-                <h6 class="DashboardColor--text--grey">Nov</h6>
-                <p class="DashboardColor--text--grey">17</p>
-              </div>
-              <div class="Rider__name">
-                <h6>
-                  <a href="#">joeeasy</a>
-                </h6>
-                <p class="DashboardColor--text--grey">
-                  <em>
-                    <strong>Offered:</strong>
-                  </em> heading towards mile yaba </p>
-              </div>
-              <div class="ride__destination">
-                <h6 class="DashboardColor--text--grey">
-                  <em>From: </em>Ikeja
-                  <br>
-                  <em>To: </em>Yaba
-                </h6>
-              </div>
-            </div>
-            <div class="row ">
-              <div class="Ride__date">
-                <!-- <h5>Nov</h5> -->
-                <h6 class="DashboardColor--text--grey">Nov</h6>
-                <p class="DashboardColor--text--grey">17</p>
-              </div>
-              <div class="Rider__name">
-                <h6>
-                  <a href="#">joeeasy</a>
-                </h6>
-                <p class="DashboardColor--text--grey">
-                  <em>
-                    <strong>Offered:</strong>
-                  </em> heading towards mile yaba </p>
-              </div>
-              <div class="ride__destination">
-                <h6 class="DashboardColor--text--grey">
-                  <em>From: </em>Ikeja
-                  <br>
-                  <em>To: </em>Yaba
-                </h6>
-              </div>
+            <div class="RideInfo__content  margin--top--10 padding--40">
+              <form action="summary.html" role="form">
+                <!-- group inputs -->
+                <!-- capture names -->
+                <div class="input--group dashboard--input">
+                  <input type="text" class="form--control" placeholder="First Name" autofocus="">
+                  <input type="text" class="form--control" placeholder="Last Name">
+                </div>
+
+                <!-- capture email and phone number -->
+                <div class="input--group dashboard--input">
+                  <input type="text" class="form--control" placeholder="Email">
+                  <input type="text" class="form--control" placeholder="Phone number">
+                </div>
+
+                <!-- capture price and number of seats -->
+                <div class="input--group dashboard--input">
+                  <input type="text" class="form--control" placeholder="Address">
+                  <input type="text" class="form--control" placeholder="City">
+                </div>
+                <!-- capture price and number of seats -->
+                <div class="input--group dashboard--input">
+                  <input type="text" class="form--control" placeholder="Zipcode">
+                  <input type="file" class="form--control" placeholder="Upload profille image">
+                </div>
+
+                <!-- submit button -->
+                <div class="contact__submit margin--top--10">
+                  <button type="submit" class="btn btn--block bg--color--grey text--color--white light--shadow">
+                    <span>Update profile</span>
+                  </button>
+
+                </div>
+              </form>
             </div>
           </div>
         </div>

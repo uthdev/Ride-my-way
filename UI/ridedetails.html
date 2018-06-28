@@ -20,7 +20,7 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar__header dashboard__navbar__header">
             <span class="js__navbar__toggler DashboardColor--primary">&#9776; </span>
-            <a href="/" class="navbar__brand">
+            <a href="index.html" class="navbar__brand">
               <div class="dashboard--logo--wrapper bg--color--primary">
                 <img src="assets/img/Group 2.1.png" alt="Ride my way logo">
               </div>
@@ -32,16 +32,33 @@
             <a href="javascript:void(0)" class="closebtn js__navbar__toggler">&times;</a>
             <ul class="nav navbar__right navbar__nav">
               <li>
-                <a href="#">
-                  <span class="text--color--grey">Hello,</span>
-                  <span class="text--primary">Joe</span>
-                </a>
+                <div class="DropDown">
+                  <a href="#" class="DropDown__btn">
+                    <span class="text--color--grey">Hello,</span>
+                    <span class="text--primary">Joe</span>
+                  </a>
+                  <div class="DropDown__content">
+                    <a href="profile.html" class="DashboardColor--text--grey">
+                      <i class="fas fa-user text--primary"></i> Profile</a>
+                    <a href="signin.html" class="DashboardColor--text--grey">
+                      <i class="fas fa-sign-out-alt text--primary"></i>logout</a>
+                  </div>
+                </div>
               </li>
               <li>
-                <a href="#" class="notification">
-                  <span class="notify notify--dot--small"></span>
-                  <i class="fas fa-bell text--primary"></i>
-                </a>
+                <div class="DropDown">
+                  <a href="#" class="DropDown__btn notification">
+                    <span class="notify notify--dot--small"></span>
+                    <i class="fas fa-bell text--primary"></i>
+                  </a>
+                  <div class="DropDown__content notification__content">
+                    <a href="riderequest.html" class="DashboardColor--text--grey">
+                      2 new ride requests</a>
+                    <a href="riderequest.html" class="DashboardColor--text--grey">
+                      joeeasy wants to join you</a>
+                  </div>
+                </div>
+
               </li>
             </ul>
           </div>

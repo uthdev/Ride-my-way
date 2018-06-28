@@ -161,6 +161,10 @@ a:active {
   background-color: #ffffff;
 }
 
+.light--grey {
+  color: #575962a8;
+}
+
 .light--shadow {
   -webkit-box-shadow: 0 1px 15px 1px rgba(113, 106, 202, 0.08);
   -moz-box-shadow: 0 1px 15px 1px rgba(113, 106, 202, 0.08);
@@ -1040,6 +1044,10 @@ button.searchbtn {
   width: 30%;
 }
 
+div.SearchRide__content form div.form--group.full--width {
+  width: 80%;
+}
+
 .RideRequest {
   display: flex;
   flex-wrap: wrap;
@@ -1100,4 +1108,43 @@ button.searchbtn {
 
 .pagination>li.pagination--active a {
   color: #7148a4;
+}
+
+.DropDown {
+  position: relative;
+  display: inline-block;
+}
+
+.DropDown__content {
+  display: none;
+  position: absolute;
+  right: 0;
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+}
+
+.DropDown__content a {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid lightgrey;
+}
+
+.DropDown__content a i {
+  margin-right: 5px;
+}
+
+.DropDown__content a:hover {
+  background-color: #f1f1f1;
+}
+
+.DropDown:hover .DropDown__content {
+  display: block;
+}
+
+.DropDown__content.notification__content {
+  width: 300px;
 }
