@@ -32,16 +32,33 @@
             <a href="javascript:void(0)" class="closebtn js__navbar__toggler">&times;</a>
             <ul class="nav navbar__right navbar__nav">
               <li>
-                <a href="#">
-                  <span class="text--color--grey">Hello,</span>
-                  <span class="text--primary">Joe</span>
-                </a>
+                <div class="DropDown">
+                  <a href="#" class="DropDown__btn">
+                    <span class="text--color--grey">Hello,</span>
+                    <span class="text--primary">Joe</span>
+                  </a>
+                  <div class="DropDown__content">
+                    <a href="profile.html" class="DashboardColor--text--grey">
+                      <i class="fas fa-user text--primary"></i> Profile</a>
+                    <a href="signin.html" class="DashboardColor--text--grey">
+                      <i class="fas fa-sign-out-alt text--primary"></i>logout</a>
+                  </div>
+                </div>
               </li>
               <li>
-                <a href="#" class="notification">
-                  <span class="notify notify--dot--small"></span>
-                  <i class="fas fa-bell text--primary"></i>
-                </a>
+                <div class="DropDown">
+                  <a href="#" class="DropDown__btn notification">
+                    <span class="notify notify--dot--small"></span>
+                    <i class="fas fa-bell text--primary"></i>
+                  </a>
+                  <div class="DropDown__content notification__content">
+                    <a href="riderequest.html" class="DashboardColor--text--grey">
+                      2 new ride requests</a>
+                    <a href="riderequest.html" class="DashboardColor--text--grey">
+                      joeeasy wants to join you</a>
+                  </div>
+                </div>
+
               </li>
             </ul>
           </div>
@@ -89,7 +106,24 @@
       </div>
       <div class="dashboard__content">
         <div class="RideRequest__heading">
-          <h3 class="text--center margin--bottom--20 DashboardColor--text--grey">Ride request</h3>
+          <div class="SearchRide light--shadow">
+            <div class="SearchRide__heading">
+              <h3 class="text--center margin--bottom--20 DashboardColor--text--grey">Search ride requests</h3>
+            </div>
+            <div class="SearchRide__content">
+              <form action="#">
+                <div class="form--group full--width">
+                  <input type="text" class="dashboard--input form--control" placeholder="Place">
+                </div>
+                <div class="form--group">
+                  <button class="searchbtn btn btn--round DashboardColor--bg--primary" type="sumit">Find
+                    <i class="fas fa-chevron-right slide padding--left--5"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+          </div>
         </div>
         <div class="RideRequest">
           <div class="RideDetails light--shadow">
@@ -248,6 +282,31 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="SearchResult__pagination">
+          <ul class="pagination">
+            <li>
+              <a href="#">&laquo;</a>
+            </li>
+            <li class="pagination--active">
+              <a href="#">1</a>
+            </li>
+            <li>
+              <a href="#">2</a>
+            </li>
+            <li>
+              <a href="#">3</a>
+            </li>
+            <li>
+              <a href="#">4</a>
+            </li>
+            <li>
+              <a href="#">5</a>
+            </li>
+            <li>
+              <a href="#">&raquo;</a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

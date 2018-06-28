@@ -20,7 +20,7 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar__header dashboard__navbar__header">
             <span class="js__navbar__toggler DashboardColor--primary">&#9776; </span>
-            <a href="/" class="navbar__brand">
+            <a href="index.html" class="navbar__brand">
               <div class="dashboard--logo--wrapper bg--color--primary">
                 <img src="assets/img/Group 2.1.png" alt="Ride my way logo">
               </div>
@@ -32,16 +32,33 @@
             <a href="javascript:void(0)" class="closebtn js__navbar__toggler">&times;</a>
             <ul class="nav navbar__right navbar__nav">
               <li>
-                <a href="#">
-                  <span class="text--color--grey">Hello,</span>
-                  <span class="text--primary">Joe</span>
-                </a>
+                <div class="DropDown">
+                  <a href="#" class="DropDown__btn">
+                    <span class="text--color--grey">Hello,</span>
+                    <span class="text--primary">Joe</span>
+                  </a>
+                  <div class="DropDown__content">
+                    <a href="profile.html" class="DashboardColor--text--grey">
+                      <i class="fas fa-user text--primary"></i> Profile</a>
+                    <a href="signin.html" class="DashboardColor--text--grey">
+                      <i class="fas fa-sign-out-alt text--primary"></i>logout</a>
+                  </div>
+                </div>
               </li>
               <li>
-                <a href="#" class="notification">
-                  <span class="notify notify--dot--small"></span>
-                  <i class="fas fa-bell text--primary"></i>
-                </a>
+                <div class="DropDown">
+                  <a href="#" class="DropDown__btn notification">
+                    <span class="notify notify--dot--small"></span>
+                    <i class="fas fa-bell text--primary"></i>
+                  </a>
+                  <div class="DropDown__content notification__content">
+                    <a href="riderequest.html" class="DashboardColor--text--grey">
+                      2 new ride requests</a>
+                    <a href="riderequest.html" class="DashboardColor--text--grey">
+                      joeeasy wants to join you</a>
+                  </div>
+                </div>
+
               </li>
             </ul>
           </div>
@@ -93,16 +110,47 @@
             <div class="RideInfo__header">
               <div class="RideInfo__header__img text--center">
                 <img src="assets/img/ME.jpeg" alt="offerer profile">
-                <h4 class="text--primary">Heading towards mile 2</h4>
+                <h4 class="text--primary">Heading towards Yaba</h4>
                 <h5 class="text--color--grey font--regular">Jehonadab Okpukoro</h5>
               </div>
             </div>
-            <div class="RideInfo__content text--center margin--top--10">
-              <div class="text--color--grey">Computer village Ikeja</div>
-              <div>
-                <i class="fas fa-arrow-down text--primary margin--10"></i>
+            <div class="RideInfo__content  margin--top--10 padding--40">
+              <div class="direction">
+                <div class="text--color--grey margin--0">
+                  <strong>Location:</strong> Computer village Ikeja</div>
+                <div>
+                  <i class="fas fa-arrow-right text--primary"></i>
+                </div>
+                <div class="text--color--grey">
+                  <strong>Destination:</strong> Yaba</div>
               </div>
-              <div class="text--color--grey">Yaba</div>
+
+              <div class="ride__price">
+                <h4 class="DashboardColor--text--grey">Price:
+                  <span class="text--primary">NGN 200</span>
+                </h4>
+              </div>
+              <div class="ride__duration">
+                <h4 class="DashboardColor--text--grey">Distance:
+                  <span class="text--primary">30km</span>
+                </h4>
+                <h4 class="DashboardColor--text--grey">Estimated Time:
+                  <span class="text--primary">20mins</span>
+                </h4>
+              </div>
+              <div class="ride__seats">
+                <h6 class="DashboardColor--text--grey">Available Seats:
+                  <span class="text--primary">3</span>
+                </h6>
+              </div>
+
+              <div class="RideInfo__description">
+                <p>
+                  <strong>Note:</strong> Lorem ipsum dolor sit amet consectetur.</p>
+              </div>
+              <div class="view__rideoffers">
+                <a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="riderequest.html">View ride offers(for ride owners only)</a>
+              </div>
               <form action="/summary.html" class="RideForm">
                 <div>
                   <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join ride</button>

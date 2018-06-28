@@ -275,4 +275,7 @@
     display: block;
     align-items: unset;
   }
+  .pagination {
+    width: 100%;
+  }
 }

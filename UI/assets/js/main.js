@@ -16,3 +16,15 @@ app.loadSideBar = () => {
   });
 
 };
+
+
+// Get the navbar
+var navbar = document.querySelector("nav");
+
+
+// Get the offset position of the navbar
+var sticky = 100;
+console.log(sticky)
+
+// When the user scrolls the page, execute myFunction 
+window.onscroll = () => ((window.pageYOffset >= sticky) ? navbar.classList.add("sticky") :  navbar.classList.remove("sticky"));
