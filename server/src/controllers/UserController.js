@@ -27,11 +27,13 @@ class UserController {
         if (response.rowCount > 0) {
           return res.status(403).json({ message: 'Account already exists' });
         }
+        // Query string for creating user
         const text = 'INSERT INTO users(fname, lname, email, phone,  password, address) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
         const values = [
           fname, req.body.lname,
           email, req.body.phone,
           hashedPassword, req.body.address,
+          req.body.city, req.body.zipcode,
         ];
 
         // callback
