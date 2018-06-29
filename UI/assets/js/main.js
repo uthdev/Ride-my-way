@@ -1,18 +1,16 @@
 const app = {};
 
 app.loadSideBar = () => {
-  let btns = Array.from(document.getElementsByClassName('js__navbar__toggler'));
-  let navBarCollaspe = document.querySelector('.navbar__collapse');
+  const btns = Array.from(document.getElementsByClassName('js__navbar__toggler'));
+  const navBarCollaspe = document.querySelector('.navbar__collapse');
 
-  btns.forEach(btn => {
+  btns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
-      if(navBarCollaspe.style.display === 'none') {
+      if (navBarCollaspe.style.display === 'none') {
         navBarCollaspe.style.display = 'block';
-      }
-      else {
+      } else {
         navBarCollaspe.style.display = 'none';
       }
-    } );
+    });
   });
-
 };
