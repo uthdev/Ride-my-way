@@ -18,7 +18,7 @@ class UserController {
   static signUp(req, res) {
     if (isUserDetailsValid(req.body, res)) {
       const email = req.body.email.trim();
-      const fname = req.body.fname.trim();
+      const firstName = req.body.firstName.trim();
       const hashedPassword = bcrypt.hashSync(req.body.password.trim(), 8);
       return dbPool.query(`SELECT email FROM users WHERE email = '${email}'`, (err, response) => {
         if (err) {
@@ -28,9 +28,9 @@ class UserController {
           return res.status(403).json({ message: 'Account already exists' });
         }
         // Query string for creating user
-        const text = 'INSERT INTO users(fname, lname, email, phone,  password, address) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+        const text = 'INSERT INTO users(firstName, lastName, email, phone,  password, address, city, zip) VALUES($1, $2, $3, $4, $5, $6,$7, $8) RETURNING *';
         const values = [
-          fname, req.body.lname,
+          firstName, req.body.lastName,
           email, req.body.phone,
           hashedPassword, req.body.address,
           req.body.city, req.body.zipcode,
@@ -38,10 +38,10 @@ class UserController {
 
         // callback
         return dbPool.query(text, values, (err, result) => {
-          const results = result.rows[0];
           if (err) {
             error(res, 500, 'Something went wrong');
           } else {
+            const results = result.rows[0];
             const token = jwt.sign(
               { id: results.id },
               dbConfig.secret,

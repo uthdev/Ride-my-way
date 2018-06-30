@@ -10,8 +10,12 @@ userRoute.use(json());
 // for parsing application/x-ww-form-urlencoded
 userRoute.use(urlencoded({ extended: true }));
 
+/* Route for creating account */
 userRoute.route('/signup')
   .post(UserController.signUp);
 
+/* Route for login in */
+userRoute.route('/signin')
+  .post(UserController.signIn);
 
 export default userRoute;
