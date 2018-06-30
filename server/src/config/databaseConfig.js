@@ -20,4 +20,6 @@ dbConfig.database = {
   port: process.env.DB_PORT,
 };
 
+dbConfig.secret = 'iloveprogramming';
+
 export default dbConfig;

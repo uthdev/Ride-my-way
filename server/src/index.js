@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import rideRoute from './routes/index';
+import rideRoute from './routes/rides/rideRoutes';
+import userRoute from './routes/user/userRoutes';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/v1/rides', rideRoute);
+app.use('/api/v1/auth', userRoute);
 
 // Subscribe server to a particular port
 app.listen(Port, () => console.log(`Server Started At ${Port}`));
