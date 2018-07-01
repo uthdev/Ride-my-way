@@ -20,6 +20,6 @@ dbConfig.database = {
   port: process.env.DB_PORT,
 };
 
-dbConfig.secret = 'iloveprogramming';
+dbConfig.secret = process.env.JWT_SECRET;
 
 export default dbConfig;
