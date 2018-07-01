@@ -5,7 +5,7 @@
     },
     "rules": {
         "no-shadow": ["error", {
-            "allow": ["req", "res", "err"]
+            "allow": ["req", "res", "err", "next"]
         }]
     }
 }
