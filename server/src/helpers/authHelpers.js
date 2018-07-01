@@ -81,11 +81,23 @@ export const isUserDetailsValid = (userDetails) => {
  * @description Checks if User is alrady existing
  * @param {string} data
  */
-export const isUserValid = (data, res) => {
-  const email = (data.email !== '') ? data.email : res.status(400).json({
-    error: 'Email not valid',
-  });
-  const password = (data.password !== '') ? data.password : res.status(400).json({ error: 'Password is required' });
+export const isUserValid = (data) => {
+  const { email, password } = data;
+  const errorCode = 401;
+  let errorMsg;
 
-  return email || password;
+  /* regular expression for testing email address */
+  let emailRegex = /[^\s]*@[a-z0-9.-]*/i;
+  /* test email address */
+  emailRegex = emailRegex.test(String(email).toLowerCase());
+  if (!emailRegex) {
+    errorMsg = 'Email address is invalid';
+  }
+
+  /* Check for password */
+  if (!password || password.trim().length < 6) {
+    errorMsg = 'Password is invalid, should be at least six characters';
+  }
+
+  return { errorCode, errorMsg };
 };

@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { isUserDetailsValid } from '../helpers/authHelpers';
+import { isUserDetailsValid, isUserValid } from '../helpers/authHelpers';
 import { error, success, failure } from '../helpers/rideHelpers';
 import dbPool from '../config/dbConnection';
 import dbConfig from '../config/databaseConfig';
@@ -27,10 +27,10 @@ class UserController {
       /* check if email address is already existing */
       return dbPool.query(find('email', 'users', 'email', email), (err, response) => {
         if (err) {
-          return failure(res, 500, 'Error establishing database connection');
+          return error(res, 500, 'Error establishing database connection');
         }
         if (response.rowCount > 0) {
-          return error(res, 403, 'A user with this email address already exist');
+          return failure(res, 403, 'A user with this email address already exist');
         }
 
         const values = [
@@ -58,6 +58,41 @@ class UserController {
       });
     }
     return error(res, errorCode, errorMsg);
+  }
+
+  static signIn(req, res) {
+    /* Grab the email addres and password from the request body */
+    const { errorCode, errorMsg } = isUserValid(req.body);
+    const { email, password } = req.body;
+
+    if (!errorMsg) {
+      /* Search for user */
+      dbPool.query(find('*', 'users', 'email', email), (err, user) => {
+        if (err) {
+          error(res, 500, 'Could not connect to the database server');
+        }
+        if (user.rowCount > 0) {
+          const userInfo = user.rows[0];
+          const token = jwt.sign(
+            { id: userInfo.id },
+            dbConfig.secret,
+            { expiresIn: 86400 },
+          );
+
+          if (bcrypt.compareSync(password, userInfo.password.trim())) {
+            delete userInfo.password;
+            success(res, 200, { message: 'User login successfull', token, userInfo });
+          }
+        } else {
+          failure(res, 404, 'Could not find any user matching your request');
+        }
+      });
+    } else {
+      return error(res, errorCode, errorMsg);
+    }
+
+    /* Return validation error */
+    return null;
   }
 }
 
