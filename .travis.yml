@@ -8,7 +8,8 @@ env:
     - CC_TEST_REPORTER_ID=2c21212bd01b49eb1c8bc2929951404e53824061cdaca893373da23563baadaf\
 
 before_script:
-  - psql -c "CREATE USER admin"; -U postgres
+  - psql -c "CREATE DATABASE ridemywaytest;" -U postgres
+  - psql -U postgres -d ridemywaytest -f ./server/src/config/tests/setup.sql
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
