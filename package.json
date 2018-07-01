@@ -11,7 +11,10 @@
     "prestart": "npm run build",
     "start": "cross-env NODE_ENV=production node ./server/build/index.js",
     "dev": "nodemon --exec babel-node ./server/src/index.js",
+    "test:setup": "psql -U admin -d ridemywaytest -f ./server/src/config/tests/setup.sql",
+    "test:pulldown": "psql -U admin -d ridemywaytest -f ./server/src/config/tests/pulldown.sql",
     "test": "cross-env NODE_ENV=test nyc mocha --require babel-register --timeout 6000 ./server/src/test/**/**.spec.js  --exit",
+    "test:local": "cross-env NODE_ENV=test npm run test:setup && npm run test && npm run test:pulldown",
     "coverage": "nyc report --reporter=text-lcov | coveralls && codecov -t 905ff2c7-a6e5-4b80-9d87-8ba82697508d",
     "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls"
   },
