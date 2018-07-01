@@ -15,12 +15,17 @@ export const isValid = (rideOffer) => {
 };
 
 /* returns the response of a request */
-export const error = (res, statusCode, message) => res.status(statusCode).json({ message });
+export const error = (res, statusCode, data) =>
+  res.status(statusCode).json({ status: 'error', data });
+
+/* returns the response of a request */
+export const failure = (res, statusCode, message) =>
+  res.status(statusCode).json({ status: 'fail', message });
 
 /* When a request was successful */
-export const success = (res, statusCode, message, data) =>
+export const success = (res, statusCode, data) =>
   res.status(statusCode)
-    .json({ message, data });
+    .json({ status: 'success', data });
 
 /* Find ride offer */
 export const find = (rideOfferArr, id) => rideOfferArr.find(ride => (id === ride.id));

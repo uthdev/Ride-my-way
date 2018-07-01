@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { isUserDetailsValid } from '../helpers/authHelpers';
-import { error, success } from '../helpers/rideHelpers';
+import { error, success, failure } from '../helpers/rideHelpers';
 import dbPool from '../config/dbConnection';
 import dbConfig from '../config/databaseConfig';
 import { createNewUser, find } from '../helpers/queryHelpers';
@@ -27,10 +27,10 @@ class UserController {
       /* check if email address is already existing */
       return dbPool.query(find('email', 'users', 'email', email), (err, response) => {
         if (err) {
-          return res.status(500).json({ message: 'An error processing your' });
+          return failure(res, 500, 'Error establishing database connection');
         }
         if (response.rowCount > 0) {
-          return res.status(403).json({ message: 'Account already exists' });
+          return error(res, 403, 'A user with this email address already exist');
         }
 
         const values = [
@@ -52,7 +52,7 @@ class UserController {
             { expiresIn: 86400 },
           );
           delete results.password;
-          return success(res, 201, 'Your account was created successfully', { token, results });
+          return success(res, 201, { message: 'Your account was created successfully', token, results });
         });
         return null;
       });
