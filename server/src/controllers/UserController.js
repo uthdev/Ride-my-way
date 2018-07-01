@@ -4,6 +4,7 @@ import { isUserDetailsValid } from '../helpers/authHelpers';
 import { error, success } from '../helpers/rideHelpers';
 import dbPool from '../config/dbConnection';
 import dbConfig from '../config/databaseConfig';
+import { createNewUser, find } from '../helpers/queryHelpers';
 
 /**
  * @class UserContoller
@@ -15,45 +16,48 @@ class UserController {
    * @param {Object} req
    * @param {Object} res
    */
-  static signUp(req, res) {
-    if (isUserDetailsValid(req.body, res)) {
+  static signUp(req, res, done) {
+    // console.log(isUserDetailsValid(req.body, res, done));
+    const { errorCode, errorMsg } = isUserDetailsValid(req.body, res, done);
+    if (!errorMsg) {
       const email = req.body.email.trim();
       const firstName = req.body.firstName.trim();
       const hashedPassword = bcrypt.hashSync(req.body.password.trim(), 8);
-      return dbPool.query(`SELECT email FROM users WHERE email = '${email}'`, (err, response) => {
+
+      /* check if email address is already existing */
+      return dbPool.query(find('email', 'users', 'email', email), (err, response) => {
         if (err) {
-          res.status(500).json({ message: 'An error occured while processing this request outer' });
+          return res.status(500).json({ message: 'An error processing your' });
         }
         if (response.rowCount > 0) {
           return res.status(403).json({ message: 'Account already exists' });
         }
-        // Query string for creating user
-        const text = 'INSERT INTO users(firstName, lastName, email, phone,  password, address, city, zip) VALUES($1, $2, $3, $4, $5, $6,$7, $8) RETURNING *';
+
         const values = [
           firstName, req.body.lastName,
           email, req.body.phone,
           hashedPassword, req.body.address,
-          req.body.city, req.body.zipcode,
+          req.body.city, req.body.zipCode, 'NOW()',
         ];
 
         // callback
-        return dbPool.query(text, values, (err, result) => {
+        dbPool.query(createNewUser, values, (err, result) => {
           if (err) {
-            error(res, 500, 'Something went wrong');
-          } else {
-            const results = result.rows[0];
-            const token = jwt.sign(
-              { id: results.id },
-              dbConfig.secret,
-              { expiresIn: 86400 },
-            );
-            delete results.password;
-            success(res, 201, 'Your account was created successfully', { token, results });
+            error(res, 500, 'Something went while trying to create your account');
           }
+          const results = result.rows[0];
+          const token = jwt.sign(
+            { id: results.id },
+            dbConfig.secret,
+            { expiresIn: 86400 },
+          );
+          delete results.password;
+          return success(res, 201, 'Your account was created successfully', { token, results });
         });
+        return null;
       });
     }
-    return error(res, 500, 'An error occurred while processing your request');
+    return error(res, errorCode, errorMsg);
   }
 }
 

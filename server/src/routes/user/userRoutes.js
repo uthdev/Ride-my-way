@@ -14,8 +14,5 @@ userRoute.use(urlencoded({ extended: true }));
 userRoute.route('/signup')
   .post(UserController.signUp);
 
-/* Route for login in */
-userRoute.route('/signin')
-  .post(UserController.signIn);
 
 export default userRoute;
