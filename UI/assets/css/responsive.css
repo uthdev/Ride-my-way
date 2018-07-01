@@ -109,10 +109,12 @@
   }
   .navbar__header {
     width: 100%;
+    padding: 0 2rem;
   }
   .js__navbar__toggler {
     display: block;
     color: #ffff;
+    width: 100%;
   }
   .dashboard__navbar__header a {
     width: 50%;

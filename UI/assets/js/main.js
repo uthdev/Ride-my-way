@@ -23,7 +23,7 @@ var navbar = document.querySelector("nav");
 
 
 // Get the offset position of the navbar
-var sticky = 100;
+var sticky = 50;
 console.log(sticky)
 
 // When the user scrolls the page, execute myFunction 
