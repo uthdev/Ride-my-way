@@ -15,12 +15,12 @@ export const isValid = (rideOffer) => {
 };
 
 /* returns the response of a request */
-export const error = (res, statusCode, data) =>
-  res.status(statusCode).json({ status: 'error', data });
+export const error = (res, statusCode, message) =>
+  res.status(statusCode).json({ status: 'error', message });
 
 /* returns the response of a request */
-export const failure = (res, statusCode, message) =>
-  res.status(statusCode).json({ status: 'fail', message });
+export const failure = (res, statusCode, data) =>
+  res.status(statusCode).json({ status: 'fail', data });
 
 /* When a request was successful */
 export const success = (res, statusCode, data) =>
