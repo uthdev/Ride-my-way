@@ -66,11 +66,11 @@
  }
 
  .font--medium {
-   font-family: BryantMedium;
+   font-family: 'Lato', sans-serif;
  }
 
  .font--regular {
-   font-family: BryantRegular;
+   font-family: 'Lato', sans-serif;
  }
 
  /*  COLORS */
@@ -233,7 +233,7 @@
    padding: 0;
    font-size: 18px;
    color: #f2f2f2;
-   font-family: BryantMedium;
+   font-family: 'Lato', sans-serif;
    font-size: 18px;
  }
 
@@ -288,7 +288,7 @@
  }
 
  .header__content {
-   font-family: BryantMedium;
+   font-family: 'Lato', sans-serif;
    font-size: 19px;
    line-height: 31px;
    margin: 0 0 24px 0;
@@ -421,7 +421,7 @@
  }
 
  .info__content p {
-   font-family: BryantMedium;
+   font-family: 'Lato', sans-serif;
    margin-bottom: 10px;
  }
 
@@ -456,7 +456,7 @@
  }
 
  .caption__text {
-   font-family: BryantMedium;
+   font-family: 'Lato', sans-serif;
    font-size: 16px;
    line-height: 23px;
    width: 296px;
@@ -771,7 +771,7 @@
  }
 
  .subheader>ul>li>a {
-   font-family: BryantRegular;
+   font-family: 'Lato', sans-serif;
    font-size: 14px;
    padding: 7px;
  }
