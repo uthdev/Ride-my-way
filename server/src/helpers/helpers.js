@@ -15,16 +15,16 @@ export const isValid = (rideOffer) => {
   const errCode = 401;
   let errMsg;
 
-  if (rideTitle || rideTitle.trim() === '') {
+  if (!rideTitle || rideTitle.trim() === '') {
     errMsg = 'Ride title is required';
   }
-  if (location || location.trim() === '') {
+  if (!location || location.trim() === '') {
     errMsg = 'Location is required';
   }
-  if (destination || destination.trim() === '') {
+  if (!destination || destination.trim() === '') {
     errMsg = 'Destination is required';
   }
-  if (departureTime || departureTime === '') {
+  if (!departureTime || departureTime.trim() === '') {
     errMsg = 'Departure time is required';
   }
   if (noOfSeats < 1) {

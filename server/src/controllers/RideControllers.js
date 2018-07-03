@@ -1,6 +1,6 @@
 import dbPool from '../config/dbConnection';
-import { find, findAll } from '../helpers/queryHelpers';
-import { parsedInt, error, success } from '../helpers/helpers';
+import { find, findAll, createRideOffer } from '../helpers/queryHelpers';
+import { parsedInt, error, success, isValid, failure } from '../helpers/helpers';
 
 /**
  * Processes all ride data
@@ -56,17 +56,42 @@ class RideController {
    */
 
   static createRideOffer(req, res) {
-    const rideOffer = req.body;
+    const {
+      rideTitle,
+      location,
+      destination,
+      departureTime,
+      noOfSeats,
+      rideOwnerId,
+    } = req.body;
+
+    const { errCode, errMsg } = isValid(req.body);
+
 
     // check is ride is valid
-    if (isValid(rideOffer)) {
-      rideOffersDb.push({
-        id: rideOffersDb.length + 1,
-        ...rideOffer,
+
+    if (!errMsg) {
+      const values = [rideTitle, location, destination, departureTime, noOfSeats, rideOwnerId, 'NOW()', 'NOW()', 'NOW()'];
+      return dbPool.query(find('"rideTitle"', 'rideoffers', '"rideTitle"', rideTitle), (err, result) => {
+        if (err) {
+          return error(res, 501, 'Could not establish database connection');
+        }
+        if (result.rowCount > 0) {
+          return failure(res, 403, 'Ride offer already exist');
+        }
+        return dbPool.query(createRideOffer, values, (err, response) => {
+          if (err) {
+            return error(res, 501, 'Could not establish database connection');
+          }
+          if (response.rowCount > 0) {
+            const rideoffers = response.rows;
+            return success(res, 200, { message: 'New ride offer created', rideoffers });
+          }
+          return error(res, 500, 'Could not process your request');
+        });
       });
-      return success(res, 201, 'New ride offer has been created', rideOffersDb);
     }
-    return error(res, 400, 'Please enter the missing fields');
+    return error(res, errCode, errMsg);
   }
 
   /**
