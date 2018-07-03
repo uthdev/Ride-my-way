@@ -31,19 +31,23 @@ class RideController {
 
   static getRideOffer(req, res) {
     const { id } = req.params;
-
     const parsedId = parsedInt(id);
-    let rideDetails = '';
 
     /* Check if id is  a Not a number */
     if (!(Number.isInteger(parsedId))) {
       return error(res, 400, 'Ride id is invalid');
     }
-
-    rideDetails = find(rideOffersDb, parsedId);
-    // if ride is found rerurn ride
-    if (rideDetails) return success(res, 200, 'Found a ride', rideDetails);
-    return error(res, 404, 'The ride offer you requested does not exist');
+    dbPool.query(find('*', 'rideoffers', 'id', parsedId), (err, response) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      if (response.rowCount > 0) {
+        const rideOffer = response.rows[0];
+        success(res, 200, { message: 'Found One ride offer', rideOffer });
+      }
+      return null;
+    });
+    return null;
   }
 
   /**
