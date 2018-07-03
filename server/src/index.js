@@ -1,8 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import rideRoute from './routes/rides/rideRoutes';
-import userRoute from './routes/user/userRoutes';
 import { errorHandler, clientErrorHandler } from './middleware/errorhandler/errorHandler';
+import { rideRoute, userRoute, rideOffersRoute } from './routes';
 
 const app = express();
 
@@ -17,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/v1/rides', rideRoute);
 app.use('/api/v1/auth', userRoute);
+app.use('/api/v1/users', rideOffersRoute);
 
 /* Handle client side err */
 app.use(clientErrorHandler);
