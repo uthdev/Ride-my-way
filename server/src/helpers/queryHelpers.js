@@ -18,3 +18,6 @@ export const createNewUser = `INSERT INTO
  * @param {String} value the value coming from the client
  */
 export const find = (selectedColumn, tableName, columnName, value) => (`SELECT ${selectedColumn} FROM ${tableName} WHERE ${columnName} = '${value}'`);
+
+/* Find all user */
+export const findAll = (selectedColumn, tableName) => (`SELECT ${selectedColumn} FROM ${tableName}`);
