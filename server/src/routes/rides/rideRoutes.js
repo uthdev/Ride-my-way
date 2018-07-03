@@ -14,11 +14,7 @@ rideRoute.route('/')
 
   /* Get all ride offers */
 
-  .get(RideController.allRideOffer)
-
-  /* Create ride offer */
-  .post(RideController.createRideOffer);
-
+  .get(RideController.allRideOffer);
 
 rideRoute.route('/:id')
 
