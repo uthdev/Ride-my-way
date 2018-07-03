@@ -1,6 +1,6 @@
-import rideOffersDb from '../dummydata/rideoffers';
-import rideRequestDb from '../dummydata/riderequest';
-import { success, error, parsedInt, isValid, isRequestValid, findRequest, find, isSeatValid } from '../helpers/rideHelpers';
+import dbPool from '../config/dbConnection';
+import { find, findAll } from '../helpers/queryHelpers';
+import { parsedInt, error, success } from '../helpers/helpers';
 
 /**
  * Processes all ride data
@@ -13,7 +13,15 @@ class RideController {
    * @returns {Object} Array ride offers
    */
   static allRideOffer(req, res) {
-    return (rideOffersDb.length > 0) && success(res, 200, 'All ride Offers', rideOffersDb);
+    dbPool.query(findAll('*', 'rideOffers'), (err, response) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      if (response.rowCount > 0) {
+        const rideOffers = response.rows;
+        return success(res, 200, { message: 'All ride offers', rideOffers });
+      }
+    });
   }
 
   /**

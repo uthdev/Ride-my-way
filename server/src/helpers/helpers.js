@@ -4,15 +4,36 @@ export const parsedInt = id => ((!(/^\d+$/.test(id))) ? NaN : parseInt(id, 10));
 
 /* Validate fields for create new ride offers */
 export const isValid = (rideOffer) => {
-  // validations
-  const name = rideOffer.name.trim() !== '';
-  const location = rideOffer.location.trim() !== '';
-  const destination = rideOffer.destination.trim() !== '';
-  const departureTime = rideOffer.departureTime.trim() !== '';
-  const price = typeof (rideOffer.price) === 'number' && rideOffer.price > 0;
+  /* Ride title */
+  const {
+    rideTitle,
+    location,
+    destination,
+    departureTime,
+    noOfSeats,
+  } = rideOffer;
+  const errCode = 401;
+  let errMsg;
 
-  return name && location && destination && departureTime && price;
+  if (rideTitle || rideTitle.trim() === '') {
+    errMsg = 'Ride title is required';
+  }
+  if (location || location.trim() === '') {
+    errMsg = 'Location is required';
+  }
+  if (destination || destination.trim() === '') {
+    errMsg = 'Destination is required';
+  }
+  if (departureTime || departureTime === '') {
+    errMsg = 'Departure time is required';
+  }
+  if (noOfSeats < 1) {
+    errMsg = 'Number of seats is required for this ride';
+  }
+
+  return { errCode, errMsg };
 };
+
 
 /* returns the response of a request */
 export const error = (res, statusCode, message) =>

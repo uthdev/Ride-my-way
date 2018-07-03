@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { isUserDetailsValid, isUserValid } from '../helpers/authHelpers';
-import { error, success, failure } from '../helpers/rideHelpers';
+import { error, success, failure } from '../helpers/helpers';
 import dbPool from '../config/dbConnection';
 import dbConfig from '../config/databaseConfig';
 import { createNewUser, find } from '../helpers/queryHelpers';
@@ -17,7 +17,6 @@ class UserController {
    * @param {Object} res
    */
   static signUp(req, res, done) {
-    // console.log(isUserDetailsValid(req.body, res, done));
     const { errorCode, errorMsg } = isUserDetailsValid(req.body, res, done);
     if (!errorMsg) {
       const email = req.body.email.trim();
