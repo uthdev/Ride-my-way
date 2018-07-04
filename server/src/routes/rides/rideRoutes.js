@@ -1,6 +1,7 @@
 import express from 'express';
 import { json, urlencoded } from 'body-parser';
 import RideController from '../../controllers/RideControllers';
+import { ensureAutheticated } from '../../middleware/auth/authMiddleware';
 
 const rideRoute = express();
 
@@ -9,6 +10,7 @@ rideRoute.use(json());
 
 // for parsing application/x-ww-form-urlencoded
 rideRoute.use(urlencoded({ extended: true }));
+rideRoute.use(ensureAutheticated);
 
 rideRoute.route('/')
 
