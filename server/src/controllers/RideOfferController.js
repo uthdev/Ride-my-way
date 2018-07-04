@@ -51,6 +51,25 @@ class RideOfferController {
     }
     return error(res, errCode, errMsg);
   }
+
+  static fetchAllRideRequest(req, res) {
+    let { rideId } = req.params;
+    rideId = parsedInt(rideId);
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(rideId))) {
+      return error(res, 400, 'Ride is invalid');
+    }
+    return dbPool.query(find('*', 'riderequests', '"rideId"', rideId), (err, result) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      const riderequests = result.rows;
+      if (result.rowCount > 0) {
+        return success(res, 201, { message: 'All ride request', riderequests });
+      }
+      return failure(res, 403, { message: 'No ride offer found' });
+    });
+  }
 }
 
 export default RideOfferController;
