@@ -15,11 +15,11 @@ rideoffersRoute.route('/rides')
 
   /* Create ride offer */
   .post(RideOfferController.createRideOffer);
-/* Request to join a ride */
-// rideoffersRoute.route('/:id/requests')
-
-//   /* Send request to join ride */
-//   .post(RideOfferController.joinRide);
 
 
+rideoffersRoute.route('/rides/:rideId/requests')
+
+
+  /* Create ride offer */
+  .get(RideOfferController.fetchAllRideRequest);
 export default rideoffersRoute;
