@@ -1,7 +1,6 @@
 import dbPool from '../config/dbConnection';
 import { find, findAll, joinRideQuery } from '../helpers/queryHelpers';
-import { parsedInt, error, success, isSeatValid, isRequestValid, failure } from '../helpers/helpers';
-import { fail } from 'assert';
+import { parsedInt, error, success, failure } from '../helpers/helpers';
 
 /**
  * Processes all ride data

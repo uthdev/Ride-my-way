@@ -7,7 +7,7 @@ export const clientErrorHandler = (req, res, next) => {
 };
 
 export const errorHandler = (err, req, res, next) => {
-  res.status(500).json({
+  res.status(500 || 503).json({
     message: 'Error, your request could not  be processed at the moment',
   });
 };
