@@ -22,4 +22,11 @@ rideoffersRoute.route('/rides/:rideId/requests')
 
   /* Create ride offer */
   .get(RideOfferController.fetchAllRideRequest);
+
+rideoffersRoute.route('/rides/:rideId/requests/:requestId')
+
+
+  /* respond to ride request */
+  .put(RideOfferController.acceptRideRequest);
+
 export default rideoffersRoute;

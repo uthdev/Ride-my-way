@@ -70,6 +70,34 @@ class RideOfferController {
       return failure(res, 403, { message: 'No ride offer found' });
     });
   }
+
+  static acceptRideRequest(req, res) {
+    let { rideId, requestId } = req.params;
+    const { status } = req.body;
+
+    rideId = parsedInt(rideId);
+    requestId = parsedInt(requestId);
+    console.log(requestId);
+
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(rideId)) || !(Number.isInteger(requestId)) || status.trim() === '') {
+      return error(res, 400, 'Invalid credentials');
+    }
+    if (status.toLowerCase() === 'rejected') {
+      return dbPool.query(`DELETE FROM riderequests  WHERE id = '${requestId}' AND "rideId"='${rideId}' RETURNING *;`, (err, response) => {
+        if (err) {
+          return error(res, 500, 'Could not establish database connection');
+        }
+        return success(res, 200, { message: '1 ride over declined' });
+      });
+    }
+    return dbPool.query(`UPDATE riderequests SET status =' ${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
+      if (err) {
+        return error(res, 400, 'Invalid credentials');
+      }
+      return success(res, 200, { message: 'Acceptance successful' });
+    });
+  }
 }
 
 export default RideOfferController;
