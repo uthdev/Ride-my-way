@@ -45,7 +45,7 @@
  }
 
  .btn--secondary {
-   background: #9b9b9b;
+   background: #6b459e;
    color: #ffffff;
  }
 
@@ -97,7 +97,8 @@
  }
 
  .bg--color--grey {
-   background-color: #9b9b9b;
+   background-color: #6b459e;
+   border: 0;
    color: #ffffff;
  }
 
@@ -116,7 +117,7 @@
  }
 
  .gradient {
-   background-image: linear-gradient(to bottom, #401779 0%, #357dc5 100%);
+   background-image: linear-gradient(to bottom, #401779 0%, #5073B8);
  }
 
  /*  */
@@ -263,7 +264,7 @@
 
  .header__main {
    /* padding: 6rem; */
-   background-image: linear-gradient( to left, #f4516c 0%, #7148a4 99%, #573a87 100%);
+   background-image: linear-gradient( to left, #5073B8 0%, #7148a4 99%, #573a87 100%);
    background-position: right 0 top 0;
    background-repeat: no-repeat;
    height: auto;
@@ -1108,4 +1109,10 @@
  nav.sticky .navbar__collapse ul li .DropDown a>span,
  nav.sticky .navbar__collapse ul li .DropDown a>i {
    color: #ffffff;
+ }
+
+ nav .navbar__collapse ul li a.sticky--sign--up,
+ .btn--white {
+   background: white;
+   color: #6b459e;
  }
