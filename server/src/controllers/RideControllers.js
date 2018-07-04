@@ -1,6 +1,7 @@
 import dbPool from '../config/dbConnection';
-import { find, findAll } from '../helpers/queryHelpers';
+import { find, findAll, joinRideQuery } from '../helpers/queryHelpers';
 import { parsedInt, error, success, isSeatValid, isRequestValid, failure } from '../helpers/helpers';
+import { fail } from 'assert';
 
 /**
  * Processes all ride data
@@ -38,7 +39,7 @@ class RideController {
     if (!(Number.isInteger(parsedId))) {
       return error(res, 400, 'Ride id is invalid');
     }
-    dbPool.query(find('*', 'rideoffers', 'id', parsedId), (err, response) => {
+    return dbPool.query(find('*', 'rideoffers', 'id', parsedId), (err, response) => {
       if (err) {
         return error(res, 500, 'Could not establish database connection');
       }
@@ -48,7 +49,6 @@ class RideController {
       }
       return failure(res, 403, { message: 'No ride offer found' });
     });
-    return null;
   }
 
   /**
@@ -57,43 +57,31 @@ class RideController {
    */
   static joinRide(req, res) {
     // Ride id
-    const { id } = req.params;
-    const parsedId = parsedInt(id);
-    // reques body
-    const requestOption = req.body;
-    // ride request to be sent to ride owner
-    let rideRequest = {};
-    let index = 0;
-
-    /* Validate request details */
-    const userSeat = requestOption.seats;
-
-    // used variables
-    let noOfSeats = 0;
-    let passengerArr = [];
-
-
-    // Check if there is space for additional ride offers
-    if (isRequestValid(requestOption)) {
-      rideRequest = findRequest(rideRequestDb, parsedId);
-      // re-assign use variables
-      noOfSeats = rideRequest.noOfSeats + 1;
-      passengerArr = rideRequest.passengersId.length;
-
-      // check to see if passengers seats are already occuppied
-      if (isSeatValid(noOfSeats, passengerArr, userSeat)) {
-        // Add passenger multiple passengers for one user
-        while (userSeat > index) {
-          rideRequest.passengersId.push(requestOption.id);
-          index += 1;
-        }
-
-        rideRequest.noOfSeatsLeft = (rideRequest.noOfSeats) - (rideRequest.passengersId.length);
-        return success(res, 200, 'Ride request sent', rideRequest);
-      }
-      return error(res, 201, 'Your cannot join this ride the passengers are already complete');
+    const { rideId } = req.params;
+    const { passengerId } = req.body;
+    const parsedId = parsedInt(rideId);
+    const parsedPassengerId = parsedInt(passengerId);
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(parsedId)) || !(Number.isInteger(parsedPassengerId))) {
+      return error(res, 400, 'Ride is invalid');
     }
-    return error(res, 400, 'Invalid request token');
+    const values = [rideId, passengerId, 'pending'];
+    return dbPool.query(find('"passengerId"', 'riderequests', '"rideId"', rideId), (err, response) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      const passenger = response.rows[0];
+      if ((response.rowCount > 0 && passenger.passengerId !== null)) {
+        return failure(res, 403, { message: 'You have already sent a ride request' });
+      }
+      return dbPool.query(joinRideQuery, values, (err, result) => {
+        const request = result.rows[0];
+        if (err) {
+          return error(res, 500, 'Could not establish database connection');
+        }
+        return success(res, 201, { message: 'Your ride request was sent successfully', request });
+      });
+    });
   }
 }
 
