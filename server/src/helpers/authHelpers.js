@@ -24,12 +24,12 @@ export const isUserDetailsValid = (userDetails) => {
 
 
   /* Check for first name */
-  if (!firstName || firstName.length < 2) {
+  if (!firstName || firstName.trim() === '') {
     errorMsg = 'First name is required.';
   }
 
   /* check if last name is valid */
-  if (!lastName || lastName.trim().length < 2) {
+  if (!lastName || lastName.trim() === '') {
     errorMsg = 'Last name is required.';
   }
 
@@ -91,12 +91,12 @@ export const isUserValid = (data) => {
   /* test email address */
   emailRegex = emailRegex.test(String(email).toLowerCase());
   if (!emailRegex) {
-    errorMsg = 'Email address is invalid';
+    errorMsg = 'Email or password is incorrect';
   }
 
   /* Check for password */
-  if (!password || password.trim().length < 6) {
-    errorMsg = 'Password is invalid, should be at least six characters';
+  if (!password) {
+    errorMsg = 'Email or password is incorrect';
   }
 
   return { errorCode, errorMsg };
