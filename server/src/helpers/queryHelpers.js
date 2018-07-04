@@ -9,7 +9,7 @@ export const createNewUser = `INSERT INTO
  VALUES($1, $2, $3, $4, $5, $6,$7, $8, $9)
   RETURNING *`;
 
-// Quewry for finding a user by Id
+// Query for finding a user by Id
 /**
  * @description for finding or more items in a database
  * @param {String} selectedColumn the column you'll like to return
