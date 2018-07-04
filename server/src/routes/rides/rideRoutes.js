@@ -21,7 +21,7 @@ rideRoute.route('/:id')
   /* Get ride details of a single ride offer */
   .get(RideController.getRideOffer);
 
-rideRoute.route('/:id/requests')
+rideRoute.route('/:rideId/requests')
 
   /* Send request to join ride */
   .post(RideController.joinRide);

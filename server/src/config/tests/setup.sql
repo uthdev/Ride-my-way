@@ -33,15 +33,17 @@ CREATE TABLE rideoffers
   CONSTRAINT rideoffers_pkey PRIMARY KEY (id)
 );
 
+
+
 CREATE TABLE riderequests
 (
   id SERIAL,
   "rideId" integer,
   "noOfSeats" integer,
-  "passengerId" integer[],
-  "noOfSeatsLeft" integer,
+  "passengerId" integer,
+  status character varying(10),
   CONSTRAINT riderequests_pkey PRIMARY KEY (id),
   CONSTRAINT "riderequests_rideId_fkey" FOREIGN KEY ("rideId")
-      REFERENCES rideoffers (id) MATCH SIMPLE
+      REFERENCES public.rideoffers (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );
