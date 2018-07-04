@@ -14,6 +14,10 @@ CREATE TABLE users
   CONSTRAINT users_pkey PRIMARY KEY (id)
 );
 
+-- Table: public.rideoffers
+
+-- DROP TABLE public.rideoffers;
+
 CREATE TABLE rideoffers
 (
   id SERIAL,
@@ -21,10 +25,23 @@ CREATE TABLE rideoffers
   location character varying(25),
   destination character varying(25),
   "departureTime" date,
-  "rideOwnerId" integer,
   "noOfSeats" integer,
-  CONSTRAINT rideoffers_pkey PRIMARY KEY (id),
-  CONSTRAINT "rideoffers_rideOwner_fkey" FOREIGN KEY ("rideOwnerId")
-      REFERENCES users (id) MATCH SIMPLE
+  "createdAt" timestamp without time zone,
+  "startsAt" timestamp without time zone,
+  "expiresAt" timestamp without time zone,
+  "rideOwnerId" integer,
+  CONSTRAINT rideoffers_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE riderequests
+(
+  id SERIAL,
+  "rideId" integer,
+  "noOfSeats" integer,
+  "passengerId" integer[],
+  "noOfSeatsLeft" integer,
+  CONSTRAINT riderequests_pkey PRIMARY KEY (id),
+  CONSTRAINT "riderequests_rideId_fkey" FOREIGN KEY ("rideId")
+      REFERENCES rideoffers (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 );

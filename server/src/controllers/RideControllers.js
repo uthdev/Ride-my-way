@@ -21,6 +21,7 @@ class RideController {
         const rideOffers = response.rows;
         return success(res, 200, { message: 'All ride offers', rideOffers });
       }
+      return failure(res, 403, { message: 'No ride offer found' });
     });
   }
 
