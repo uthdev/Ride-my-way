@@ -2,7 +2,6 @@ import chai, { assert, expect } from 'chai';
 import chaiHtpp from 'chai-http';
 
 import app from '../index';
-import { user1 } from './tokens';
 
 /* Test all ride actions */
 
