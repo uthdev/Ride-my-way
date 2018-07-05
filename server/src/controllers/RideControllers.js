@@ -44,9 +44,9 @@ class RideController {
       }
       if (response.rowCount > 0) {
         const rideOffer = response.rows[0];
-        success(res, 200, { message: 'Found One ride offer', rideOffer });
+        return success(res, 200, { message: 'Found One ride offer', rideOffer });
       }
-      return failure(res, 403, { message: 'No ride offer found' });
+      return failure(res, 404, { message: 'No ride offer found' });
     });
   }
 

@@ -75,7 +75,7 @@ class UserController {
           const token = jwt.sign(
             { id: userInfo.id },
             dbConfig.secret,
-            { expiresIn: 86400 },
+            { expires: 84000 },
           );
 
           if (bcrypt.compareSync(password, userInfo.password.trim())) {

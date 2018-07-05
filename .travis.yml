@@ -6,6 +6,7 @@ services:
 env:
   global:
     - CC_TEST_REPORTER_ID=2c21212bd01b49eb1c8bc2929951404e53824061cdaca893373da23563baadaf\
+  NODE_ENV=test
 
 before_script:
   - psql -c "CREATE DATABASE ridemywaytest;" -U postgres
@@ -19,4 +20,5 @@ script:
 
 after_script:
   - npm run coverage
+  - psql -U postgres -d ridemywaytest -f ./server/src/config/tests/setup.sql
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
