@@ -1,1 +1,3 @@
-DROP TABLE users;
+DROP TABLE users CASCADE;
+DROP TABLE rideoffers CASCADE;
+DROP TABLE riderequests CASCADE;
