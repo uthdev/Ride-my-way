@@ -5,6 +5,7 @@ services:
   - postgresql
 env:
   global:
+    NODE_ENV=test
     - CC_TEST_REPORTER_ID=2c21212bd01b49eb1c8bc2929951404e53824061cdaca893373da23563baadaf\
 
 before_script:
