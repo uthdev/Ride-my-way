@@ -2,7 +2,10 @@ import chai, { assert, expect } from 'chai';
 import chaiHtpp from 'chai-http';
 
 import app from '../index';
+import { user1 } from './tokens';
+
 /* Test all ride actions */
+
 
 chai.use(chaiHtpp);
 describe('Test For Ride Routes', () => {
@@ -11,10 +14,9 @@ describe('Test For Ride Routes', () => {
     it('should return all ride offers', (done) => {
       chai.request(app)
         .get('/api/v1/rides')
-        .end((message, res) => {
+        .set('Authorization', user1)
+        .end((error, res) => {
           expect(res).to.have.status(200);
-          assert.isObject(res.body, 'is an object with an array of rides');
-          expect(res.body.data.length).to.equals(5);
           done();
         });
     });
@@ -25,10 +27,11 @@ describe('Test For Ride Routes', () => {
     it('should return a ride offers', (done) => {
       chai.request(app)
         .get('/api/v1/rides/1')
+        .set('Authorization', user1)
         .end((error, res) => {
           expect(res).to.have.status(200);
-          expect(parseInt(res.body.data.id, 10)).to.equal(1);
-          expect(res.body.data.id).to.be.a('number');
+          expect(parseInt(res.body.data.rideOffer.id, 10)).to.equal(1);
+          expect(res.body.data.rideOffer.id).to.be.a('number');
           assert.isObject(res.body, 'is an object containing the ride details');
           done();
         });
@@ -40,19 +43,21 @@ describe('Test For Ride Routes', () => {
     it('should a not found message', (done) => {
       chai.request(app)
         .get('/api/v1/rides/1333')
+        .set('Authorization', user1)
         .end((message, res) => {
           expect(res).to.have.status(404);
-          expect(res.body.message).to.equal('The ride offer you requested does not exist');
+          expect(res.body.data.message).to.equal('No ride offer found');
           done();
         });
     });
   });
 
-  /* test individual ride offer that doesn't exit */
+  // /* test individual ride offer that doesn't exit */
   describe('Test for non existing ride offers', () => {
     it('should not return a ride offers', (done) => {
       chai.request(app)
         .get('/api/v1/rides/abcd')
+        .set('Authorization', user1)
         .end((message, res) => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal('Ride id is invalid');
@@ -66,6 +71,7 @@ describe('Test For Ride Routes', () => {
     it('should not parseInt if Id has alphabet', (done) => {
       chai.request(app)
         .get('/api/v1/rides/123abcd')
+        .set('Authorization', user1)
         .end((message, res) => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal('Ride id is invalid');
@@ -74,103 +80,87 @@ describe('Test For Ride Routes', () => {
     });
   });
 
-  /* create ride offers */
-  describe('/POST api/v1/rides', () => {
+  // /* create ride offers */
+  describe('/POST api/v1/users/rides', () => {
     it('should create a new ride offer', (done) => {
       const data = {
-        name: 'suen',
+        rideTitle: 'heading towards surulere',
         location: 'Maryland',
         destination: 'Surulere',
         departureTime: '3-07-2018 4PM',
-        price: 200,
+        rideOwnerId: 2,
+        noOfSeat: 4,
         createdAt: '3-07-2018 3PM',
         expiresAt: '3-07-2018 3PM',
       };
       chai.request(app)
         .post('/api/v1/rides/')
-        .send(data)
-        .end((message, res) => {
-          expect(res).to.have.status(201);
-          expect(res.body.message).to.equal('New ride offer has been created');
-          done();
-        });
-    });
-  });
-
-  /* create ride offers */
-  describe('Test for missing fields on a new ride request', () => {
-    it('should not create an offer when a field is missing', (done) => {
-      const data = {
-        name: '',
-        location: 'Maryland',
-        destination: 'Surulere',
-        departureTime: '3-07-2018 4PM',
-        price: 200,
-        createdAt: '3-07-2018 3PM',
-        expiresAt: '3-07-2018 3PM',
-      };
-      chai.request(app)
-        .post('/api/v1/rides/')
-        .send(data)
-        .end((message, res) => {
-          expect(res).to.have.status(400);
-          expect(res.body.message).to.equal('Please enter the missing fields');
-          done();
-        });
-    });
-  });
-
-  /* Request to join ride offers */
-  describe('/POST api/v1/rides/<rideId>/requests', () => {
-    it('should be able to join a ride when fields are complete', (done) => {
-      const data = {
-        id: 1,
-        seats: 1,
-      };
-      chai.request(app)
-        .post('/api/v1/rides/2/requests')
+        .set('Authorization', user1)
         .send(data)
         .end((message, res) => {
           expect(res).to.have.status(200);
-          expect(res.body.message).to.equal('Ride request sent');
           done();
         });
     });
   });
 
+
   /* Request to join ride offers */
-  describe('Test join ride when field is not complete', () => {
-    it('should not join a ride when fields are empty', (done) => {
+  describe('/POST api/v1/rides/<rideId>/requests', () => {
+    it('should not  be able to join a ride when fields are incomplete', (done) => {
       const data = {
-        id: 1,
-        seats: 0,
+        rideId: 1,
+        passengerId: 1,
       };
       chai.request(app)
-        .post('/api/v1/rides/2/requests')
+        .post('/api/v1/rides/hdhadh/requests')
+        .set('Authorization', user1)
         .send(data)
         .end((message, res) => {
           expect(res).to.have.status(400);
-          expect(res.body.message).to.equal('Invalid request token');
+          expect(res.body.message).to.equal('Ride is invalid');
           done();
         });
     });
   });
 
+  /* should be a able to join a ride */
   /* Request to join ride offers */
-  describe('Test join ride requested seats is more than the available seats', () => {
-    it('should not join a ride when available seats are less than the requested', (done) => {
+  describe('/POST api/v1/rides/<rideId>/requests', () => {
+    it('should not  be able to join a ride', (done) => {
       const data = {
-        id: 1,
-        seats: 10,
+        rideId: 1,
+        passengerId: 1,
       };
       chai.request(app)
-        .post('/api/v1/rides/2/requests')
+        .post('/api/v1/rides/1/requests')
+        .set('Authorization', user1)
         .send(data)
         .end((message, res) => {
-          expect(res).to.have.status(201);
-          expect(res.body.message).to.equal('Your cannot join this ride the passengers are already complete');
+          expect(res).to.have.status(403);
+          expect(res.body.data.message).to.equal('You have already sent a ride request');
+          done();
+        });
+    });
+  });
+
+  /* should not be able to send a ride request twice */
+  describe('/POST api/v1/rides/1/requests', () => {
+    it('should not  be able to join a ride', (done) => {
+      const data = {
+        rideId: 1,
+        passengerId: 1,
+      };
+      chai.request(app)
+        .post('/api/v1/rides/1/requests')
+        .set('Authorization', user1)
+        .send(data)
+        .end((message, res) => {
+          expect(res).to.have.status(403);
+          expect(res.body.data.message).to.equal('You have already sent a ride request');
           done();
         });
     });
   });
 });
+

@@ -45,7 +45,7 @@ class RideOfferController {
             const rideoffers = response.rows;
             return success(res, 200, { message: 'New ride offer created', rideoffers });
           }
-          return error(res, 500, 'Could not process your request');
+          return error(res, 404, 'Could not process your request');
         });
       });
     }
