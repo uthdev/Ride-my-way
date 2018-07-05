@@ -66,7 +66,7 @@ class UserController {
 
     if (!errorMsg) {
       /* Search for user */
-      dbPool.query(find('*', 'users', 'email', email), (err, user) => {
+      return dbPool.query(find('*', 'users', 'email', email), (err, user) => {
         if (err) {
           error(res, 500, 'Could not connect to the database server');
         }
@@ -75,23 +75,19 @@ class UserController {
           const token = jwt.sign(
             { id: userInfo.id },
             dbConfig.secret,
-            { expires: 84000 },
+            { expiresIn: 84000 },
           );
 
           if (bcrypt.compareSync(password, userInfo.password.trim())) {
             delete userInfo.password;
-            success(res, 200, { message: 'User login successfull', token, userInfo });
+            return success(res, 200, { message: 'User login successfull', token, userInfo });
           }
-        } else {
-          failure(res, 404, 'Could not find any user matching your request');
+          return failure(res, 401, 'Username or password is not correct');
         }
+        return failure(res, 404, 'Could not find any user matching your request');
       });
-    } else {
-      return error(res, errorCode, errorMsg);
     }
-
-    /* Return validation error */
-    return null;
+    return error(res, errorCode, errorMsg);
   }
 }
 
