@@ -69,5 +69,8 @@ INSERT INTO rideoffers ("rideTitle", location, destination, "departureTime", "no
 
 
 
--- INSERT INTO riderequests ("rideId", "noOfSeats", status, "ride") 
---  VALUES ('Heading towards computer vaillage',	'Yaba', 	'Ikeja', 'NOW()', 2, 'NOW()', 'NOW()', 'NOW()');
+INSERT INTO riderequests ("rideId", "passengerId", status) 
+ VALUES (2,	1, 	'pending');
+
+ INSERT INTO riderequests ("rideId", "passengerId", status) 
+ VALUES (1,	2, 	'pending');
