@@ -65,19 +65,21 @@ class RideOfferController {
       }
       const riderequests = result.rows;
       if (result.rowCount > 0) {
-        return success(res, 201, { message: 'All ride request', riderequests });
+        return success(res, 200, { message: 'Your ride requests', riderequests });
       }
-      return failure(res, 403, { message: 'No ride offer found' });
+      return failure(res, 404, { message: 'No ride request found' });
     });
   }
 
   static acceptRideRequest(req, res) {
     let { rideId, requestId } = req.params;
     const { status } = req.body;
+    // const token = req.headers.authorization.split(' ')[1];
+    // const decoded = jwt.verify(token, dbConfig.secret);
 
     rideId = parsedInt(rideId);
     requestId = parsedInt(requestId);
-    console.log(requestId);
+    // console.log(requestId);
 
     /* Check if id is  a Not a number */
     if (!(Number.isInteger(rideId)) || !(Number.isInteger(requestId)) || status.trim() === '') {
@@ -88,7 +90,7 @@ class RideOfferController {
         if (err) {
           return error(res, 500, 'Could not establish database connection');
         }
-        return success(res, 200, { message: '1 ride over declined' });
+        return success(res, 200, { message: '1 ride offer declined' });
       });
     }
     return dbPool.query(`UPDATE riderequests SET status =' ${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {

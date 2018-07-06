@@ -9,7 +9,7 @@ export const ensureAutheticated = (req, res, next) => {
     req.userData = decoded;
     next();
   } catch (error) {
-    failure(res, 403, { message: 'You do not have access to this page' });
+    failure(res, 400, { message: 'You are not signed in, please login  or create an account' });
   }
 };
 

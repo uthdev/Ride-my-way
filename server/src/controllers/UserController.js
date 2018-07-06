@@ -29,7 +29,7 @@ class UserController {
           return error(res, 500, 'Error establishing database connection');
         }
         if (response.rowCount > 0) {
-          return failure(res, 403, 'A user with this email address already exist');
+          return failure(res, 400, 'A user with this email address already exist');
         }
 
         const values = [
@@ -82,7 +82,7 @@ class UserController {
             delete userInfo.password;
             return success(res, 200, { message: 'User login successfull', token, userInfo });
           }
-          return failure(res, 401, 'Username or password is not correct');
+          return failure(res, 400, 'Username or password is not correct');
         }
         return failure(res, 404, 'Could not find any user matching your request');
       });

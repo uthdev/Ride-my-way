@@ -7,7 +7,7 @@
  */
 export const isUserDetailsValid = (userDetails) => {
   /* Name variable declarration */
-  const errorCode = 401;
+  const errorCode = 400;
   let errorMsg;
 
   const {
@@ -24,12 +24,12 @@ export const isUserDetailsValid = (userDetails) => {
 
 
   /* Check for first name */
-  if (!firstName || firstName.trim() === '') {
+  if (!firstName || firstName.trim() === '' && ((typeof firstName) !== 'string')) {
     errorMsg = 'First name is required.';
   }
 
   /* check if last name is valid */
-  if (!lastName || lastName.trim() === '') {
+  if (!lastName || lastName.trim() === '' && typeof (lastName !== 'string')) {
     errorMsg = 'Last name is required.';
   }
 
@@ -45,12 +45,12 @@ export const isUserDetailsValid = (userDetails) => {
   }
 
   /* Check for phone number  */
-  if (!phone || phone.trim() === '') {
+  if (!phone || phone.trim() === '' && (typeof phone !== 'string')) {
     errorMsg = 'Phone cannot be empty';
   }
 
   /* Check for password */
-  if (!password || password.trim().length < 6) {
+  if (!password || password.trim().length < 6 && (typeof password !== 'string')) {
     errorMsg = 'Password cannot be less than six characters';
   }
 
@@ -60,19 +60,20 @@ export const isUserDetailsValid = (userDetails) => {
   }
 
   /* check for address  */
-  if (!address || address.trim() === '') {
+  if (!address || address.trim() === '' && (typeof address !== 'string')) {
     errorMsg = 'Address field cannot be empty';
   }
 
   /* Check for city */
-  if (!city || city.trim() === '') {
-    errorMsg = 'City cannot be empty';
+  if (!city || city.trim() === '' && typeof (city !== 'string')) {
+    errorMsg = 'City is empty or invalid';
   }
 
   /* Check for zipCode */
-  if (!zipCode || zipCode.trim() === '') {
+  if (!zipCode || zipCode.trim() === '' && (typeof (zipCode !== 'string'))) {
     errorMsg = 'Zip Code is required';
   }
+  console.log(errorMsg);
 
   return { errorCode, errorMsg };
 };
@@ -83,7 +84,7 @@ export const isUserDetailsValid = (userDetails) => {
  */
 export const isUserValid = (data) => {
   const { email, password } = data;
-  const errorCode = 401;
+  const errorCode = 400;
   let errorMsg;
 
   /* regular expression for testing email address */
@@ -95,7 +96,7 @@ export const isUserValid = (data) => {
   }
 
   /* Check for password */
-  if (!password) {
+  if (!password || typeof password !== 'string') {
     errorMsg = 'Email or password is incorrect';
   }
 
