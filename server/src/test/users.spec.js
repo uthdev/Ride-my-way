@@ -15,7 +15,7 @@ describe('Test users signup routes', () => {
         firstName: 'trust',
         lastName: 'jamine',
         phone: '07059972180',
-        email: 'jokpus@gmail.com',
+        email: 'joek@gmail.com',
         password: 'joeeasy',
         confirmPassword: 'joeeasy',
         address: '42 montgomery',
@@ -39,7 +39,7 @@ describe('Test users signup routes', () => {
         firstName: 'trust',
         lastName: 'jamine',
         phone: '07059972180',
-        email: 'jokpus@gmail.com',
+        email: 'joek@gmail.com',
         password: 'joeeasy',
         confirmPassword: 'joeeasy',
         address: '42 montgomery',
@@ -50,7 +50,7 @@ describe('Test users signup routes', () => {
         .post('/api/v1/auth/signup')
         .send(data)
         .end((error, res) => {
-          expect(res).to.have.status(403);
+          expect(res).to.have.status(400);
           expect(res.body.data).to.equal('A user with this email address already exist');
           done();
         });
@@ -63,7 +63,7 @@ describe('Test users signup routes', () => {
         firstName: '',
         lastName: 'jamine',
         phone: '07059972180',
-        email: 'jokpus@gmail.com',
+        email: 'joek@gmail.com',
         password: 'joeeasy',
         confirmPassword: 'joeeasy',
         address: '42 montgomery',
@@ -74,7 +74,7 @@ describe('Test users signup routes', () => {
         .post('/api/v1/auth/signup')
         .send(data)
         .end((error, res) => {
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           done();
         });
     });
@@ -87,14 +87,14 @@ describe('Test users signin routes', () => {
   describe('/GET api/v1/auth/signin', () => {
     it('users should not be able to login in when wrong credentials are provided', (done) => {
       const data = {
-        email: 'jokpus@gmail.com',
+        email: 'joek@gmail.com',
         password: 'joeeas0000y',
       };
       chai.request(app)
         .post('/api/v1/auth/signin')
         .send(data)
         .end((error, res) => {
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           // expect(res.body.data).to.equal('Username or password is not correct');
           done();
         });
@@ -104,14 +104,14 @@ describe('Test users signin routes', () => {
   describe('/GET api/v1/auth/signin', () => {
     it('users should not be able to signin when credentials are incomplete', (done) => {
       const data = {
-        email: 'jokpus@gmail.com',
+        email: 'joek@gmail.com',
         password: '',
       };
       chai.request(app)
         .post('/api/v1/auth/signin')
         .send(data)
         .end((error, res) => {
-          expect(res).to.have.status(401);
+          expect(res).to.have.status(400);
           done();
         });
     });
@@ -120,7 +120,7 @@ describe('Test users signin routes', () => {
   describe('/GET api/v1/auth/signin', () => {
     it('users should be able to login account to their account', (done) => {
       const data = {
-        email: 'jokpus@gmail.com',
+        email: 'joek@gmail.com',
         password: 'joeeasy',
       };
       chai.request(app)
@@ -134,3 +134,4 @@ describe('Test users signin routes', () => {
     });
   });
 });
+

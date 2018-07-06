@@ -74,3 +74,7 @@ INSERT INTO riderequests ("rideId", "passengerId", status)
 
  INSERT INTO riderequests ("rideId", "passengerId", status) 
  VALUES (1,	2, 	'pending');
+
+INSERT INTO riderequests ("rideId", "passengerId", status) 
+ VALUES (3,	1, 	'pending');
+ 

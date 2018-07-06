@@ -40,7 +40,7 @@ describe('Test For Ride Routes', () => {
 
   /* valid character but not availiable */
   describe('Check for invalid ride Id', () => {
-    it('should a not found message', (done) => {
+    it('should show a not found message', (done) => {
       chai.request(app)
         .get('/api/v1/rides/1333')
         .set('Authorization', user1)
@@ -137,27 +137,84 @@ describe('Test For Ride Routes', () => {
         .set('Authorization', user1)
         .send(data)
         .end((message, res) => {
-          expect(res).to.have.status(403);
+          expect(res).to.have.status(400);
           expect(res.body.data.message).to.equal('You have already sent a ride request');
           done();
         });
     });
   });
 
-  /* should not be able to send a ride request twice */
-  describe('/POST api/v1/rides/1/requests', () => {
-    it('should not  be able to join a ride', (done) => {
+  /* should be able to fetch all ride request */
+  describe('/GET api/v1/users/rides/<rideId>/requests', () => {
+    it('ride owner should be able to view all his ride requests', (done) => {
+      chai.request(app)
+        .get('/api/v1/users/rides/1/requests')
+        .set('Authorization', user1)
+        .end((message, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.data.message).to.equal('Your ride requests');
+          done();
+        });
+    });
+  });
+  /* should not be able to fetch all ride request */
+  describe('/GET api/v1/users/rides/<rideId>/requests', () => {
+    it('should handle illegal characters', (done) => {
+      chai.request(app)
+        .get('/api/v1/users/rides/dadj/requests')
+        .set('Authorization', user1)
+        .end((message, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body.message).to.equal('Ride is invalid');
+          done();
+        });
+    });
+  });
+  /* when a ride request does not exist */
+  describe('/GET api/v1/users/rides/<rideId>/requests', () => {
+    it('should return not found when a ride request does not exist', (done) => {
+      chai.request(app)
+        .get('/api/v1/users/rides/44/requests')
+        .set('Authorization', user1)
+        .end((message, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body.data.message).to.equal('No ride request found');
+          done();
+        });
+    });
+  });
+
+  /* accept/ reject ride request */
+  /* when a ride request does not exist */
+  describe('/PUT api/v1/users/rides/<rideId>/requests/<requestId>', () => {
+    it('should return accept a ride request', (done) => {
       const data = {
-        rideId: 1,
-        passengerId: 1,
+        status: 'accepted',
       };
       chai.request(app)
-        .post('/api/v1/rides/1/requests')
+        .put('/api/v1/users/rides/2/requests/1')
         .set('Authorization', user1)
         .send(data)
         .end((message, res) => {
-          expect(res).to.have.status(403);
-          expect(res.body.data.message).to.equal('You have already sent a ride request');
+          expect(res).to.have.status(200);
+          expect(res.body.data.message).to.equal('Acceptance successful');
+          done();
+        });
+    });
+  });
+  /* Should be able to reject a ride offer  */
+  describe('/PUT api/v1/users/rides/<rideId>/requests/<requestId>', () => {
+    it('should return accept a ride request', (done) => {
+      const data = {
+        status: 'rejected',
+      };
+      chai.request(app)
+        .put('/api/v1/users/rides/2/requests/1')
+        .set('Authorization', user1)
+        .send(data)
+        .end((message, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body.data.message).to.equal('1 ride offer declined');
           done();
         });
     });

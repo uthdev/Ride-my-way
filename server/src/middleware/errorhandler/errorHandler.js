@@ -2,7 +2,7 @@
 export const clientErrorHandler = (req, res, next) => {
   const err = new Error('Not Found');
   err.status = 404;
-  res.json({ message: 'Page not found' });
+  res.json({ message: 'Oops... Could not find the request you were looking for' });
   next(err);
 };
 

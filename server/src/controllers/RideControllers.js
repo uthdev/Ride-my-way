@@ -21,7 +21,7 @@ class RideController {
         const rideOffers = response.rows;
         return success(res, 200, { message: 'All ride offers', rideOffers });
       }
-      return failure(res, 403, { message: 'No ride offer found' });
+      return failure(res, 404, { message: 'No ride offer found' });
     });
   }
 
@@ -71,7 +71,7 @@ class RideController {
       }
       const passenger = response.rows[0];
       if ((response.rowCount > 0 && passenger.passengerId !== null)) {
-        return failure(res, 403, { message: 'You have already sent a ride request' });
+        return failure(res, 400, { message: 'You have already sent a ride request' });
       }
       return dbPool.query(joinRideQuery, values, (err, result) => {
         const request = result.rows[0];
