@@ -373,7 +373,7 @@
 
  .card__header {
    height: 132px;
-   background-color: #357dc5;
+   background-image: linear-gradient(to left, rgb(80, 115, 184) 0%, rgb(113, 72, 164) 99%, rgb(87, 58, 135) 100%);
    display: flex;
    justify-content: center;
    align-items: center;
