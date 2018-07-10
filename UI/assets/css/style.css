@@ -369,6 +369,8 @@
  .card {
    width: 264px;
    background-color: #ffffff;
+   height: 150px;
+   border-bottom: 3px solid #6a459d9e
  }
 
  .card__header {
@@ -383,15 +385,21 @@
  }
 
  .card__content {
+   display: flex;
    padding: 19px;
    background-color: #f5f7fa73;
+   height: inherit;
+   align-items: center;
  }
 
  .card--content__title {
-   font-size: 18px;
-   line-height: 21px;
+   line-height: 25px;
    padding-bottom: 16px;
    text-align: center;
+   letter-spacing: 3px;
+   font-size: 24px;
+   color: #9b9b9b;
+   font-weight: 700;
  }
 
  .card--content__body {
@@ -399,6 +407,12 @@
    text-align: center;
    color: #9b9b9b;
    padding-bottom: 42px;
+ }
+
+ .arrow__right {
+   height: 150px;
+   display: flex;
+   align-items: center;
  }
 
  /* INFO */
@@ -505,7 +519,21 @@
  }
 
  .contact__form>form {
-   width: 70%;
+   width: 40%;
+ }
+
+ .contact__form>form .input--group {
+   height: auto;
+   background-color: transparent;
+   border-radius: 3px;
+   display: flex;
+   flex-direction: column;
+ }
+
+ .contact__form>form .input--group .form--control {
+   background-color: #ffffff;
+   height: 50px;
+   margin-bottom: 10px;
  }
 
  .input--group {
