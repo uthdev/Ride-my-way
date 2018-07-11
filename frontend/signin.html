@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <title>Login To Your account | Ride My Way</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <header class="header__main">
+      <div class="header__nav">
+        <nav class="navbar " role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar__header">
+            <span class="js__navbar__toggler" style="font-size:30px;cursor:pointer">&#9776; </span>
+            <a href="index.html" class="navbar__brand">
+              <img src="assets/img/logo.png" alt="Ride my way logo" srcset="">
+            </a>
+          </div>
+
+          <!-- Collect the nav links for toggling -->
+          <div class="collapse navbar__collapse">
+            <a href="javascript:void(0)" class="closebtn js__navbar__toggler">&times;</a>
+            <ul class="nav navbar__right navbar__nav">
+              <li>
+                <a href="index.html#howitworks">How it works</a>
+              </li>
+              <li>
+                <a href="index.html#benefits">Benefits</a>
+              </li>
+              <li>
+                <a href="about.html">About</a>
+              </li>
+              <li>
+                <a href="signin.html">Login</a>
+              </li>
+              <li>
+                <a class="btn btn--secondary btn--round" href="createaccount.html">Sign Up</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <section class="SignIn padding--bottom--210">
+      <div class="SignIn__title">
+        <div class="logo--wrapper">
+          <img src="assets/img/Group 2.1.png" alt="Ride my way logo">
+        </div>
+        <h4 class="text--center margin--top--10 text--primary">Sign In to Ride</h4>
+      </div>
+      <div class="SignIn__headline">Safe, reliable rides in minutes
+      </div>
+      <div class="SignIn__content">
+        <div class="SignIn__form">
+          <form action="summary.html" role="form">
+            <!-- group inputs -->
+            <!-- capture email and phone number -->
+            <div class="input--group">
+              <input type="text" class="form-control form--control" placeholder="Email address">
+              <input type="password" class="form-control form--control" placeholder="Password">
+            </div>
+            <!-- submit button -->
+            <div class="contact__submit">
+              <button type="submit" class="btn btn--block bg--color--grey text--color--white">
+                <span>Sign In</span>
+              </button>
+
+            </div>
+            <div class="margin--top--10">
+              <p class="text--primary">Don't have an account?
+                <a href="createaccount.html" class="text--color--grey">Register</a>
+              </p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+    <section class="contact SignInFooter gradient">
+      <footer>
+        <h5 class="text--center text--color--white">&copy; Andela bootcamp project</h5>
+
+      </footer>
+  </div>
+  </section>
+  </div>
+  <script src="assets/js/main.js"></script>
+  <script>
+    window.onload = () => {
+      app.loadSideBar();
+    }
+  </script>
+</body>
+
+</html>
