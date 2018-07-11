@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
+import path from 'path';
 import { errorHandler, clientErrorHandler } from './middleware/errorhandler/errorHandler';
 import { rideRoute, userRoute, rideOffersRoute } from './routes';
 import swaggerDocument from './../../swagger.json';
@@ -18,6 +19,11 @@ app.use(bodyParser.json());
 // support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+/* Connect static files */
+app.use(express.static(path.resolve(__dirname, '../../frontend/')));
+
+
 /* Use cors to connect to any origin */
 app.options('*', cors({
   origin: true,
@@ -26,6 +32,8 @@ app.options('*', cors({
   optionsSuccessStatus: 204,
 }));
 
+
+app.get('/', (req, res) => res.sendfile('../../frontend/index.html'));
 app.use('/api/v1/rides', rideRoute);
 app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/users', rideOffersRoute);
