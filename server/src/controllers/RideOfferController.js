@@ -29,7 +29,7 @@ class RideOfferController {
     // check is ride is valid
 
     if (!errMsg) {
-      const values = [rideTitle, location, destination, departureTime, noOfSeats, rideOwnerId, 'NOW()', 'NOW()', 'NOW()'];
+      const values = [rideTitle, location, destination, departureTime, noOfSeats, rideOwnerId, 'NOW()'];
       return dbPool.query(find('"rideTitle"', 'rideoffers', '"rideTitle"', rideTitle), (err, result) => {
         if (err) {
           return error(res, 501, 'Could not establish database connection');

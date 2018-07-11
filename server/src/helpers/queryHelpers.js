@@ -24,8 +24,8 @@ export const findAll = (selectedColumn, tableName) => (`SELECT ${selectedColumn}
 
 export const createRideOffer = `INSERT INTO 
   rideoffers("rideTitle", location, destination, "departureTime", "rideOwnerId", 
-  "noOfSeats", "createdAt", "startsAt", "expiresAt")
- VALUES($1, $2, $3, $4, $5, $6,$7, $8, $9)
+  "noOfSeats", "createdAt")
+ VALUES($1, $2, $3, $4, $5, $6,$7)
   RETURNING *`;
 
 export const joinRideQuery = `INSERT INTO 

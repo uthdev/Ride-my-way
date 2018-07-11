@@ -1,0 +1,387 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Ride My Way",
+    "description": "Yet Another Node.js Blogg Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "/api/v1",
+  "tags": [],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth User Sign Up"
+        ],
+        "description": "Create new user in system",
+        "parameters": [{
+          "name": "signup",
+          "in": "body",
+          "description": "User that we want to create",
+          "schema": {
+            "$ref": "#/definitions/signup"
+          }
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "New user is created",
+            "schema": {
+              "properties": {
+                "token": "string",
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "uniqueItems": true
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "zipCode": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "Auth User Sign In"
+        ],
+        "description": "Sign in to application",
+        "parameters": [{
+          "name": "signin",
+          "in": "body",
+          "description": "Allows users to login to their account",
+          "schema": {
+            "$ref": "#/definitions/signin"
+          }
+        }],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Existing users can login to their account",
+            "schema": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rides": {
+      "parameters": [{
+        "name": "auth",
+        "in": "headers",
+        "required": true,
+        "description": "Authorization header",
+        "type": "string"
+      }],
+      "get": {
+        "tags": [
+          "Rides"
+        ],
+        "summary": "Get All Ride Offers",
+
+        "responses": {
+          "200": {
+            "description": "Gets all the available ride offers",
+            "schema": {
+              "properties": {
+                "status": "string",
+                "data": {
+                  "message": "string",
+                  "rideOffers": [{
+                    "id": "number",
+                    "rideTitle": "string",
+                    "location": "string",
+                    "destination": "string",
+                    "departureTime": "string",
+                    "noOfSeats": "number",
+                    "createdAt": "string",
+                    "rideOwnerId": "number"
+                  }]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rides/{rideId}": {
+      "parameters": [{
+        "name": "auth",
+        "in": "headers",
+        "required": true,
+        "description": "Authorization header",
+        "type": "string"
+      }, {
+        "name": "rideId",
+        "in": "path",
+        "required": true,
+        "description": "ID of the ride",
+        "type": "string"
+      }],
+      "get": {
+        "tags": [
+          "ride/{rideId}"
+        ],
+        "summary": "Get A Single Ride",
+
+        "responses": {
+          "200": {
+            "description": "Gets all the available ride offers",
+            "schema": {
+              "$ref": "#/definitions/rides"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete ride offer with a given ID",
+        "tags": [
+          "rides/{rideId}"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ride has been deleted",
+            "schema": {
+              "$ref": "#/definitions/rides"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "rides/{rideId}"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ride info has been updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+    "/rides/{rideId}/request": {
+      "parameters": [{
+        "name": "auth",
+        "in": "headers",
+        "required": true,
+        "description": "Authorization header",
+        "type": "string"
+      }, {
+        "name": "rideId",
+        "in": "path",
+        "required": true,
+        "description": "ID of the ride",
+        "type": "string"
+      }],
+      "post": {
+        "tags": [
+          "ride/{rideId}/request"
+        ],
+        "summary": "<Make a ride request",
+
+        "responses": {
+          "200": {
+            "description": "Send request to join a ride",
+            "schema": {
+              "$ref": "#/definitions/requests"
+            }
+          }
+        }
+      }
+    },
+    "/users/rides": {
+      "parameters": [{
+        "name": "auth",
+        "in": "headers",
+        "required": true,
+        "description": "Authorization header",
+        "type": "string"
+      }],
+      "post": {
+        "tags": [
+          "users/rides"
+        ],
+        "summary": "Create a ride offer",
+
+        "responses": {
+          "200": {
+            "description": "Offer rides",
+            "schema": {
+              "$ref": "#/definitions/offers"
+            }
+          }
+        }
+      }
+    },
+    "/users/rides/<rideId>/requests": {
+      "parameters": [{
+        "name": "auth",
+        "in": "headers",
+        "required": true,
+        "description": "Authorization header",
+        "type": "string"
+      }],
+      "get": {
+        "tags": [
+          "/users/rides/<rideId>/requests"
+        ],
+        "summary": "Fetch all ride requests",
+
+        "responses": {
+          "200": {
+            "description": "This endpoint helps the creator of the ride offer to see the responses so far.All the requests  returned should contain the name of the interested party ",
+            "schema": {
+              "$ref": "#/definitions/riderequests"
+            }
+          }
+        }
+      }
+    },
+    "/users/rides/<rideId>/requests/<requestId > ": {
+      "parameters": [{
+        "name": "auth",
+        "in": "headers",
+        "required": true,
+        "description": "Authorization header",
+        "type": "string"
+      }],
+      "put": {
+        "tags": [
+          "users/rides"
+        ],
+        "summary": "Accept or reject a ride request",
+
+        "responses": {
+          "200": {
+            "description": "Accept or reject a ride offer",
+            "schema": {
+              "$ref": "#/definitions/offers"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "signup": {
+      "required": [
+        "firstName",
+        "lastName",
+        "phone",
+        "email",
+        "address",
+        "password",
+        "confirmPassword",
+        "city",
+        "zipCode"
+
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "phone": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "confirmPassword": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        }
+      }
+    },
+    "signin": {
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "rides": {
+      "properties": {
+        "status": "string",
+        "data": {
+          "message": "string",
+          "rideOffers": [{
+            "id": "number",
+            "rideTitle": "string",
+            "location": "string",
+            "destination": "string",
+            "departureTime": "string",
+            "noOfSeats": "number",
+            "createdAt": "string",
+            "startsAt": "string",
+            "expiresAt": "string",
+            "rideOwnerId": "number"
+          }]
+        }
+      }
+    }
+  }
+}

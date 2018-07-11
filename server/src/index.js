@@ -1,7 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import { errorHandler, clientErrorHandler } from './middleware/errorhandler/errorHandler';
 import { rideRoute, userRoute, rideOffersRoute } from './routes';
+import swaggerDocument from './../../swagger.json';
+
 
 const app = express();
 
@@ -14,12 +18,23 @@ app.use(bodyParser.json());
 // support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/* Use cors to connect to any origin */
+app.options('*', cors({
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+}));
+
 app.use('/api/v1/rides', rideRoute);
 app.use('/api/v1/auth', userRoute);
 app.use('/api/v1/users', rideOffersRoute);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 /* Handle client side err */
 app.use(clientErrorHandler);
+
+
 if (app.get('env') === 'development') {
   app.use(errorHandler);
 }
