@@ -58,32 +58,33 @@
       </div>
       <div class="CreateAccount__content">
         <div class="CreateAccount__form">
-          <form action="summary.html" role="form">
+          <form role="form" id="signUp">
+            <p class="js__errMsg"></p>
             <!-- group inputs -->
             <!-- capture names -->
             <div class="input--group">
-              <input type="text" class="form-control form--control" placeholder="First Name">
-              <input type="text" class="form-control form--control" placeholder="Last Name">
+              <input type="text" class="form-control form--control" placeholder="First Name" name="firstName">
+              <input type="text" class="form-control form--control" placeholder="Last Name" name="lastName">
             </div>
 
             <!-- capture email and phone number -->
             <div class="input--group">
-              <input type="text" class="form-control form--control" placeholder="Email address">
-              <input type="text" class="form-control form--control" placeholder="Phone number">
+              <input type="text" class="form-control form--control" placeholder="Email address" name="email">
+              <input type="text" class="form-control form--control" placeholder="Phone number" name="phone">
             </div>
             <!-- capture password and confirm password-->
             <div class="input--group">
-              <input type="password" class="form-control form--control" placeholder="Password">
-              <input type="password" class="form-control form--control" placeholder="Confirm Password">
+              <input type="password" class="form-control form--control" placeholder="Password" name="password">
+              <input type="password" class="form-control form--control" placeholder="Confirm Password" name="confirmPassword">
             </div>
             <!-- capture password and confirm password-->
             <div class="input--group">
-              <input type="text" class="form-control form--control" placeholder="Address">
-              <input type="text" class="form-control form--control" placeholder="City">
+              <input type="text" class="form-control form--control" placeholder="Address" name="address">
+              <input type="text" class="form-control form--control" placeholder="City" name="city">
             </div>
             <!-- capture password and confirm password-->
             <div class="input--group">
-              <input type="text" class="form-control form--control bd--none" placeholder="Zip code">
+              <input type="text" class="form-control form--control bd--none" placeholder="Zip code" name="zipCode">
             </div>
             <!-- submit button -->
             <div class="contact__submit">
@@ -114,6 +115,7 @@
   <script>
     window.onload = () => {
       app.loadSideBar();
+      app.signUp();
     }
   </script>
 </body>

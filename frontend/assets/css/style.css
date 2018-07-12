@@ -120,6 +120,15 @@
    background-image: linear-gradient(to bottom, #401779 0%, #5073B8);
  }
 
+ .js__errMsg {
+   font-size: 20px;
+   text-align: center;
+   color: #B71C1C;
+   padding: 10px;
+ }
+
+ }
+
  /*  */
 
  .vertical--center {
