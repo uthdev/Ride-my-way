@@ -59,11 +59,12 @@
       <div class="SignIn__content">
         <div class="SignIn__form">
           <form action="summary.html" role="form">
+            <p class="js__errMsg"></p>
             <!-- group inputs -->
             <!-- capture email and phone number -->
             <div class="input--group">
-              <input type="text" class="form-control form--control" placeholder="Email address">
-              <input type="password" class="form-control form--control" placeholder="Password">
+              <input type="text" class="form-control form--control" placeholder="Email address" name="email">
+              <input type="password" class="form-control form--control" placeholder="Password" name="password">
             </div>
             <!-- submit button -->
             <div class="contact__submit">
@@ -94,6 +95,7 @@
   <script>
     window.onload = () => {
       app.loadSideBar();
+      app.signIn();
     }
   </script>
 </body>
