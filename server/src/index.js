@@ -53,6 +53,7 @@ if (app.get('env') === 'development') {
 app.use(errorHandler);
 
 // Subscribe server to a particular port
+// eslint-disable-next-line
 app.listen(Port, () => console.log(`Server Started At ${Port}`));
 
 // export app
