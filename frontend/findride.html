@@ -136,103 +136,14 @@
           <div class="SearchResult__heading">
             <h2 class="DashboardColor--text--grey text--center">Ride Offers</h2>
           </div>
-          <div class="SearchResult__content">
-            <div class="RideDetails light--shadow">
-              <div class="RideDetail__header">
-                <div class="RideInfo__content text--center margin--top--10">
-                  <div class="text--color--grey">
-                    <i class="fas fa-map-marker-alt"></i> Computer village Ikeja</div>
-                  <div>
-                    <i class="fas fa-arrow-down text--primary margin--10 bounce"></i>
-                  </div>
-                  <div class="text--color--grey">
-                    <i class="fas fa-map-marker-alt text--primary"></i> Yaba
-                  </div>
-                  <div class="ride__price">
-                    <h3 class="DashboardColor--text--grey">Price:
-                      <span class="text--primary">NGN 200</span>
-                    </h3>
-                  </div>
-                  <div class="ride__seats">
-                    <h6 class="DashboardColor--text--grey">Available Seats:
-                      <span class="text--primary">3</span>
-                    </h6>
-                  </div>
-                  <form action="summary.html" class="RideForm">
-                    <div>
-                      <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join</button>
-                    </div>
-                    <div>
-                      <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Cancel</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="RideDetails light--shadow">
-              <div class="RideDetail__header">
-                <div class="RideInfo__content text--center margin--top--10">
-                  <div class="text--color--grey">
-                    <i class="fas fa-map-marker-alt"></i> Computer village Ikeja</div>
-                  <div>
-                    <i class="fas fa-arrow-down text--primary margin--10 bounce"></i>
-                  </div>
-                  <div class="text--color--grey">
-                    <i class="fas fa-map-marker-alt text--primary"></i> Yaba
-                  </div>
-                  <div class="ride__price">
-                    <h3 class="DashboardColor--text--grey">Price:
-                      <span class="text--primary">NGN 200</span>
-                    </h3>
-                  </div>
-                  <div class="ride__seats">
-                    <h6 class="DashboardColor--text--grey">Available Seats:
-                      <span class="text--primary">2</span>
-                    </h6>
-                  </div>
-                  <form action="summary.html" class="RideForm">
-                    <div>
-                      <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join</button>
-                    </div>
-                    <div>
-                      <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Cancel</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="RideDetails light--shadow">
-              <div class="RideDetail__header">
-                <div class="RideInfo__content text--center margin--top--10">
-                  <div class="text--color--grey">
-                    <i class="fas fa-map-marker-alt"></i> Computer village Ikeja</div>
-                  <div>
-                    <i class="fas fa-arrow-down text--primary margin--10 bounce"></i>
-                  </div>
-                  <div class="text--color--grey">
-                    <i class="fas fa-map-marker-alt text--primary"></i> Yaba
-                  </div>
-                  <div class="ride__price">
-                    <h3 class="DashboardColor--text--grey">Price:
-                      <span class="text--primary">NGN 200</span>
-                    </h3>
-                  </div>
-                  <div class="ride__seats">
-                    <h6 class="DashboardColor--text--grey">Available Seats:
-                      <span class="text--primary">7</span>
-                    </h6>
-                  </div>
-                  <form action="summary.html" class="RideForm">
-                    <div>
-                      <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join</button>
-                    </div>
-                    <div>
-                      <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Cancel</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+          <div class="alert alert--success alert--dismissible fade show" role="alert">
+            <span>You should check in on some of those fields below.</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="SearchResult__content" id="js__ride__search__result">
+
           </div>
           <div class="SearchResult__pagination">
             <ul class="pagination">
@@ -268,6 +179,7 @@
   <script>
     window.onload = () => {
       app.loadSideBar();
+      app.loadAllRideOffers();
     }
   </script>
 </body>
