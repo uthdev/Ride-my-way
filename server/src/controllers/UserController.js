@@ -1,96 +1,49 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { isUserDetailsValid, isUserValid } from '../helpers/authHelpers';
-import { error, success, failure } from '../helpers/helpers';
+import { error, parsedInt, success, failure } from '../helpers/helpers';
 import dbPool from '../config/dbConnection';
-import dbConfig from '../config/databaseConfig';
-import { createNewUser, find } from '../helpers/queryHelpers';
+import { find } from '../helpers/queryHelpers';
 
 /**
- * @class UserContoller
- * @description Handles user signup and login
+ * @class UserController
+ * @description Handles all request to the user's information
  */
 class UserController {
   /**
-   * @description Create a new user account
+   *
    * @param {Object} req
    * @param {Object} res
+   * @description fetches the user info with from the params
    */
-  static signUp(req, res, done) {
-    const { errorCode, errorMsg } = isUserDetailsValid(req.body, res, done);
-    if (!errorMsg) {
-      const email = req.body.email.trim();
-      const firstName = req.body.firstName.trim();
-      const hashedPassword = bcrypt.hashSync(req.body.password.trim(), 8);
+  static fetchUser(req, res) {
+    const { id } = req.params;
+    const parsedId = parsedInt(id);
+    // console.log('from request', req.userData);
 
-      /* check if email address is already existing */
-      return dbPool.query(find('email', 'users', 'email', email), (err, response) => {
-        if (err) {
-          return error(res, 500, 'Error establishing database connection');
-        }
-        if (response.rowCount > 0) {
-          return failure(res, 400, 'A user with this email address already exist');
-        }
 
-        const values = [
-          firstName, req.body.lastName,
-          email, req.body.phone,
-          hashedPassword, req.body.address,
-          req.body.city, req.body.zipCode, 'NOW()',
-        ];
-
-        // callback
-        dbPool.query(createNewUser, values, (err, result) => {
-          if (err) {
-            error(res, 500, 'Something went while trying to create your account');
-          }
-          const results = result.rows[0];
-          const token = jwt.sign(
-            { id: results.id },
-            dbConfig.secret,
-            { expiresIn: 86400 },
-          );
-          delete results.password;
-          return success(res, 201, { message: 'Your account was created successfully', token, results });
-        });
-        return null;
-      });
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(parsedId))) {
+      return error(res, 400, 'User is invalid');
     }
-    return error(res, errorCode, errorMsg);
+    return dbPool.query(find('*', 'users', 'id', parsedId), (err, result) => {
+      if (err) {
+        return error(res, 500, 'Error connecting the database');
+      }
+
+      if (result.rowCount > 0) {
+        const user = result.rows[0];
+        delete user.password;
+        return success(res, 200, { message: 'user info', user });
+      }
+      return failure(res, 404, "User wasn't found");
+    });
   }
 
-  static signIn(req, res) {
-    /* Grab the email addres and password from the request body */
-    const { errorCode, errorMsg } = isUserValid(req.body);
-    const { email, password } = req.body;
-
-    if (!errorMsg) {
-      /* Search for user */
-      return dbPool.query(find('*', 'users', 'email', email), (err, user) => {
-        if (err) {
-          error(res, 500, 'Could not connect to the database server');
-        }
-        if (user.rowCount > 0) {
-          const userInfo = user.rows[0];
-          const token = jwt.sign(
-            { id: userInfo.id },
-            dbConfig.secret,
-            { expiresIn: 84000 },
-          );
-
-          if (bcrypt.compareSync(password, userInfo.password.trim())) {
-            delete userInfo.password;
-            return success(res, 200, { message: 'User login successfull', token, userInfo });
-          }
-          return failure(res, 400, 'Username or password is not correct');
-        }
-        return failure(res, 404, 'Could not find any user matching your request');
-      });
+  static fetchCurrentUser(req, res) {
+    if (req.userData) {
+      const currentUser = req.userData;
+      return success(res, 200, { message: 'User is logged in', currentUser });
     }
-    return error(res, errorCode, errorMsg);
+    return null;
   }
 }
 
-
 export default UserController;
-
