@@ -14,6 +14,7 @@ class RideOfferController {
    */
 
   static createRideOffer(req, res) {
+    console.log(req.body);
     const {
       rideTitle,
       location,
@@ -29,9 +30,10 @@ class RideOfferController {
     // check is ride is valid
 
     if (!errMsg) {
-      const values = [rideTitle, location, destination, departureTime, noOfSeats, rideOwnerId, 'NOW()'];
+      const values = [rideTitle, location, destination, departureTime, noOfSeats, 'NOW()', parsedInt(rideOwnerId)];
       return dbPool.query(find('"rideTitle"', 'rideoffers', '"rideTitle"', rideTitle), (err, result) => {
         if (err) {
+          // console.log(err);
           return error(res, 501, 'Could not establish database connection');
         }
         if (result.rowCount > 0) {
@@ -39,6 +41,7 @@ class RideOfferController {
         }
         return dbPool.query(createRideOffer, values, (err, response) => {
           if (err) {
+            console.log(err);
             return error(res, 501, 'Could not establish database connection');
           }
           if (response.rowCount > 0) {

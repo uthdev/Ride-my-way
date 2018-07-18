@@ -161,6 +161,23 @@ app.fetch = (url, authToken) => {
     // eslint-disable-next-line
     .catch(error => console.error('Fetch Error =\n', error));
 };
+
+app.post = (url, authToken, formData) => {
+  const requestHeader = {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: formData,
+  };
+
+  return fetch(url, requestHeader)
+    .then(response => response.json()) // parses response to JSON
+    // eslint-disable-next-line
+    .catch(error => console.error('Fetch Error =\n', error));
+};
+
 app.authRedirect = (time) => {
   setTimeout(() => {
     window.location.href = 'signin.html';
@@ -218,12 +235,13 @@ app.getSingleRide = () => {
     if (data.status === 'success') {
       // alertMsg.innerHTML = data.data.message;
       // console.log(data);
-      // let phone = '';
+      // let phone = ''
       app.fetch(`/api/v1/profile/${data.data.rideOffer.rideOwnerId}`, localStorage.getItem('token')).then((user) => {
-        if (user.status === 'fail') {
-          // alertMsg.innerHTML = data.data.message;
-          app.authRedirect(0);
-        }
+        // if (user.status === 'fail') {
+        //   // alertMsg.innerHTML = data.data.message;
+        //   // app.authRedirect(0);
+        //   document.write('Could not find this user');
+        // }
         if (user.status === 'success') {
           const rideHeader = document.querySelector('.RideInfo__header');
           const { phone } = user.data.user;
@@ -281,6 +299,52 @@ app.getSingleRide = () => {
   });
 };
 
+app.createRideOffer = () => {
+  app.fetch('/api/v1/profile/current/user', localStorage.getItem('token')).then((currentUser) => {
+    app.fetch(`/api/v1/profile/${currentUser.data.currentUser.id}`, localStorage.getItem('token')).then((user) => {
+      const { profile, id } = user.data.user;
+      const profileImage = document.querySelector('.profile');
+      // const rideOwnerId = parseInt(id, 10);
+      const rideOwnerIdInput = document.querySelector("input[type='hidden']");
+      rideOwnerIdInput.value = id;
+
+      // console.log({ profileImage });
+      profileImage.attributes['0'].nodeValue = (profile) || 'assets/img/dummy.jpg';
+      // (profile) || 'assets/img/dummy.jpg';
+    });
+  });
+
+  const form = document.getElementsByTagName('form')[0];
+  const errMsg = document.querySelector('.js__errMsg');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = app.getFormData();
+    // console.log(formData);
+    const formdata = JSON.stringify(formData);
+    // console.log(formdata);
+    // console.log(formd);
+    app.post('/api/v1/users/rides', localStorage.getItem('token'), formdata).then((data) => {
+      console.log(data);
+      if (data.status === 'fail') {
+        errMsg.textContent = `* ${data.data}`;
+      }
+      if (data.status === 'error') {
+        errMsg.textContent = `* ${data.message}`;
+      }
+      if (data.status === 'success') {
+        errMsg.style.color = '#78c078';
+        errMsg.textContent = `* ${data.data.message}, You will be redirected shortly`;
+        setTimeout(() => {
+          window.location = 'findride.html';
+          return null;
+        }, 1500);
+      }
+    }) // JSON from `response.json()` call
+      // eslint-disable-next-line
+      .catch(error => console.error(error));
+  });
+};
 /* Fetch all ride offers */
 
 

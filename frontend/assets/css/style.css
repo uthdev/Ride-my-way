@@ -988,6 +988,10 @@
    margin-bottom: 10px;
  }
 
+ .input--group.dashboard--input .bd--none {
+   border: none;
+ }
+
  .input--group.dashboard--input:last-child {
    margin-bottom: 0;
  }

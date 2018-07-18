@@ -95,31 +95,33 @@
           <div class="RideDetail__header">
             <div class="RideInfo__header">
               <div class="RideInfo__header__img text--center">
-                <img src="assets/img/ME.jpeg" alt="offerer profile">
-                <h3 class="text--primary"> Add Offer</h3>
+                <img src="assets/img/ME.jpeg" class="profile" alt="offerer profile">
+                <h3 class="text--primary"> Create a ride offer</h3>
                 <h5 class="text--color--grey font--regular">Where are you heading to?</h5>
               </div>
             </div>
             <div class="RideInfo__content text--center margin--top--10">
-              <form action="summary.html" role="form">
+              <form role="form">
                 <!-- group inputs -->
                 <!-- capture names -->
+                <p class="js__errMsg"></p>
                 <div class="input--group dashboard--input">
-                  <input type="text" class="form--control" placeholder="From(Your current location)" autofocus>
-                  <input type="text" class="form--control" placeholder="To(Where you are going)">
+                  <input type="text" class="form--control" placeholder="From(Your current location)" autofocus name="location">
+                  <input type="text" class="form--control" placeholder="To(Where you are going)" name="destination">
                 </div>
 
                 <!-- capture email and phone number -->
                 <div class="input--group dashboard--input">
-                  <input type="text" class="form--control" placeholder="Note">
-                  <input type="text" class="form--control" placeholder="Phone number">
+                  <input type="text" class="form--control bd--none" name="rideTitle" placeholder="Ride title">
+                  <!-- <input type="text" class="form--control" placeholder="Phone number"> -->
                 </div>
 
                 <!-- capture price and number of seats -->
                 <div class="input--group dashboard--input">
-                  <input type="text" class="form--control" placeholder="Price(NGN)">
-                  <input type="number" class="form--control" placeholder="Availiable seats">
+                  <input type="datetime-local" class="form--control" placeholder="Price(NGN)" name="departureTime">
+                  <input type="number" class="form--control" placeholder="Availiable seats" name="noOfSeats">
                 </div>
+                <input type="hidden" name="rideOwnerId">
 
                 <!-- submit button -->
                 <div class="contact__submit margin--top--10">
@@ -139,6 +141,7 @@
   <script>
     window.onload = () => {
       app.loadSideBar();
+      app.createRideOffer();
     }
   </script>
 </body>
