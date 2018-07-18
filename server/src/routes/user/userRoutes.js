@@ -1,6 +1,7 @@
 import express from 'express';
 import { json, urlencoded } from 'body-parser';
 import UserController from '../../controllers/UserController';
+import { ensureAutheticated } from '../../middleware/auth/authMiddleware';
 
 const userRoute = express();
 
@@ -11,11 +12,10 @@ userRoute.use(json());
 userRoute.use(urlencoded({ extended: true }));
 
 /* Route for creating account */
-userRoute.route('/signup')
-  .post(UserController.signUp);
+userRoute.route('/:id')
+  .get(ensureAutheticated, UserController.fetchUser);
 
-/* Route for logging in */
-userRoute.route('/signin')
-  .post(UserController.signIn);
+userRoute.route('/current/user')
+  .get(ensureAutheticated, UserController.fetchCurrentUser);
 
 export default userRoute;

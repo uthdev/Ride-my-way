@@ -45,7 +45,8 @@ app.getFormData = () => {
   const inputs = form.getElementsByTagName('input');
 
   const formData = {};
-  for (let i = 0; i < inputs.length; (i += 1)) {
+  for (let i = 0; i < inputs.length;
+    (i += 1)) {
     formData[inputs[i].name] = inputs[i].value;
   }
   return formData;
@@ -71,8 +72,8 @@ app.authUser = (url, formData) =>
     body: formData,
   })
     .then(response => response.json()) // parses response to JSON
-    // eslint-disable-next-line
-    .catch(error => console.error('Fetch Error =\n', error));
+  // eslint-disable-next-line
+  .catch(error => console.error('Fetch Error =\n', error));
 
 /* Createa an account for a new user */
 /**
@@ -142,7 +143,7 @@ app.signIn = () => {
         }, 1500);
       }
     }) // JSON from `response.json()` call
-    // eslint-disable-next-line
+      // eslint-disable-next-line
       .catch(error => console.error(error));
   });
 };
@@ -160,10 +161,10 @@ app.fetch = (url, authToken) => {
     // eslint-disable-next-line
     .catch(error => console.error('Fetch Error =\n', error));
 };
-app.authRedirect = () => {
+app.authRedirect = (time) => {
   setTimeout(() => {
     window.location.href = 'signin.html';
-  }, 1000);
+  }, time);
 };
 
 app.loadAllRideOffers = () => {
@@ -176,7 +177,7 @@ app.loadAllRideOffers = () => {
     }
     if (data.status === 'success') {
       alertMsg.innerHTML = data.data.message;
-      console.log(data);
+      // console.log(data);
       data.data.rideOffers.map((rideOffer) => {
         rideSearchResult.innerHTML += `
         <div class="RideDetails light--shadow">
@@ -195,14 +196,9 @@ app.loadAllRideOffers = () => {
                   <span class="text--primary">${rideOffer.noOfSeats}</span>
                 </h6>
               </div>
-              <form action="ridedetails.html?id=${rideOffer.id}" class="RideForm">
-                <div>
-                  <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join</button>
+              <div>
+                  <a href='ridedetails.html?${rideOffer.id}' style='display:inherit' class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join</a>
                 </div>
-                <div>
-                  <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Cancel</button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
@@ -212,6 +208,78 @@ app.loadAllRideOffers = () => {
   });
 };
 
+app.getSingleRide = () => {
+  const rideOfferId = window.location.search.split('')[1];
+  app.fetch(`/api/v1/rides/${rideOfferId}`, localStorage.getItem('token')).then((data) => {
+    if (data.status === 'fail') {
+      // alertMsg.innerHTML = data.data.message;
+      app.authRedirect(0);
+    }
+    if (data.status === 'success') {
+      // alertMsg.innerHTML = data.data.message;
+      // console.log(data);
+      // let phone = '';
+      app.fetch(`/api/v1/profile/${data.data.rideOffer.rideOwnerId}`, localStorage.getItem('token')).then((user) => {
+        if (user.status === 'fail') {
+          // alertMsg.innerHTML = data.data.message;
+          app.authRedirect(0);
+        }
+        if (user.status === 'success') {
+          const rideHeader = document.querySelector('.RideInfo__header');
+          const { phone } = user.data.user;
+          const rideOfferHeading = `<div class="RideInfo__header__img text--center">
+            <img src="${(user.data.user.profile) ? user.data.user.profile : 'assets/img/dummy.jpg'}" alt="offerer profile">
+            <h4 class="text--primary">${data.data.rideOffer.rideTitle}</h4>
+            <h5 class="text--color--grey font--regular">${user.data.user.firstName} ${user.data.user.lastName}</h5>
+            <h4 class="DashboardColor--text--grey">Phone:
+            <span class="text--primary">${phone}</span>
+          </h4>
+          </div>`;
+          rideHeader.innerHTML = rideOfferHeading;
+        }
+      });
+      const rideOfferContent = document.querySelector('.RideInfo__content');
+      const rideOfferBody = `
+      <div class="direction">
+      <div class="text--color--grey margin--0">
+        <strong>Location:</strong> ${data.data.rideOffer.location}</div>
+      <div>
+        <i class="fas fa-arrow-right text--primary"></i>
+      </div>
+      <div class="text--color--grey">
+        <strong>Destination:</strong> ${data.data.rideOffer.destination}</div>
+    </div>
+  
+    <div class="ride__seats">
+      <h6 class="DashboardColor--text--grey">Available Seats:
+        <span class="text--primary">${data.data.rideOffer.noOfSeats}</span>
+      </h6>
+    </div>
+    
+    
+      `;
+      rideOfferContent.innerHTML = rideOfferBody;
+      app.fetch('/api/v1/profile/current/user', localStorage.getItem('token')).then((currentUser) => {
+        if (currentUser) {
+          // eslint-disable-next-line
+          return (currentUser.data.currentUser.id === data.data.rideOffer.rideOwnerId) ? (
+            rideOfferContent.innerHTML += `<div class="view__rideoffers">
+            <a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="riderequest.html">View ride offers</a>
+          </div>`) : (
+            rideOfferContent.innerHTML += `<form action="/summary.html" class="RideForm">
+            <div>
+              <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join ride</button>
+            </div>
+            <div>
+              <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Cancel</button>
+            </div>
+          </form>`
+          );
+        }
+      });
+    }
+  });
+};
 
 /* Fetch all ride offers */
 

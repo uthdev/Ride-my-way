@@ -4,7 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import path from 'path';
 import { errorHandler, clientErrorHandler } from './middleware/errorhandler/errorHandler';
-import { rideRoute, userRoute, rideOffersRoute } from './routes';
+import { rideRoute, userRoute, rideOffersRoute, authRoute } from './routes';
 import swaggerDocument from './../../swagger.json';
 
 
@@ -34,9 +34,11 @@ app.options('*', cors({
 
 
 app.get('/', (req, res) => res.sendfile('../../frontend/index.html'));
+
 app.use('/api/v1/rides', rideRoute);
-app.use('/api/v1/auth', userRoute);
+app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/users', rideOffersRoute);
+app.use('/api/v1/profile/', userRoute);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 /* Handle client side err */
