@@ -28,5 +28,9 @@ rideRoute.route('/:rideId/requests')
   /* Send request to join ride */
   .post(RideController.joinRide);
 
+rideRoute.route('/owner/:rideOwnerId')
+
+  /* Get ride offers of a particular user */
+  .get(RideController.getUserRideOffer);
 
 export default rideRoute;

@@ -131,7 +131,7 @@
 
           <div class="divider--three vertical--center">
             <div class="CreateRide">
-              <a href="#">
+              <a href="#" id="js__RideRecieved">
                 <i class="fa-3x DashboardColor--text--primary">27</i>
                 <h4 class="DashboardColor--text--grey">Rides received</h4>
               </a>
@@ -139,7 +139,7 @@
           </div>
           <div class="divider--three vertical--center">
             <div class="CreateRide">
-              <a href="#">
+              <a href="#" id="js__RideOffered">
                 <i class="fa-3x DashboardColor--text--primary">17</i>
                 <h4 class="DashboardColor--text--grey">Rides offered</h4>
               </a>
@@ -324,6 +324,7 @@
   <script>
     window.onload = () => {
       app.loadSideBar();
+      app.getUserRidesCount();
     }
   </script>
 </body>
