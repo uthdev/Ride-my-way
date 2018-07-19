@@ -67,19 +67,19 @@
           <div class="container-fluid">
             <ul class="nav navbar__right navbar__nav">
               <li>
-                <a href="#">
+                <a href="summary.html">
                   Summary
                   <hr class="active--indicator">
                 </a>
               </li>
               <li>
-                <a href="#" class="notification active">
+                <a href="findride.html" class="notification active">
                   Ride Offers
                   <hr class="active--indicator">
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="riderequest.html">
                   Ride Requests
                   <hr class="active--indicator">
                 </a>
@@ -94,7 +94,7 @@
         <h3 class="DashboardColor--text--grey">Dashboard</h3>
         <ul class="nav navbar__nav">
           <li>
-            <a href="index.html">
+            <a href="summary.html">
               <i class="fas fa-home"></i>
             </a>
           </li>
@@ -106,6 +106,7 @@
       </div>
       <div class="dashboard__content">
         <div class="RideDetails light--shadow">
+          <p class="js__errMsg"></p>
           <div class="RideDetail__header">
             <div class="RideInfo__header">
             </div>
@@ -122,6 +123,7 @@
     window.onload = () => {
       app.loadSideBar();
       app.getSingleRide();
+      setTimeout(() => app.sendRideRequest(), 1000)
     }
   </script>
 </body>

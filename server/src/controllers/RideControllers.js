@@ -56,8 +56,9 @@ class RideController {
    */
   static joinRide(req, res) {
     // Ride id
+    // console.log(req.userData.id);
     const { rideId } = req.params;
-    const { passengerId } = req.body;
+    const passengerId = req.userData.id;
     const parsedId = parsedInt(rideId);
     const parsedPassengerId = parsedInt(passengerId);
     /* Check if id is  a Not a number */

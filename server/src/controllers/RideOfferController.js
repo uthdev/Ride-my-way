@@ -14,7 +14,6 @@ class RideOfferController {
    */
 
   static createRideOffer(req, res) {
-    console.log(req.body);
     const {
       rideTitle,
       location,
