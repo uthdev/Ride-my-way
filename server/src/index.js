@@ -25,7 +25,7 @@ app.use(express.static(path.resolve(__dirname, '../../frontend/')));
 
 
 /* Use cors to connect to any origin */
-app.options('*', cors({
+app.options('http://ridemw.herokuapp.com/', cors({
   origin: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   preflightContinue: false,
