@@ -1,5 +1,5 @@
 const app = {};
-
+let currentUserId = '';
 /**
  * @method saveToken Saves the token on local storage
  * @description Saves the authorization token to local storage
@@ -51,6 +51,29 @@ app.getFormData = () => {
   }
   return formData;
 };
+app.logIn = (data) => {
+  app.saveToken(data.data.token);
+  setTimeout(() => {
+    window.location = 'summary.html';
+    return null;
+  }, 1500);
+};
+app.isRequestValid = (data, callBack) => {
+  const errMsg = document.querySelector('.js__errMsg');
+  if (data.status === 'fail') {
+    errMsg.textContent = `* ${data.data.message}`;
+    return errMsg;
+  }
+  if (data.status === 'error') {
+    errMsg.textContent = `* ${data.message}`;
+    return errMsg;
+  }
+  if (data.status === 'success') {
+    errMsg.style.color = '#78c078';
+    errMsg.textContent = `* ${data.data.message}, You will be redirected shortly`;
+    return callBack(data);
+  }
+};
 
 /* sign in and signup user helpers */
 /**
@@ -83,30 +106,12 @@ app.authUser = (url, formData) =>
  */
 app.signUp = () => {
   const form = document.getElementsByTagName('form')[0];
-  const errMsg = document.querySelector('.js__errMsg');
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = app.getFormData();
     const formdata = JSON.stringify(formData);
-    app.authUser('/api/v1/auth/signup', formdata).then((data) => {
-      if (data.status === 'fail') {
-        errMsg.textContent = `* ${data.data}`;
-      }
-      if (data.status === 'error') {
-        errMsg.textContent = `* ${data.message}`;
-      }
-      if (data.status === 'success') {
-        errMsg.style.color = '#78c078';
-        errMsg.textContent = `* ${data.data.message}, You will be redirected shortly`;
-
-        app.saveToken(data.data.token);
-        setTimeout(() => {
-          window.location = 'summary.html';
-          return null;
-        }, 1500);
-      }
-    }) // eslint-disable-next-line
+    app.authUser('/api/v1/auth/signup', formdata).then(data => app.isRequestValid(data, app.logIn))
+    // eslint-disable-next-line
       .catch(error => console.error(error));
   });
 };
@@ -119,30 +124,13 @@ app.signUp = () => {
  */
 app.signIn = () => {
   const form = document.getElementsByTagName('form')[0];
-  const errMsg = document.querySelector('.js__errMsg');
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const formData = app.getFormData();
     const formdata = JSON.stringify(formData);
-    app.authUser('/api/v1/auth/signin', formdata).then((data) => {
-      if (data.status === 'fail') {
-        errMsg.textContent = `* ${data.data}`;
-      }
-      if (data.status === 'error') {
-        errMsg.textContent = `* ${data.message}`;
-      }
-      if (data.status === 'success') {
-        errMsg.style.color = '#78c078';
-        errMsg.textContent = `* ${data.data.message}, You will be redirected shortly`;
-        app.saveToken(data.data.token);
-        setTimeout(() => {
-          window.location = 'summary.html';
-          return null;
-        }, 1500);
-      }
-    }) // JSON from `response.json()` call
+    app.authUser('/api/v1/auth/signin', formdata).then(data => app.isRequestValid(data, app.logIn))
+    // JSON from `response.json()` call
       // eslint-disable-next-line
       .catch(error => console.error(error));
   });
@@ -178,9 +166,9 @@ app.post = (url, authToken, formData) => {
     .catch(error => console.error('Fetch Error =\n', error));
 };
 
-app.authRedirect = (time) => {
+app.authRedirect = (time, location) => {
   setTimeout(() => {
-    window.location.href = 'signin.html';
+    window.location.href = location;
   }, time);
 };
 
@@ -190,7 +178,7 @@ app.loadAllRideOffers = () => {
   app.fetch('/api/v1/rides', localStorage.getItem('token')).then((data) => {
     if (data.status === 'fail') {
       alertMsg.innerHTML = data.data.message;
-      app.authRedirect();
+      app.authRedirect(1000, 'signin.html');
     }
     if (data.status === 'success') {
       alertMsg.innerHTML = data.data.message;
@@ -230,7 +218,7 @@ app.getSingleRide = () => {
   app.fetch(`/api/v1/rides/${rideOfferId}`, localStorage.getItem('token')).then((data) => {
     if (data.status === 'fail') {
       // alertMsg.innerHTML = data.data.message;
-      app.authRedirect(0);
+      app.authRedirect(0, 'signIn.html');
     }
     if (data.status === 'success') {
       // alertMsg.innerHTML = data.data.message;
@@ -244,11 +232,13 @@ app.getSingleRide = () => {
         // }
         if (user.status === 'success') {
           const rideHeader = document.querySelector('.RideInfo__header');
-          const { phone } = user.data.user;
+          const {
+            phone, firstName, lastName,
+          } = user.data.user;
           const rideOfferHeading = `<div class="RideInfo__header__img text--center">
             <img src="${(user.data.user.profile) ? user.data.user.profile : 'assets/img/dummy.jpg'}" alt="offerer profile">
             <h4 class="text--primary">${data.data.rideOffer.rideTitle}</h4>
-            <h5 class="text--color--grey font--regular">${user.data.user.firstName} ${user.data.user.lastName}</h5>
+            <h5 class="text--color--grey font--regular">${(data.data.rideOffer.rideOwnerId === parseInt(localStorage.getItem('id'), 10)) ? 'You' : (`${lastName} ${firstName}`)}</h5>
             <h4 class="DashboardColor--text--grey">Phone:
             <span class="text--primary">${phone}</span>
           </h4>
@@ -294,11 +284,16 @@ app.getSingleRide = () => {
           </form>`
           );
         }
+        app.sendRideRequest();
       });
     }
   });
 };
-
+app.currentUserId = () => app.fetch('/api/v1/profile/current/user', localStorage.getItem('token')).then((currentUser) => {
+  currentUserId = currentUser.data.currentUser.id;
+  return localStorage.setItem('id', currentUserId);
+});
+app.currentUserId();
 app.createRideOffer = () => {
   app.fetch('/api/v1/profile/current/user', localStorage.getItem('token')).then((currentUser) => {
     app.fetch(`/api/v1/profile/${currentUser.data.currentUser.id}`, localStorage.getItem('token')).then((user) => {
@@ -325,28 +320,29 @@ app.createRideOffer = () => {
     // console.log(formdata);
     // console.log(formd);
     app.post('/api/v1/users/rides', localStorage.getItem('token'), formdata).then((data) => {
-      console.log(data);
-      if (data.status === 'fail') {
-        errMsg.textContent = `* ${data.data}`;
-      }
-      if (data.status === 'error') {
-        errMsg.textContent = `* ${data.message}`;
-      }
-      if (data.status === 'success') {
-        errMsg.style.color = '#78c078';
-        errMsg.textContent = `* ${data.data.message}, You will be redirected shortly`;
-        setTimeout(() => {
-          window.location = 'findride.html';
-          return null;
-        }, 1500);
-      }
+      const createOffer = () => setTimeout(() => {
+        window.location = 'findride.html';
+        return null;
+      }, 1500);
+      return app.isRequestValid(data, createOffer);
     }) // JSON from `response.json()` call
       // eslint-disable-next-line
       .catch(error => console.error(error));
   });
 };
 /* Fetch all ride offers */
-
+app.sendRideRequest = () => {
+  const form = document.querySelector('.RideForm');
+  const rideOfferId = window.location.search.split('')[1];
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // console.log(localStorage.getItem('id'));
+    app.post(`/api/v1/rides/${rideOfferId}/requests`, localStorage.getItem('token'), { passengerId: parseInt(localStorage.getItem('id'), 10) }).then((rideRequest) => {
+      const rideRequestHandler = () => app.authRedirect(1000, 'summary.html');
+      app.isRequestValid(rideRequest, rideRequestHandler);
+    });
+  });
+};
 
 // Get the navbar
 const navbar = document.querySelector('nav');

@@ -33,7 +33,7 @@ app.options('*', cors({
 }));
 
 
-app.get('/', (req, res) => res.sendfile('../../frontend/index.html'));
+app.get('/', (req, res) => res.sendFile('../../frontend/index.html'));
 
 app.use('/api/v1/rides', rideRoute);
 app.use('/api/v1/auth', authRoute);
