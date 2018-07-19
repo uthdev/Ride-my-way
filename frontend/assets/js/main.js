@@ -14,6 +14,8 @@ app.saveToken = token => localStorage.setItem('token', token);
  */
 app.getToken = () => localStorage.getItem('token');
 
+app.geCurrentUser = () => parseInt(localStorage.getItem('id'), 10);
+
 /**
  * @method loadSideBar responsible for the behaviour of the menu on mobile
  * @description loads hamburger menu once the window loads
@@ -40,8 +42,8 @@ app.loadSideBar = () => {
  * @description fetches the data from the form and creates the request body
  * @returns request body || form body
  */
-app.getFormData = () => {
-  const form = document.getElementsByTagName('form')[0];
+app.getFormData = (form) => {
+  // const form = form.getElementsByTagName('form')[0];
   const inputs = form.getElementsByTagName('input');
 
   const formData = {};
@@ -71,8 +73,9 @@ app.isRequestValid = (data, callBack) => {
   if (data.status === 'success') {
     errMsg.style.color = '#78c078';
     errMsg.textContent = `* ${data.data.message}, You will be redirected shortly`;
-    return callBack(data);
+    return callBack();
   }
+  return null;
 };
 
 /* sign in and signup user helpers */
@@ -108,7 +111,7 @@ app.signUp = () => {
   const form = document.getElementsByTagName('form')[0];
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const formData = app.getFormData();
+    const formData = app.getFormData(form);
     const formdata = JSON.stringify(formData);
     app.authUser('/api/v1/auth/signup', formdata).then(data => app.isRequestValid(data, app.logIn))
     // eslint-disable-next-line
@@ -127,7 +130,7 @@ app.signIn = () => {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const formData = app.getFormData();
+    const formData = app.getFormData(form);
     const formdata = JSON.stringify(formData);
     app.authUser('/api/v1/auth/signin', formdata).then(data => app.isRequestValid(data, app.logIn))
     // JSON from `response.json()` call
@@ -150,14 +153,14 @@ app.fetch = (url, authToken) => {
     .catch(error => console.error('Fetch Error =\n', error));
 };
 
-app.post = (url, authToken, formData) => {
+app.post = (url, authToken, formData, requestMethod) => {
   const requestHeader = {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc
+    method: requestMethod, // *GET, POST, PUT, DELETE, etc
     headers: {
       Authorization: `Bearer ${authToken}`,
       'Content-Type': 'application/json',
     },
-    body: formData,
+    body: JSON.stringify(formData),
   };
 
   return fetch(url, requestHeader)
@@ -167,9 +170,7 @@ app.post = (url, authToken, formData) => {
 };
 
 app.authRedirect = (time, location) => {
-  setTimeout(() => {
-    window.location.href = location;
-  }, time);
+  window.location.href = location;
 };
 
 app.loadAllRideOffers = () => {
@@ -208,6 +209,7 @@ app.loadAllRideOffers = () => {
           </div>
         </div>
         `;
+        return null;
       });
     }
   });
@@ -272,7 +274,7 @@ app.getSingleRide = () => {
           // eslint-disable-next-line
           return (currentUser.data.currentUser.id === data.data.rideOffer.rideOwnerId) ? (
             rideOfferContent.innerHTML += `<div class="view__rideoffers">
-            <a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="riderequest.html">View ride offers</a>
+            <a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="riderequest.html?${data.data.rideOffer.id}">View requests</a>
           </div>`) : (
             rideOfferContent.innerHTML += `<form action="/summary.html" class="RideForm">
             <div>
@@ -284,7 +286,7 @@ app.getSingleRide = () => {
           </form>`
           );
         }
-        app.sendRideRequest();
+        return app.sendRideRequest();
       });
     }
   });
@@ -310,16 +312,11 @@ app.createRideOffer = () => {
   });
 
   const form = document.getElementsByTagName('form')[0];
-  const errMsg = document.querySelector('.js__errMsg');
-
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const formData = app.getFormData();
-    // console.log(formData);
-    const formdata = JSON.stringify(formData);
-    // console.log(formdata);
-    // console.log(formd);
-    app.post('/api/v1/users/rides', localStorage.getItem('token'), formdata).then((data) => {
+    const formData = app.getFormData(form);
+
+    app.post('/api/v1/users/rides', localStorage.getItem('token'), formData, 'POST').then((data) => {
       const createOffer = () => setTimeout(() => {
         window.location = 'findride.html';
         return null;
@@ -334,16 +331,119 @@ app.createRideOffer = () => {
 app.sendRideRequest = () => {
   const form = document.querySelector('.RideForm');
   const rideOfferId = window.location.search.split('')[1];
+  app.fetch(`/api/v1/rides/${rideOfferId}`, localStorage.getItem('token')).then((data) => {
+    localStorage.setItem('rideOwnerId', data.data.rideOffer.rideOwnerId);
+  });
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     // console.log(localStorage.getItem('id'));
-    app.post(`/api/v1/rides/${rideOfferId}/requests`, localStorage.getItem('token'), { passengerId: parseInt(localStorage.getItem('id'), 10) }).then((rideRequest) => {
+    app.post(`/api/v1/rides/${rideOfferId}/requests`, localStorage.getItem('token'), { rideOwnerId: localStorage.getItem('rideOwnerId') }, 'POST').then((rideRequest) => {
       const rideRequestHandler = () => app.authRedirect(1000, 'summary.html');
       app.isRequestValid(rideRequest, rideRequestHandler);
     });
   });
 };
 
+
+app.getRideRequests = () => {
+  const rideOfferId = window.location.search.split('')[1];
+  console.log(rideOfferId);
+  const rideRequestBody = document.querySelector('.RideRequest');
+  app.fetch(`api/v1/users/rides/${rideOfferId}/requests`, app.getToken()).then((rideRequests) => {
+    console.log(rideRequests);
+    // console.log(rideRequests);
+    if (rideRequests.status === 'fail') {
+      rideRequestBody.innerHTML = `<div class="RideDetails light--shadow">
+          
+              <div class="RideDetail__header">
+                
+                <div class="RideInfo__content  margin--top--10 padding--40">
+          
+
+        <div class="ride__seats text--center">
+          <h3 class="DashboardColor--text--grey">No Request For This Ride
+          </h3>
+        </div>
+        
+        
+          </div>
+              </div>
+            </div>`;
+    } else {
+      rideRequests.data.riderequests.map((rideRequest) => {
+        console.log(rideRequest);
+        app.fetch(`/api/v1/rides/${rideRequest.rideId}`, localStorage.getItem('token')).then((data) => {
+          console.log(data);
+          // if (data.data.rideOffer.rideOwnerId !== app.geCurrentUser()) {
+          //   // alertMsg.innerHTML = data.data.message;
+          //   app.authRedirect(0, 'summary.html');
+          // }
+          if (data.status === 'success') {
+            const {
+              rideTitle, destination, location, id,
+            } = data.data.rideOffer;
+            app.fetch(`/api/v1/profile/${rideRequest.passengerId}`, localStorage.getItem('token')).then((requestingUser) => {
+              if (requestingUser.status === 'success') {
+                console.log(requestingUser);
+
+                const {
+                  phone, firstName, lastName, profile,
+                } = requestingUser.data.user;
+                const request = `
+                <div class="RideDetails light--shadow">
+                  <div class="RideDetail__header">
+                    <div class="RideInfo__header">
+                      <div class="RideInfo__header__img text--center">
+                        <img src="${profile || 'assets/img/dummy.jpg'}" alt="offerer profile">
+                        <h4 class="text--primary">${rideTitle}</h4>
+                        <h5 class="text--color--grey font--regular">${firstName} ${lastName} wants to join you</h5>
+                      </div>
+                    </div>
+                    <div class="RideInfo__content text--center margin--top--10">
+                      <div class="text--color--grey">${location}</div>
+                      <div>
+                        <i class="fas fa-arrow-down text--primary margin--10"></i>
+                      </div>
+                      <div class="text--color--grey">${destination}</div>
+                      <div class="RideForm">
+                        <form>
+                          <div>
+                          <input type='hidden' name='status' value='accepted' />
+                            <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Accept</button>
+                          </div>
+                        </form>
+                        <form>
+                          <div>
+                            <input type='hidden' name='status' value='rejected' />
+                            <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Decline</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
+                rideRequestBody.innerHTML += request;
+                const forms = Array.from(rideRequestBody.getElementsByTagName('form'));
+                forms.map((form) => {
+                  form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const formData = app.getFormData(form);
+                    app.post(`/api/v1/users/rides/${id}/requests/${rideRequest.id}`, app.getToken(), formData, 'PUT').then((result) => {
+                      console.log(result);
+                      const rideRequestHandler = () => app.authRedirect(1000, 'findride.html');
+                      app.isRequestValid(result, rideRequestHandler);
+                    });
+                  });
+                });
+              }
+            });
+          }
+        });
+      });
+    }
+  });
+};
 // Get the navbar
 const navbar = document.querySelector('nav');
 

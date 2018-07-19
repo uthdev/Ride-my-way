@@ -29,6 +29,6 @@ export const createRideOffer = `INSERT INTO
   RETURNING *`;
 
 export const joinRideQuery = `INSERT INTO 
-  riderequests("rideId", "passengerId", status)
- VALUES($1, $2, $3)
+  riderequests("rideId", "passengerId", status, "rideOwnerId")
+ VALUES($1, $2, $3, $4)
   RETURNING *`;

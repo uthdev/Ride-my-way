@@ -58,14 +58,18 @@ class RideController {
     // Ride id
     // console.log(req.userData.id);
     const { rideId } = req.params;
+    let { rideOwnerId } = req.body;
+    // console.log(req.body);
+    rideOwnerId = parsedInt(rideOwnerId);
+    // console.log(rideOwnerId);
     const passengerId = req.userData.id;
     const parsedId = parsedInt(rideId);
     const parsedPassengerId = parsedInt(passengerId);
     /* Check if id is  a Not a number */
-    if (!(Number.isInteger(parsedId)) || !(Number.isInteger(parsedPassengerId))) {
+    if (!(Number.isInteger(parsedId)) || !(Number.isInteger(parsedPassengerId)) || !(Number.isInteger(rideOwnerId))) {
       return error(res, 400, 'Ride is invalid');
     }
-    const values = [rideId, passengerId, 'pending'];
+    const values = [rideId, passengerId, 'pending', rideOwnerId];
     return dbPool.query(find('"passengerId"', 'riderequests', '"rideId"', rideId), (err, response) => {
       if (err) {
         return error(res, 500, 'Could not establish database connection');
