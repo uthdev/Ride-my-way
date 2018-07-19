@@ -872,6 +872,9 @@
  .RideInfo,
  .SearchResult__content {
    display: flex;
+ }
+
+ .SearchResult__content {
    flex-wrap: wrap;
  }
 

@@ -6,13 +6,13 @@
     "description": "Yet Another Node.js Blogg Application API",
     "license": {
       "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
+      "url": "ridemw.herokuapp.com/api/v1/"
     }
   },
-  "host": "/api/v1",
+  "host": "https",
   "tags": [],
   "schemes": [
-    "https"
+    "http"
   ],
   "consumes": [
     "application/json"
