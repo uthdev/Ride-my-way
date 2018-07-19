@@ -3,13 +3,13 @@
   "info": {
     "version": "1.0.0",
     "title": "Ride My Way",
-    "description": "Yet Another Node.js Blogg Application API",
+    "description": "Official documentation for ride my way app",
     "license": {
       "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
+      "url": "https://ridemw.herokuapp.com"
     }
   },
-  "host": "/api/v1",
+  "host": "ridemw.herokuapp.com/api/v1/",
   "tags": [],
   "schemes": [
     "https"

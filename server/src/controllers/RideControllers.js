@@ -58,20 +58,24 @@ class RideController {
     // Ride id
     // console.log(req.userData.id);
     const { rideId } = req.params;
+    let { rideOwnerId } = req.body;
+    // console.log(req.body);
+    rideOwnerId = parsedInt(rideOwnerId);
+    // console.log(rideOwnerId);
     const passengerId = req.userData.id;
     const parsedId = parsedInt(rideId);
     const parsedPassengerId = parsedInt(passengerId);
     /* Check if id is  a Not a number */
-    if (!(Number.isInteger(parsedId)) || !(Number.isInteger(parsedPassengerId))) {
+    if (!(Number.isInteger(parsedId)) || !(Number.isInteger(parsedPassengerId)) || !(Number.isInteger(rideOwnerId))) {
       return error(res, 400, 'Ride is invalid');
     }
-    const values = [rideId, passengerId, 'pending'];
+    const values = [rideId, passengerId, 'pending', rideOwnerId];
     return dbPool.query(find('"passengerId"', 'riderequests', '"rideId"', rideId), (err, response) => {
       if (err) {
         return error(res, 500, 'Could not establish database connection');
       }
       const passenger = response.rows[0];
-      if ((response.rowCount > 0 && passenger.passengerId !== null)) {
+      if ((response.rowCount > 0 && passenger.passengerId !== passengerId)) {
         return failure(res, 400, { message: 'You have already sent a ride request' });
       }
       return dbPool.query(joinRideQuery, values, (err, result) => {
@@ -81,6 +85,25 @@ class RideController {
         }
         return success(res, 201, { message: 'Your ride request was sent successfully', request });
       });
+    });
+  }
+
+  static getUserRideOffer(req, res) {
+    const { rideOwnerId } = req.params;
+    const parsedId = parsedInt(rideOwnerId);
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(parsedId))) {
+      return error(res, 400, 'Ride id is invalid');
+    }
+    return dbPool.query(find('*', 'rideoffers', '"rideOwnerId"', parsedId), (err, response) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      if (response.rowCount > 0) {
+        const rideOffer = response.rows;
+        return success(res, 200, { message: 'All your ride offers', rideOffer });
+      }
+      return failure(res, 404, { message: 'No ride offer found' });
     });
   }
 }

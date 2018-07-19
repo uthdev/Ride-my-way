@@ -1,5 +1,5 @@
 import dbPool from '../config/dbConnection';
-import { find, createRideOffer } from '../helpers/queryHelpers';
+import { find, createRideOffer, findAll } from '../helpers/queryHelpers';
 import { parsedInt, error, success, isValid, failure } from '../helpers/helpers';
 
 /**
@@ -40,7 +40,6 @@ class RideOfferController {
         }
         return dbPool.query(createRideOffer, values, (err, response) => {
           if (err) {
-            console.log(err);
             return error(res, 501, 'Could not establish database connection');
           }
           if (response.rowCount > 0) {
@@ -57,16 +56,18 @@ class RideOfferController {
   static fetchAllRideRequest(req, res) {
     let { rideId } = req.params;
     rideId = parsedInt(rideId);
+    const status = 'pending';
     /* Check if id is  a Not a number */
     if (!(Number.isInteger(rideId))) {
       return error(res, 400, 'Ride is invalid');
     }
-    return dbPool.query(find('*', 'riderequests', '"rideId"', rideId), (err, result) => {
+    return dbPool.query(`SELECT * FROM riderequests WHERE "rideId"='${rideId}' AND status = '${status}';`, (err, result) => {
       if (err) {
         return error(res, 500, 'Could not establish database connection');
       }
       const riderequests = result.rows;
       if (result.rowCount > 0) {
+        // console.log(riderequests);
         return success(res, 200, { message: 'Your ride requests', riderequests });
       }
       return failure(res, 404, { message: 'No ride request found' });
@@ -76,8 +77,6 @@ class RideOfferController {
   static acceptRideRequest(req, res) {
     let { rideId, requestId } = req.params;
     const { status } = req.body;
-    // const token = req.headers.authorization.split(' ')[1];
-    // const decoded = jwt.verify(token, dbConfig.secret);
 
     rideId = parsedInt(rideId);
     requestId = parsedInt(requestId);
@@ -88,18 +87,43 @@ class RideOfferController {
       return error(res, 400, 'Invalid credentials');
     }
     if (status.toLowerCase() === 'rejected') {
-      return dbPool.query(`DELETE FROM riderequests  WHERE id = '${requestId}' AND "rideId"='${rideId}' RETURNING *;`, (err, response) => {
+      /* eslint-disable-next-line */
+      return dbPool.query(`UPDATE riderequests SET status ='${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
         if (err) {
-          return error(res, 500, 'Could not establish database connection');
+          return error(res, 400, 'Invalid credentials');
         }
-        return success(res, 200, { message: '1 ride offer declined' });
+        return success(res, 200, { message: 'Request rejected' });
       });
     }
-    return dbPool.query(`UPDATE riderequests SET status =' ${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
+    /* eslint-disable-next-line */
+    if (status.toLowerCase() === 'accepted') {
+      /* eslint-disable-next-line */
+      return dbPool.query(`UPDATE riderequests SET status ='${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
+        if (err) {
+          return error(res, 400, 'Invalid credentials');
+        }
+        return success(res, 200, { message: 'Request accepted' });
+      });
+    }
+  }
+
+  static fetchAllAcceptedRequest(req, res) {
+    let { id } = req.userData;
+    id = parsedInt(id);
+    const status = 'accepted';
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(id))) {
+      return error(res, 400, 'Ride is invalid');
+    }
+    return dbPool.query(`SELECT * FROM riderequests WHERE "passengerId"='${id}' AND status='${status}';`, (err, result) => {
       if (err) {
-        return error(res, 400, 'Invalid credentials');
+        return error(res, 500, 'Could not establish database connection');
       }
-      return success(res, 200, { message: 'Acceptance successful' });
+      const riderequests = result.rows;
+      if (result.rowCount > 0) {
+        return success(res, 200, { message: 'Your ride requests', riderequests });
+      }
+      return failure(res, 404, { message: 'No ride request found' });
     });
   }
 }

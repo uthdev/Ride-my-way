@@ -197,7 +197,7 @@ describe('Test For Ride Routes', () => {
         .send(data)
         .end((message, res) => {
           expect(res).to.have.status(200);
-          expect(res.body.data.message).to.equal('Acceptance successful');
+          expect(res.body.data.message).to.equal('Request accepted');
           done();
         });
     });
@@ -214,7 +214,7 @@ describe('Test For Ride Routes', () => {
         .send(data)
         .end((message, res) => {
           expect(res).to.have.status(200);
-          expect(res.body.data.message).to.equal('1 ride offer declined');
+          expect(res.body.data.message).to.equal('Request rejected');
           done();
         });
     });
