@@ -74,7 +74,8 @@ app.isRequestValid = (data, callBack) => {
   if (data.status === 'success') {
     errMsg.style.color = '#78c078';
     errMsg.textContent = `* ${data.data.message}, You will be redirected shortly`;
-    return callBack();
+
+    return callBack(data);
   }
   return null;
 };
