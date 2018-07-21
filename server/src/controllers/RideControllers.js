@@ -87,6 +87,25 @@ class RideController {
       });
     });
   }
+
+  static getUserRideOffer(req, res) {
+    const { rideOwnerId } = req.params;
+    const parsedId = parsedInt(rideOwnerId);
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(parsedId))) {
+      return error(res, 400, 'Ride id is invalid');
+    }
+    return dbPool.query(find('*', 'rideoffers', '"rideOwnerId"', parsedId), (err, response) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      if (response.rowCount > 0) {
+        const rideOffer = response.rows;
+        return success(res, 200, { message: 'All your ride offers', rideOffer });
+      }
+      return failure(res, 404, { message: 'No ride offer found' });
+    });
+  }
 }
 
 export default RideController;

@@ -55,6 +55,7 @@ app.getFormData = (form) => {
 };
 app.logIn = (data) => {
   app.saveToken(data.data.token);
+  app.currentUserId();
   setTimeout(() => {
     window.location = 'summary.html';
     return null;
@@ -133,7 +134,6 @@ app.signIn = () => {
     const formData = app.getFormData(form);
     const formdata = JSON.stringify(formData);
     app.authUser('/api/v1/auth/signin', formdata).then(data => app.isRequestValid(data, app.logIn))
-    // JSON from `response.json()` call
       // eslint-disable-next-line
       .catch(error => console.error(error));
   });
@@ -295,7 +295,33 @@ app.currentUserId = () => app.fetch('/api/v1/profile/current/user', localStorage
   currentUserId = currentUser.data.currentUser.id;
   return localStorage.setItem('id', currentUserId);
 });
-app.currentUserId();
+app.getUserRidesCount = () => {
+  const rideRecievedId = document.getElementById('js__RideRecieved');
+  const ridesOfffered = document.getElementById('js__RideOffered');
+  app.fetch(`/api/v1/rides/owner/${app.geCurrentUser()}`, localStorage.getItem('token')).then((data) => {
+    if (data.status === 'fail') {
+      // alertMsg.innerHTML = data.data.message;
+      ridesOfffered.attributes['0'] = `findride.html?${app.geCurrentUser()}`;
+      ridesOfffered.children['0'].innerHTML = 0;
+    }
+    if (data.status === 'success') {
+      ridesOfffered.attributes['0'] = `findride.html?${app.geCurrentUser()}`;
+      ridesOfffered.children['0'].innerHTML = data.data.rideOffer.length;
+    }
+  });
+  app.fetch('/api/v1/users/rides/recieved', localStorage.getItem('token')).then((rideRecieved) => {
+    if (rideRecieved.status === 'fail') {
+      rideRecievedId.attributes['0'] = `findride.html?${app.geCurrentUser()}`;
+      rideRecievedId.children['0'].innerHTML = 0;
+    }
+    if (rideRecieved.status === 'success') {
+      console.log(rideRecieved);
+      rideRecievedId.attributes['0'] = `findride.html?${app.geCurrentUser()}`;
+      rideRecievedId.children['0'].innerHTML = rideRecieved.data.riderequests.length;
+    }
+  });
+};
+
 app.createRideOffer = () => {
   app.fetch('/api/v1/profile/current/user', localStorage.getItem('token')).then((currentUser) => {
     app.fetch(`/api/v1/profile/${currentUser.data.currentUser.id}`, localStorage.getItem('token')).then((user) => {

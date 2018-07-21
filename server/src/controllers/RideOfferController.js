@@ -40,7 +40,6 @@ class RideOfferController {
         }
         return dbPool.query(createRideOffer, values, (err, response) => {
           if (err) {
-            console.log(err);
             return error(res, 501, 'Could not establish database connection');
           }
           if (response.rowCount > 0) {
@@ -78,8 +77,6 @@ class RideOfferController {
   static acceptRideRequest(req, res) {
     let { rideId, requestId } = req.params;
     const { status } = req.body;
-    // const token = req.headers.authorization.split(' ')[1];
-    // const decoded = jwt.verify(token, dbConfig.secret);
 
     rideId = parsedInt(rideId);
     requestId = parsedInt(requestId);
@@ -91,7 +88,7 @@ class RideOfferController {
     }
     if (status.toLowerCase() === 'rejected') {
       /* eslint-disable-next-line */
-      return dbPool.query(`UPDATE riderequests SET status =' ${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
+      return dbPool.query(`UPDATE riderequests SET status ='${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
         if (err) {
           return error(res, 400, 'Invalid credentials');
         }
@@ -101,13 +98,33 @@ class RideOfferController {
     /* eslint-disable-next-line */
     if (status.toLowerCase() === 'accepted') {
       /* eslint-disable-next-line */
-      return dbPool.query(`UPDATE riderequests SET status =' ${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
+      return dbPool.query(`UPDATE riderequests SET status ='${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
         if (err) {
           return error(res, 400, 'Invalid credentials');
         }
         return success(res, 200, { message: 'Request accepted' });
       });
     }
+  }
+
+  static fetchAllAcceptedRequest(req, res) {
+    let { id } = req.userData;
+    id = parsedInt(id);
+    const status = 'accepted';
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(id))) {
+      return error(res, 400, 'Ride is invalid');
+    }
+    return dbPool.query(`SELECT * FROM riderequests WHERE "passengerId"='${id}' AND status='${status}';`, (err, result) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      const riderequests = result.rows;
+      if (result.rowCount > 0) {
+        return success(res, 200, { message: 'Your ride requests', riderequests });
+      }
+      return failure(res, 404, { message: 'No ride request found' });
+    });
   }
 }
 
