@@ -75,7 +75,7 @@ class RideController {
         return error(res, 500, 'Could not establish database connection');
       }
       const passenger = response.rows[0];
-      if ((response.rowCount > 0 && passenger.passengerId !== null)) {
+      if ((response.rowCount > 0 && passenger.passengerId !== passengerId)) {
         return failure(res, 400, { message: 'You have already sent a ride request' });
       }
       return dbPool.query(joinRideQuery, values, (err, result) => {
