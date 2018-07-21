@@ -315,7 +315,6 @@ app.getUserRidesCount = () => {
       rideRecievedId.children['0'].innerHTML = 0;
     }
     if (rideRecieved.status === 'success') {
-      console.log(rideRecieved);
       rideRecievedId.attributes['0'] = `findride.html?${app.geCurrentUser()}`;
       rideRecievedId.children['0'].innerHTML = rideRecieved.data.riderequests.length;
     }
