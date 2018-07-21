@@ -38,10 +38,7 @@ CREATE TABLE riderequests
   "passengerId" integer,
   status text,
   "rideOwnerId" integer,
-  CONSTRAINT riderequests_pkey PRIMARY KEY (id),
-  CONSTRAINT "riderequests_rideId_fkey" FOREIGN KEY ("rideId")
-      REFERENCES public.rideoffers (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+  CONSTRAINT riderequests_pkey PRIMARY KEY (id)
 );
 
 
