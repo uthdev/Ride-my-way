@@ -470,6 +470,50 @@ app.getRideRequests = () => {
     }
   });
 };
+
+app.loadRideHistory = () => {
+  app.fetch('api/v1/profile/current/history', app.getToken()).then((ridehistory) => {
+    const { histories } = ridehistory.data;
+    const rideHistory = document.querySelector('.js__RideHistory');
+    if (histories.length < 1) {
+      rideHistory.innerHTML = '<h1>No History</h1>';
+    }
+    histories.map((history) => {
+      const {
+        status, location, destination, rideTitle,
+        createdAt,
+      } = history;
+
+      const [year, month, day] = createdAt.split('-');
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+      rideHistory.innerHTML += `
+      <div class="row ">
+        <div class="Ride__date">
+          <!-- <h5>Nov</h5> -->
+          <h6 class="DashboardColor--text--grey">${months[month - 1]}</h6>
+          <p class="DashboardColor--text--grey">${day.slice(0, 2)}</p>
+        </div>
+        <div class="Rider__name">
+          <h6>
+            <a href="#">You</a>
+          </h6>
+          <p class="DashboardColor--text--grey">
+            <em>
+              <strong>${status ? 'Joined' : 'Offered'}:</strong>
+            </em> ${rideTitle} </p>
+        </div>
+        <div class="ride__destination">
+          <h6 class="DashboardColor--text--grey">
+            <em>From: </em>${location}
+            <br>
+            <em>To: </em>${destination}
+          </h6>
+        </div>
+      </div>
+      `;
+    });
+  });
+};
 // Get the navbar
 const navbar = document.querySelector('nav');
 
