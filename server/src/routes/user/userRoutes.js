@@ -18,4 +18,7 @@ userRoute.route('/:id')
 userRoute.route('/current/user')
   .get(ensureAutheticated, UserController.fetchCurrentUser);
 
+userRoute.route('/current/history')
+  .get(ensureAutheticated, UserController.fetchRideHistory);
+
 export default userRoute;
