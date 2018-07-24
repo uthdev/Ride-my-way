@@ -139,6 +139,7 @@ app.signIn = () => {
       .catch(error => console.error(error));
   });
 };
+app.removeItem = itemKey => localStorage.removeItem(itemKey);
 app.fetch = (url, authToken) => {
   const requestHeader = {
     method: 'GET', // *GET, POST, PUT, DELETE, etc
@@ -282,7 +283,7 @@ app.getSingleRide = () => {
               <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join ride</button>
             </div>
             <div>
-              <a href='profile.html' class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">View driver's profile</a>
+              <a href='profile.html?${data.data.rideOffer.rideOwnerId}' class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">View driver's profile</a>
             </div>
           </form>`
           );
@@ -591,7 +592,7 @@ app.loadAllRideRequests = () => {
     }
 
     requests.data.allRequests.map((request) => {
-      console.log(request);
+      // console.log(request);
       const {
         profile, firstName, location, destination,
         rideId, lastName, rideTitle, requestId,
@@ -646,6 +647,84 @@ app.loadAllRideRequests = () => {
     });
   });
 };
+
+app.viewDriverProfile = () => {
+  const driverId = window.location.search.split('?')[1];
+  const profileBody = document.querySelector('.js__profile');
+
+  app.fetch(`/api/v1/profile/${driverId}`, localStorage.getItem('token')).then((driverProfile) => {
+    const {
+      firstName, lastName, phone, email, city, zipCode, address, profile, id,
+    } = driverProfile.data.user;
+    profileBody.innerHTML += ` <div class="RideDetail__header">
+    <div class="RideInfo__header">
+      <div class="RideInfo__header__img text--center">
+        <img src="${(profile) || 'assets/img/dummy.jpg'}" alt="offerer profile">
+        <h4 class="text--primary">${firstName} ${lastName}</h4>
+      </div>
+    </div>
+    <div class="RideInfo__content  margin--top--10 padding--40">
+
+
+      <div class="ride__price">
+        <h4 class="DashboardColor--text--grey margin--bottom--10">Email:
+          <span class="text--primary">${email}</span>
+        </h4>
+      </div>
+      <div class="ride__duration ">
+
+        <h4 class="DashboardColor--text--grey margin--bottom--20">Phone:
+          <span class="text--primary">${phone}</span>
+        </h4>
+        <!-- Address -->
+        <h2 class="light--grey margin--bottom--10">Address Information </h2>
+        <h4 class="DashboardColor--text--grey margin--bottom--10">Address
+          <span class="text--primary">${address}</span>
+        </h4>
+        <h4 class="DashboardColor--text--grey margin--bottom--10">City
+          <span class="text--primary">${city}</span>
+        </h4>
+        ${(id === app.geCurrentUser()) ? `<h4 class="DashboardColor--text--grey margin--bottom--10">Postal Code
+        <span class="text--primary">${zipCode}</span>
+      </h4>` : ''}
+      </div>
+      <div class="view__rideoffers">
+      ${(id === app.geCurrentUser()) ? '<a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="editprofile.html">Edit Profile</a>' : '<a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="findride.html">Go  back to ride offers</a>'}
+      </div>
+    </div>
+  </div>`;
+  });
+};
+
+app.loadProfile = () => {
+  const profileName = document.querySelector('.js__ProfileFirstName');
+  const profileLink = document.querySelector('.js__ProfileLink');
+  const logout = document.querySelector('.js__logout');
+  const profileImage = document.querySelector('.card__user__pics');
+
+
+  app.fetch(`/api/v1/profile/${app.geCurrentUser()}`, localStorage.getItem('token')).then((currentUser) => {
+    // console.log(currentUser);
+    if (currentUser.status === 'success') {
+      const { firstName, profile } = currentUser.data.user;
+      profileName.textContent = firstName;
+      if (profileImage && profile) {
+        profileImage.attributes['0'].value = profile;
+      }
+      if (profileImage) {
+        profileImage.attributes['0'].value = 'assets/img/dummy.jpg';
+      }
+    }
+  });
+  profileLink.attributes['0'].nodeValue = `profile.html?${app.geCurrentUser()}`;
+  logout.addEventListener('click', (e) => {
+    app.removeItem('token');
+    app.removeItem('id');
+    app.removeItem('rideOwnerId');
+    app.authRedirect(1000, 'signin.html');
+  });
+};
+app.loadProfile();
 // Get the navbar
 const navbar = document.querySelector('nav');
 
@@ -655,3 +734,5 @@ const sticky = 1;
 
 // When the user scrolls the page, execute myFunction
 window.onscroll = () => ((window.pageYOffset >= sticky) ? navbar.classList.add('sticky') : navbar.classList.remove('sticky'));
+
+// window.onload = () => app.loadProfile();
