@@ -35,12 +35,12 @@
                 <div class="DropDown">
                   <a href="#" class="DropDown__btn">
                     <span class="text--color--grey">Hello,</span>
-                    <span class="text--primary">Joe</span>
+                    <span class="text--primary js__ProfileFirstName">Joe</span>
                   </a>
                   <div class="DropDown__content">
-                    <a href="profile.html" class="DashboardColor--text--grey">
+                    <a href="profile.html" class="DashboardColor--text--grey js__ProfileLink">
                       <i class="fas fa-user text--primary"></i> Profile</a>
-                    <a href="signin.html" class="DashboardColor--text--grey">
+                    <a href="signin.html" class="DashboardColor--text--grey js__logout">
                       <i class="fas fa-sign-out-alt text--primary"></i>logout</a>
                   </div>
                 </div>
@@ -105,61 +105,19 @@
         </ul>
       </div>
       <div class="dashboard__content">
-        <div class="RideDetails light--shadow">
-          <div class="RideDetail__header">
-            <div class="RideInfo__header">
-              <div class="RideInfo__header__img text--center">
-                <img src="assets/img/ME.jpeg" alt="offerer profile">
-                <h4 class="text--primary">Jehonadab Okpukoro</h4>
-              </div>
-            </div>
-            <div class="RideInfo__content  margin--top--10 padding--40">
+        <div class="RideDetails js__profile light--shadow">
 
-
-              <div class="ride__price">
-                <h4 class="DashboardColor--text--grey margin--bottom--10">Email:
-                  <span class="text--primary">jehonadabokpus@gmai.com</span>
-                </h4>
-              </div>
-              <div class="ride__duration ">
-
-                <h4 class="DashboardColor--text--grey margin--bottom--20">Phone:
-                  <span class="text--primary">+2347059972180</span>
-                </h4>
-                <!-- Address -->
-                <h2 class="light--grey margin--bottom--10">Address Information </h2>
-                <h4 class="DashboardColor--text--grey margin--bottom--10">Address
-                  <span class="text--primary">42 montgomery sabo</span>
-                </h4>
-                <h4 class="DashboardColor--text--grey margin--bottom--10">City
-                  <span class="text--primary">Yaba</span>
-                </h4>
-                <h4 class="DashboardColor--text--grey margin--bottom--10">Postal Code
-                  <span class="text--primary">101212</span>
-                </h4>
-              </div>
-              <div class="ride__seats">
-                <h6 class="DashboardColor--text--grey">Available Seats:
-                  <span class="text--primary">3</span>
-                </h6>
-              </div>
-
-
-              <div class="view__rideoffers">
-                <a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="editprofile.html">Edit Profile</a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- <script src="assets/js/main.js"></script>
-  <!-- <script>
+  <script src="assets/js/main.js"></script>
+  <script>
     window.onload = () => {
       app.loadSideBar();
+      app.viewDriverProfile();
     }
-  </script> -->-->
+  </script>
 </body>
 
 </html>
