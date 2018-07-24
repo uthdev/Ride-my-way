@@ -1,5 +1,5 @@
 import dbPool from '../config/dbConnection';
-import { find, createRideOffer, findAll } from '../helpers/queryHelpers';
+import { find, createRideOffer, findAll, fetchAllRequests } from '../helpers/queryHelpers';
 import { parsedInt, error, success, isValid, failure } from '../helpers/helpers';
 
 /**
@@ -90,6 +90,7 @@ class RideOfferController {
       /* eslint-disable-next-line */
       return dbPool.query(`UPDATE riderequests SET status ='${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
         if (err) {
+          // console.log(err);
           return error(res, 400, 'Invalid credentials');
         }
         return success(res, 200, { message: 'Request rejected' });
@@ -98,8 +99,9 @@ class RideOfferController {
     /* eslint-disable-next-line */
     if (status.toLowerCase() === 'accepted') {
       /* eslint-disable-next-line */
-      return dbPool.query(`UPDATE riderequests SET status ='${status}' WHERE "rideId"='${rideId}' AND id = '${requestId}' RETURNING *;`, (err, response) => {
+      return dbPool.query(`UPDATE riderequests SET status ='${status}' WHERE "rideId"='${rideId}' AND "requestId" = '${requestId}' RETURNING *;`, (err, response) => {
         if (err) {
+          // console.log(err);
           return error(res, 400, 'Invalid credentials');
         }
         return success(res, 200, { message: 'Request accepted' });
@@ -123,7 +125,26 @@ class RideOfferController {
       if (result.rowCount > 0) {
         return success(res, 200, { message: 'Your ride requests', riderequests });
       }
-      return failure(res, 404, { message: 'No ride request found' });
+      return error(res, 404, { message: 'No ride request found' });
+    });
+  }
+
+  static fetchAllUserRequest(req, res) {
+    let { id } = req.userData;
+    id = parsedInt(id);
+    /* Check if id is  a Not a number */
+    if (!(Number.isInteger(id))) {
+      return error(res, 400, 'Ride is invalid');
+    }
+    return dbPool.query(fetchAllRequests(id), (err, requests) => {
+      if (err) {
+        return error(res, 500, 'Could not establish database connection');
+      }
+      if (requests.rowCount <= 0) {
+        return error(res, 404, { message: 'No request found' });
+      }
+      const allRequests = requests.rows;
+      return success(res, 200, { message: 'All your ride request', allRequests });
     });
   }
 }

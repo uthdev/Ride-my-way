@@ -910,6 +910,7 @@
 
  .RideOffers__item {
    display: flex;
+   flex-direction: column;
    margin-bottom: 15px;
    border-bottom: 2px solid #f5f7fa;
    padding-bottom: 10px;
@@ -928,7 +929,17 @@
  }
 
  .RideOffers__item form {
-   width: 30%;
+   width: 60%;
+ }
+
+ div.Requests,
+ .RideForm.js__RideOfferForm {
+   flex-direction: row;
+ }
+
+ .RideForm.js__RideOfferForm>div {
+   width: 50%;
+   text-align: center;
  }
 
  .rider__img img {
@@ -972,6 +983,11 @@
  .RideForm {
    display: flex;
    flex-wrap: wrap;
+   flex-direction: column;
+ }
+
+ .RideForm>div {
+   width: 100%;
  }
 
  .js__navbar__toggler.DashboardColor--primary {

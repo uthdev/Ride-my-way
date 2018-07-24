@@ -32,3 +32,4 @@ export const joinRideQuery = `INSERT INTO
   riderequests("rideId", "passengerId", status, "rideOwnerId")
  VALUES($1, $2, $3, $4)
   RETURNING *`;
+export const fetchAllRequests = userId => `SELECT * FROM rideoffers, riderequests, users WHERE(rideoffers.id = riderequests."rideId" AND riderequests."rideOwnerId" ='${userId}' AND riderequests.status ='pending' AND riderequests."passengerId"=users.id);`;
