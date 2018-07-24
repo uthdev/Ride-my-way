@@ -38,4 +38,10 @@ rideoffersRoute.route('/rides/recieved')
 /* Create ride offer */
   .get(RideOfferController.fetchAllAcceptedRequest);
 
+rideoffersRoute.route('/rides/user/')
+
+
+  /* fetch all ride requests for a user */
+  .get(RideOfferController.fetchAllUserRequest);
+
 export default rideoffersRoute;

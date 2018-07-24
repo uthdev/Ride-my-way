@@ -277,12 +277,12 @@ app.getSingleRide = () => {
             rideOfferContent.innerHTML += `<div class="view__rideoffers">
             <a class="btn btn--block DashboardColor--bg--primary btn--round margin--top--10 text--center" href="riderequest.html?${data.data.rideOffer.id}">View requests</a>
           </div>`) : (
-            rideOfferContent.innerHTML += `<form action="/summary.html" class="RideForm">
+            rideOfferContent.innerHTML += `<form action="/summary.html" class="RideForm js__RideOfferForm">
             <div>
               <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Join ride</button>
             </div>
             <div>
-              <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Cancel</button>
+              <a href='profile.html' class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">View driver's profile</a>
             </div>
           </form>`
           );
@@ -431,7 +431,7 @@ app.getRideRequests = () => {
                         <i class="fas fa-arrow-down text--primary margin--10"></i>
                       </div>
                       <div class="text--color--grey">${destination}</div>
-                      <div class="RideForm">
+                      <div class="RideForm Requests">
                         <form>
                           <div>
                           <input type='hidden' name='status' value='accepted' />
@@ -455,7 +455,7 @@ app.getRideRequests = () => {
                   form.addEventListener('submit', (e) => {
                     e.preventDefault();
                     const formData = app.getFormData(form);
-                    app.post(`/api/v1/users/rides/${id}/requests/${rideRequest.id}`, app.getToken(), formData, 'PUT').then((result) => {
+                    app.post(`/api/v1/users/rides/${id}/requests/${rideRequest.requestId}`, app.getToken(), formData, 'PUT').then((result) => {
                       console.log(result);
                       const rideRequestHandler = () => app.authRedirect(1000, 'findride.html');
                       app.isRequestValid(result, rideRequestHandler);
@@ -511,6 +511,138 @@ app.loadRideHistory = () => {
         </div>
       </div>
       `;
+    });
+  });
+};
+
+app.loadUserRequests = () => {
+  app.fetch('/api/v1/users/rides/user/', app.getToken()).then((requests) => {
+    const requestBody = document.querySelector('.js__RideRequests');
+    if (requests.status === 'error') {
+      requestBody.innerHTML = `<h2 class='text--center DashboardColor--text--grey'>${requests.message.message}<h2/>`;
+    }
+    requests.data.allRequests.map((request, index) => {
+      const {
+        profile, firstName, location, destination,
+        rideId,
+      } = request;
+      if (index <= 2) {
+        requestBody.innerHTML += `<div class="RideOffers__item">
+          <div class="rider__img">
+            <img src="${(profile) || 'assets/img/dummy.jpg'}" alt="Rider's image">
+          </div>
+          <div class="riders__content">
+            <div class="riders__subheader">
+              <h5>
+                <a href="ridedetails.html"> ${firstName} wants to join you</a>
+              </h5>
+              <h6>
+                <strong>
+                  <em>Location: </em>
+                </strong>
+                <span class="DashboardColor--text--grey">${location}</span>
+              </h6>
+              <h6>
+                <strong>
+                  <em>Destination: </em>
+                </strong>
+                <span class="DashboardColor--text--grey">${destination}</span>
+              </h6>
+
+            </div>
+          </div>
+          <form action="summary.html" class="RideForm">
+            <div>
+              <a href='riderequest.html?${rideId}' class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10 btn--block text--center">View request</a>
+            </div>
+
+          </form>
+        </div>
+        `;
+      }
+    });
+    requestBody.innerHTML += `<div class="RideOffer__footer text--center js__ViewAllRequest">
+    <a href="allriderequest.html">View All Ride request
+    </a>
+  </div>`;
+  });
+};
+
+app.loadAllRideRequests = () => {
+  app.fetch('/api/v1/users/rides/user/', app.getToken()).then((requests) => {
+    const requestBody = document.querySelector('.RideRequest');
+    if (requests.status === 'error') {
+      requestBody.innerHTML = `<div class="RideDetails light--shadow">
+          
+      <div class="RideDetail__header">
+        
+                <div class="RideInfo__content  margin--top--10 padding--40">
+          
+
+        <div class="ride__seats text--center">
+          <h3 class="DashboardColor--text--grey">You don't have any ride request
+          </h3>
+        </div>
+
+
+          </div>
+              </div>
+            </div>`;
+    }
+
+    requests.data.allRequests.map((request) => {
+      console.log(request);
+      const {
+        profile, firstName, location, destination,
+        rideId, lastName, rideTitle, requestId,
+      } = request;
+      const requestContent = `
+                <div class="RideDetails light--shadow">
+                  <div class="RideDetail__header">
+                    <div class="RideInfo__header">
+                      <div class="RideInfo__header__img text--center">
+                        <img src="${profile || 'assets/img/dummy.jpg'}" alt="offerer profile">
+                        <h4 class="text--primary">${rideTitle}</h4>
+                        <h5 class="text--color--grey font--regular">${firstName} ${lastName} wants to join you</h5>
+                      </div>
+                    </div>
+                    <div class="RideInfo__content text--center margin--top--10">
+                      <div class="text--color--grey">${location}</div>
+                      <div>
+                        <i class="fas fa-arrow-down text--primary margin--10"></i>
+                      </div>
+                      <div class="text--color--grey">${destination}</div>
+                      <div class="RideForm Requests">
+                        <form>
+                          <div>
+                          <input type='hidden' name='status' value='accepted' />
+                            <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--primary margin--top--10">Accept</button>
+                          </div>
+                        </form>
+                        <form>
+                          <div>
+                            <input type='hidden' name='status' value='rejected' />
+                            <button type="submit" class="DashboardBtn btn--round DashboardColor--bg--grey margin--top--10">Decline</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                `;
+      requestBody.innerHTML += requestContent;
+      const forms = Array.from(requestBody.getElementsByTagName('form'));
+      forms.map((form) => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const formData = app.getFormData(form);
+          app.post(`/api/v1/users/rides/${rideId}/requests/${requestId}`, app.getToken(), formData, 'PUT').then((result) => {
+            // console.log(result);
+            const rideRequestHandler = () => app.authRedirect(1000, 'findride.html');
+            app.isRequestValid(result, rideRequestHandler);
+          });
+        });
+      });
     });
   });
 };
