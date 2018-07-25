@@ -714,7 +714,7 @@ app.loadProfile = () => {
       if (profileImage) {
         profileImage.attributes['0'].value = 'assets/img/dummy.jpg';
       }
-    }
+
   });
   profileLink.attributes['0'].nodeValue = `profile.html?${app.geCurrentUser()}`;
   logout.addEventListener('click', (e) => {
