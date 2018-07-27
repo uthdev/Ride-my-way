@@ -1,6 +1,10 @@
+import fs from 'fs';
 import { error, parsedInt, success, failure } from '../helpers/helpers';
 import dbPool from '../config/dbConnection';
 import { find } from '../helpers/queryHelpers';
+import { cloudinaryConfig, uploader } from '../config/cloudinary/cloudinaryConfig';
+import multerUploads from '../config/multer/multerConfig';
+
 
 /**
  * @class UserController
@@ -34,6 +38,32 @@ class UserController {
         return success(res, 200, { message: 'user info', user });
       }
       return failure(res, 404, "User wasn't found");
+    });
+  }
+
+  static updateProfile(req, res, next) {
+    multerUploads(req, res, (err) => {
+      if (err) {
+        return error(res, 500, 'Error connecting the database');
+      }
+      const {
+        firstName, lastName, phone, email, address, city, zipCode,
+      } = req.body;
+
+      cloudinaryConfig();
+      // cloudinaryConfig()/;object
+      if (req.file) {
+        uploader.upload(
+          req.file.path
+          , (result) => {
+            const profile = result.url;
+            dbPool.query(`UPDATE users SET profile ='${profile}', "firstName"='${firstName}', "lastName"='${lastName}', phone='${phone}', email='${email}', address='${address}', city='${city}', "zipCode"='${zipCode}' WHERE id='${req.userData.id}' RETURNING *;`, (err, res) => ((err) ? error(res, 500, 'Error connecting the database') : null));
+            // eslint-disable-next-line
+            fs.unlink(req.file.path, err => ((err) ? console.log(err) : console.log('file deleted successfully')));
+          },
+        );
+        return success(res, 200, { message: 'Profile updated successfully' });
+      }
     });
   }
 

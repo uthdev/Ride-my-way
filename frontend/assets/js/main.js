@@ -155,12 +155,12 @@ app.fetch = (url, authToken) => {
     .catch(error => console.error('Fetch Error =\n', error));
 };
 
-app.post = (url, authToken, formData, requestMethod) => {
+app.post = (url, authToken, formData, requestMethod, contentType) => {
   const requestHeader = {
     method: requestMethod, // *GET, POST, PUT, DELETE, etc
     headers: {
       Authorization: `Bearer ${authToken}`,
-      'Content-Type': 'application/json',
+      'Content-Type': contentType || 'application/json',
     },
     body: JSON.stringify(formData),
   };
@@ -699,12 +699,14 @@ app.viewDriverProfile = () => {
 app.loadProfile = () => {
   const profileName = document.querySelector('.js__ProfileFirstName');
   const profileLink = document.querySelector('.js__ProfileLink');
+  const profileImage = document.querySelector('.card__user__pics');
   const logout = document.querySelector('.js__logout');
   app.fetch(`/api/v1/profile/${app.geCurrentUser()}`, localStorage.getItem('token')).then((currentUser) => {
     // console.log(currentUser);
     if (currentUser.status === 'success') {
-      const { firstName } = currentUser.data.user;
+      const { firstName, profile } = currentUser.data.user;
       profileName.textContent = firstName;
+      profileImage.attributes['0'].nodeValue = profile || 'assets/img/dummy.jpg';
     }
   });
   profileLink.attributes['0'].nodeValue = `profile.html?${app.geCurrentUser()}`;
@@ -716,6 +718,60 @@ app.loadProfile = () => {
   });
 };
 app.loadProfile();
+
+app.updateProfile = () => {
+  app.fetch(`/api/v1/profile/${app.geCurrentUser()}`, localStorage.getItem('token')).then((currentUser) => {
+    const form = document.querySelector('form');
+    const {
+      firstName, lastName, phone, email, address, city, zipCode,
+    } = currentUser.data.user;
+    form.innerHTML = `
+      <div class="input--group dashboard--input">
+        <input type="text" class="form--control" placeholder="First Name" autofocus="" value="${firstName}" name='firstName'>
+        <input type="text" class="form--control" placeholder="Last Name" value="${lastName}" name='lastName'>
+      </div>
+
+      <!-- capture email and phone number -->
+      <div class="input--group dashboard--input">
+        <input type="text" class="form--control" placeholder="Email" name='email' value="${email}">
+        <input type="text" class="form--control" placeholder="Phone number" value="${phone}" name='phone'>
+      </div>
+
+      <!-- capture price and number of seats -->
+      <div class="input--group dashboard--input">
+        <input type="text" class="form--control" placeholder="Address" value="${address}" name='address'>
+        <input type="text" class="form--control" placeholder="City" value=${city} name='city'>
+      </div>
+      <!-- capture price and number of seats -->
+      <div class="input--group dashboard--input">
+        <input type="text" class="form--control" placeholder="Zipcode" value="${zipCode}" name='zipCode'>
+        <input type="file" class="form--control" placeholder="Upload profille image" name='imageUpload' accept='image/*'>
+      </div>
+
+      <!-- submit button -->
+      <div class="contact__submit margin--top--10">
+        <button type="submit" class="btn btn--block bg--color--grey text--color--white light--shadow">
+          <span>Update profile</span>
+        </button>
+
+      </div>`;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const FD = new FormData(form);
+      // console.log(formData.entries());
+      fetch('/api/v1/profile/current/update', {
+        method: 'POST',
+        headers: {
+          // 'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${app.getToken()}`,
+        },
+        body: FD,
+      }).then((res) => {
+        app.authRedirect(0, `profile.html?${  app.geCurrentUser()}`);
+      }).catch(e => console.log(e));
+    });
+  });
+};
 // Get the navbar
 const navbar = document.querySelector('nav');
 

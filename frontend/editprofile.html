@@ -113,38 +113,10 @@
               </div>
             </div>
             <div class="RideInfo__content  margin--top--10 padding--40">
-              <form action="summary.html" role="form">
+              <form role="form" action="/api/v1/profile/current/update" enctype="multipart/form-data" method="POST">
                 <!-- group inputs -->
                 <!-- capture names -->
-                <div class="input--group dashboard--input">
-                  <input type="text" class="form--control" placeholder="First Name" autofocus="" value="Jehonadab">
-                  <input type="text" class="form--control" placeholder="Last Name" value="okpukoro">
-                </div>
 
-                <!-- capture email and phone number -->
-                <div class="input--group dashboard--input">
-                  <input type="text" class="form--control" placeholder="Email" value="jehonadabokpus@gmail.com">
-                  <input type="text" class="form--control" placeholder="Phone number" value="07059972180">
-                </div>
-
-                <!-- capture price and number of seats -->
-                <div class="input--group dashboard--input">
-                  <input type="text" class="form--control" placeholder="Address" value="42, montgomery">
-                  <input type="text" class="form--control" placeholder="City">
-                </div>
-                <!-- capture price and number of seats -->
-                <div class="input--group dashboard--input">
-                  <input type="text" class="form--control" placeholder="Zipcode" value="101212">
-                  <input type="file" class="form--control" placeholder="Upload profille image">
-                </div>
-
-                <!-- submit button -->
-                <div class="contact__submit margin--top--10">
-                  <button type="submit" class="btn btn--block bg--color--grey text--color--white light--shadow">
-                    <span>Update profile</span>
-                  </button>
-
-                </div>
               </form>
             </div>
           </div>
@@ -152,10 +124,11 @@
       </div>
     </div>
   </div>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js "></script>
   <script>
     window.onload = () => {
       app.loadSideBar();
+      app.updateProfile();
     }
   </script>
 </body>
