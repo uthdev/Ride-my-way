@@ -14,7 +14,7 @@ const app = express();
 const Port = process.env.PORT || 5000;
 
 // support parsing of application/json type post data
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
