@@ -21,4 +21,7 @@ userRoute.route('/current/user')
 userRoute.route('/current/history')
   .get(ensureAutheticated, UserController.fetchRideHistory);
 
+userRoute.route('/current/update')
+  .post(ensureAutheticated, UserController.updateProfile);
+
 export default userRoute;
