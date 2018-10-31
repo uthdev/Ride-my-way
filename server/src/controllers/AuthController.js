@@ -42,9 +42,9 @@ class AuthController {
         // callback
         dbPool.query(createNewUser, values, (err, result) => {
           if (err) {
-            error(res, 500, 'Something went while trying to create your account');
+            return error(res, 500, 'Something went while trying to create your account');
           }
-          const results = result.rows[0];
+          const results = result && result.rows[0];
           const token = jwt.sign(
             { id: results.id },
             dbConfig.secret,
