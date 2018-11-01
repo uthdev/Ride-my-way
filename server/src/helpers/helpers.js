@@ -12,7 +12,7 @@ export const isValid = (rideOffer) => {
     departureTime,
     noOfSeats,
   } = rideOffer;
-  const errCode = 401;
+  const errCode = 400;
   let errMsg;
 
   if (!rideTitle || rideTitle.trim() === '') {
